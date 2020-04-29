@@ -1,0 +1,16 @@
+.nav-bar {
+  height: 100vh;
+  width: 100px;
+  background-color: blue;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.prof-pic {
+  height: 75px;
+  width: 75px;
+  background-color: white;
+  border-radius: 50%;
+}
+
