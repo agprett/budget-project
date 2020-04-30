@@ -1,0 +1,61 @@
+.dash {
+  padding: 20px 20px 20px 130px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
+  background-color: #eaebed;
+}
+
+.dash-budget-expense {
+  height: 200px;
+  width: 50%;
+  background-color: #006989;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 3vw;
+  box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
+}
+
+.budget-expenses {
+  height: 40%;
+  width: 85%;
+  padding: 10px;
+  background-color: #01a7c2;
+  margin: 5px;
+  box-shadow: 10px 0 20px 0 rgba(0,0,0,.1), 5px 0 5px rgba(0,0,0,.2);
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.budget {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.expense-graph {
+  margin-left: 20px;
+  box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
+  background-color: #a3bac3;
+}
+
+.recent-expenses {
+  height: 350px;
+  width: 60%;
+  background-color: #01a7c2;
+  margin: 20px 0;
+  box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
+  text-align: center;
+}
+
+.dash-friends {
+  height: 300px;
+  width: 300px;
+  background-color: #006989;
+  margin: 40px 75px;
+  box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
+  text-align: center;
+}

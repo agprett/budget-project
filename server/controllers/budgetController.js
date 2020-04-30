@@ -3,7 +3,7 @@ module.exports = {
     const db = req.app.get('db')
     const id = 1
 
-    const budget = await db.budget.get_budget([id])
+    const [budget] = await db.budget.get_budget([id])
 
     res.status(200).send(budget)
   },

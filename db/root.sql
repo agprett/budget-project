@@ -30,3 +30,12 @@ CREATE TABLE budget (
   travel INTEGER,
   other INTEGER
 )
+
+INSERT INTO users (username, password)
+VALUES ('b', 'b');
+
+INSERT INTO budget (user_id, monthly, entertainment, personal_care, groceries, travel, other)
+VALUES (1, 1300, 300, 100, 450, 100, 400);
+
+SELECT * FROM users;
+SELECT * FROM budget;
