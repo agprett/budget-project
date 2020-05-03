@@ -16,7 +16,7 @@ class BarChart extends React.Component {
     const {data} = this.props
     const margins = { top: 20, right: 20, bottom: 80, left: 60 }
     const svgDimensions = {
-      width: Math.max(this.props.parentWidth, 400),
+      width: Math.max(this.props.parentWidth, 300),
       height: 250
     }
 

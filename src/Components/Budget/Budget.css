@@ -1,0 +1,48 @@
+.budget-route {
+  background-color: #eaebed;
+  padding: 20px 20px 20px 120px;
+  min-height: 100vh;
+}
+
+.budget {
+  height: 45vh;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 30px;
+}
+
+.pie-chart {
+  height: 300px;
+  width: 300px;
+  background-color: #006989;
+}
+
+.budget-amounts {
+  width: 250px;
+  text-align: center;
+}
+
+.amount {
+  font-size: 26px;
+}
+
+.line-graph {
+  height: 300px;
+  width: 350px;
+  background-color: #006989;
+}
+
+.expenses {
+  min-height: 500px;
+  width: 50%;
+  background-color: #007090;
+  padding: 25px;
+}
+
+.view-expense {
+  height: 60px;
+  width: 95%;
+  background-color: #01a7c2;
+  margin: 5px auto;
+  padding: 5px;
+}
