@@ -9,6 +9,7 @@ function Budget(){
   const [upcoming, setUpcoming] = useState([])
   const [newUpcoming, setNewUpcoming] = useState({name: '', category: '', amount: 0})
   const [expenses, setExpenses] = useState([])
+  const [current, setCurrent] = useState({weekly: 0, monthly: 0})
   const [newExpense, setNewExpense] = useState({name: '', category: '', amount: 0})
   const [time, setTime] = useState('monthly')
   const [loading, setLoading] = useState(false)
@@ -29,7 +30,13 @@ function Budget(){
       setUpcoming(res.data)
     })
     .catch(err => console.log(err))
-    
+
+    axios.get('/api/expenses/current')
+    .then(res => {
+      setCurrent(res.data)
+    })
+    .catch(err => console.log(err))
+
     axios.get('/api/expenses')
     .then(res => {
       setExpenses(res.data)
@@ -103,7 +110,7 @@ function Budget(){
         </section>
         <section className='budget'>
           <section className='pie-chart'>budget pie chart</section>
-          <BudgetDisplay budget={budget} setBudget={setBudget} time={time}/>
+          <BudgetDisplay budget={budget} setBudget={setBudget} current={current} time={time}/>
           <section className='line-graph'>
             expense line graph
           </section>

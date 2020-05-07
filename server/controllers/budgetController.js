@@ -5,9 +5,9 @@ module.exports = {
 
     let [budget] = await db.budget.get_budget([id])
 
-    const {entertainment, personal_care, groceries, travel, other} = budget
+    const {personal, groceries, travel, other} = budget
 
-    let weekly = entertainment + personal_care + groceries + travel + other
+    let weekly = personal + groceries + travel + other
 
     budget = {...budget, weekly}
 

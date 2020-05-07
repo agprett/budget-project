@@ -2,11 +2,10 @@ import React, {useState} from 'react'
 import axios from 'axios'
 
 function BudgetDisplay(props){
-  const {budget, setBudget, time} = props
+  const {budget, setBudget, current, time} = props
   const [editting, setEditting] = useState(false)
   const weeklyBudget = [
-    {name: 'Entertainment', category: 'entertainment', amount: budget.entertainment},
-    {name: 'Personal Care', category: 'personal_care', amount: budget.personal_care},
+    {name: 'Personal', category: 'personal', amount: budget.personal},
     {name: 'Groceries', category: 'groceries', amount: budget.groceries},
     {name: 'Travel', category: 'travel', amount: budget.travel},
     {name: 'Other', category: 'other', amount: budget.other}
@@ -68,7 +67,7 @@ function BudgetDisplay(props){
             <button style={{margin: '10px 0 15px'}} onClick={() => setEditting(true)}>Edit</button>
           )}
           <h4>Monthly Expense:</h4>
-          <p className='amount'>$ 123</p>
+          <p className='amount'>$ {current.monthly}</p>
         </section>
       ) : (
         <section className='budget-amounts'>
@@ -94,7 +93,7 @@ function BudgetDisplay(props){
             <button style={{margin: '10px 0'}} onClick={() => setEditting(true)}>Edit</button>
           )}
           <h4>Weekly Expense:</h4>
-          <p className='amount'>$ 123</p>
+          <p className='amount'>$ {current.weekly}</p>
         </section>
       )}
     </section>

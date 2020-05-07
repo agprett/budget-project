@@ -1,23 +1,32 @@
 import React, {useState, useEffect} from 'react'
+import moment from 'moment'
 import './Dash.css'
 import axios from 'axios'
 import BarChart from '../BarChart/BarChart'
 import Loading from '../Loading/Loading'
 
 function Dashboard(){
-  const [budget, setBudget] = useState({monthly: 0, weekly: 0, entertainment: 0, personal_care: 0, groceries: 0, travel: 0, other: 0})
-  // const [upcoming, setUpcoming] = useState([])
+  const [budget, setBudget] = useState({monthly: 0, weekly: 0, personal: 0, groceries: 0, travel: 0, other: 0})
   const [expenses, setExpenses] = useState([])
+  const [current, setCurrent] = useState({weekly: 0, monthly: 0})
+  const [condensed, setCondensed] = useState({monthly: 0, weekly: 0, personal: 0, groceries: 0, travel: 0, other: 0})
   const [quickAdd, setQuickAdd] = useState({name: '', category: '', amount: 0})
+  // const [upcoming, setUpcoming] = useState([])
   const [loading, setLoading] = useState(false)
   // const [display, setDisplay] = useState(false)
   
   let budgetData = [
-    {category: 'Entertainment', amount: budget.entertainment},
-    {category: 'Personal Care', amount: budget.personal_care},
+    {category: 'Personal', amount: budget.personal},
     {category: 'Groceries', amount: budget.groceries},
     {category: 'Travel', amount: budget.travel},
     {category: 'Other', amount: budget.other}
+  ]
+
+  let expensesData = [
+    {category: 'Personal', amount: condensed.personal},
+    {category: 'Groceries', amount: condensed.groceries},
+    {category: 'Travel', amount: condensed.travel},
+    {category: 'Other', amount: condensed.other}
   ]
 
   useEffect(() => {
@@ -28,6 +37,18 @@ function Dashboard(){
     axios.get('/api/budget')
     .then(res => {
       setBudget({...res.data})
+    })
+    .catch(err => console.log(err))
+
+    axios.get('/api/expenses/condensed')
+    .then(res => {
+      setCondensed(res.data)
+    })
+    .catch(err => console.log(err))
+
+    axios.get('/api/expenses/current')
+    .then(res => {
+      setCurrent(res.data)
     })
     .catch(err => console.log(err))
 
@@ -48,7 +69,7 @@ function Dashboard(){
   }, [expenses[expenses.length], quickAdd.name === ''])
 
   const handleQuickAdd = () => {
-    axios.post('/api/expenses/quick', quickAdd)
+    axios.post('/api/expenses/new', quickAdd)
     .then(() => {
       setQuickAdd({name: '', category: '', amount: 0})
     })
@@ -62,7 +83,8 @@ function Dashboard(){
           <h3>{expense.name}</h3>
           <p>{expense.category}</p>
         </section>
-        <h2>Amount: $ {expense.amount}</h2>
+        <h3>{moment(expense.date_paid).format('MM/DD')}</h3>
+        <h2>$ {expense.amount}</h2>
       </div>
     )
   })
@@ -86,7 +108,7 @@ function Dashboard(){
             <h3 className='dash-budget spent'>
               Monthly Spent:
               <br/>
-              $ 300
+              $ {current.monthly}
               </h3>
               </div>
               <div className='budget-expenses'>
@@ -98,12 +120,12 @@ function Dashboard(){
             <h3 className='dash-budget spent'>
               Weekly Spent:
               <br/>
-              $ 300
+              $ {current.weekly}
             </h3>
           </div>
         </div>
         <div className='expense-graph'>
-          <BarChart budget={budgetData}/>
+          <BarChart budget={budgetData} expenses={expensesData}/>
         </div>
         <section className='dash-upcoming'>list of upcoming</section>
         <div className='recent-expenses'>

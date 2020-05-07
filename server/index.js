@@ -18,10 +18,11 @@ app.put('/api/budget', budgetCtrl.updateBudget)
 
 app.get('/api/expenses', expensesCtrl.getExpenses)
 app.get('/api/expenses/recent', expensesCtrl.getRecent)
+app.get('/api/expenses/condensed', expensesCtrl.getCondensed)
+app.get('/api/expenses/current', expensesCtrl.getCurrent)
 app.put('/api/expenses/:id', expensesCtrl.updateExpenses)
 app.post('/api/expenses/quick', expensesCtrl.quickAdd)
 app.post('/api/expenses/new', expensesCtrl.addNew)
-app.get('/api/expenses/condensed', expensesCtrl.getCondensed)
 
 app.get('/api/upcoming', upcomingCtrl.getUpcoming)
 app.post('/api/upcoming/new', upcomingCtrl.newUpcoming)

@@ -1,3 +1,3 @@
 SELECT * FROM expenses
 WHERE user_id = $1
-ORDER BY expense_id DESC LIMIT 5;
+ORDER BY date_paid DESC LIMIT 5;

@@ -1,2 +1,2 @@
 SELECT * FROM condensed
-WHERE budget_id = $1;
+WHERE user_id = $1;

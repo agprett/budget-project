@@ -1,3 +1,5 @@
+const moment = require('moment')
+
 module.exports = {
   getExpenses: async (req, res) => {
     const db = req.app.get('db')
@@ -41,8 +43,9 @@ module.exports = {
     const db = req.app.get('db')
     const {name, category, amount} = req.body
     const id = 1
+    const date = moment().format()
 
-    await db.expenses.new_expense([id, name, category, amount])
+    await db.expenses.new_expense([id, name, category, amount, date])
 
     res.sendStatus(200)
   },
@@ -54,5 +57,24 @@ module.exports = {
     let [condensed] = await db.expenses.get_condensed([id])
 
     res.status(200).send(condensed)
+  },
+
+  getCurrent: async (req, res) => {
+    const db = req.app.get('db')
+    const id = 1
+
+    const date = moment().format('L')
+    const today = new Date(date)
+    let number = today.getDay()
+    let sunday = moment(today).subtract(number, 'd').format('L')
+    let monthNum = today.getDate()
+    let month = moment(today).subtract(monthNum - 1, 'd').format('L')
+
+    let [weekly] = await db.expenses.get_weekly([id, sunday, date])
+    let [monthly] = await db.expenses.get_monthly([id, month, date])
+
+    let current = {...weekly, ...monthly}
+
+    res.status(200).send(current)
   }
 }

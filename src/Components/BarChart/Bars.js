@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import translate from 'd3'
 // import { scaleLinear } from 'd3-scale'
 // import { interpolateLab } from 'd3-interpolate'
 
