@@ -16,7 +16,6 @@ CREATE TABLE expenses (
   name VARCHAR(20),
   category VARCHAR(20),
   amount INTEGER,
-  date_due INTEGER,
   date_paid DATE
 );
 

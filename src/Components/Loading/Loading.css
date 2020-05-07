@@ -1,0 +1,22 @@
+svg {
+  display: block;
+  margin: auto;
+}
+
+path {
+  fill-rule: evenodd;
+  stroke: #333;
+  stroke-width: 2px;
+}
+
+.sun{
+  fill: #6baed6;
+}
+
+.planet{
+  fill: #9ecae1;
+}
+
+.ring{
+  fill: #c6dbef;
+}

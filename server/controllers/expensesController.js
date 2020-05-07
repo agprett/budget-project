@@ -35,5 +35,24 @@ module.exports = {
     await db.expenses.new_expense([id, name, category, amount])
 
     res.sendStatus(200)
+  },
+
+  addNew: async (req, res) => {
+    const db = req.app.get('db')
+    const {name, category, amount} = req.body
+    const id = 1
+
+    await db.expenses.new_expense([id, name, category, amount])
+
+    res.sendStatus(200)
+  },
+
+  getCondensed: async (req, res) => {
+    const db = req.app.get('db')
+    const id = 1
+
+    let [condensed] = await db.expenses.get_condensed([id])
+
+    res.status(200).send(condensed)
   }
 }

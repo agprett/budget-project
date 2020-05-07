@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import translate from 'd3'
 // import { scaleLinear } from 'd3-scale'
 // import { interpolateLab } from 'd3-interpolate'
 
@@ -13,25 +14,37 @@ export default class Bars extends Component {
   // }
 
   render() {
-    const { scales, margins, data, svgDimensions } = this.props
+    const { scales, margins, svgDimensions } = this.props
     const { xScale, yScale } = scales
     const { height } = svgDimensions
+    const {budget, expenses} = this.props
 
-    const bars = (
-      data.map(data =>
+    const bars = budget ? (
+      budget.map(budget =>
         <rect
-          key={data.category}
-          x={xScale(data.category)}
-          y={yScale(data.amount)}
-          height={height - margins.bottom - scales.yScale(data.amount)}
+          key={budget.category}
+          x={xScale(budget.category)}
+          y={yScale(budget.amount)}
+          height={height - margins.bottom - scales.yScale(budget.amount)}
           width={xScale.bandwidth()}
           fill={'green'}
+        />,
+      )
+    ) : (
+      expenses.map(expense =>
+        <rect
+          key={expense.category}
+          x={xScale(expense.category)}
+          y={yScale(expense.amount)}
+          height={height - margins.bottom - scales.yScale(expense.amount)}
+          width={xScale.bandwidth()}
+          fill={'red'}
         />,
       )
     )
 
     return (
-      <g>{bars}</g>
+      <g transform={budget ? null : 'translate(10, 0)'}>{bars}</g>
     )
   }
 }
