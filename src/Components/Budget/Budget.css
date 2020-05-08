@@ -26,6 +26,9 @@
   height: 300px;
   width: 300px;
   background-color: #006989;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .budget-amounts {

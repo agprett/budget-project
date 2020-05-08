@@ -4,12 +4,13 @@ import './Dash.css'
 import axios from 'axios'
 import BarChart from '../BarChart/BarChart'
 import Loading from '../Loading/Loading'
+import {remove, update} from '../img.json'
 
 function Dashboard(){
   const [budget, setBudget] = useState({monthly: 0, weekly: 0, personal: 0, groceries: 0, travel: 0, other: 0})
   const [expenses, setExpenses] = useState([])
   const [current, setCurrent] = useState({weekly: 0, monthly: 0})
-  const [condensed, setCondensed] = useState({monthly: 0, weekly: 0, personal: 0, groceries: 0, travel: 0, other: 0})
+  const [condensed, setCondensed] = useState({personal: 0, groceries: 0, travel: 0, other: 0})
   const [quickAdd, setQuickAdd] = useState({name: '', category: '', amount: 0})
   // const [upcoming, setUpcoming] = useState([])
   const [loading, setLoading] = useState(false)
@@ -66,13 +67,23 @@ function Dashboard(){
     })
     .catch(err => console.log(err))
     console.log('hit')
-  }, [expenses[expenses.length], quickAdd.name === ''])
+  }, [quickAdd.name === ''])
 
   const handleQuickAdd = () => {
     axios.post('/api/expenses/new', quickAdd)
     .then(() => {
       setQuickAdd({name: '', category: '', amount: 0})
     })
+    .catch(err => console.log(err))
+  }
+
+  const handleEdit = (id) => {
+    console.log(id)
+  }
+
+  const handleDelete = (id, index) => {
+    axios.delete(`/api/expenses/${id}`)
+    .then(() => expenses.splice(index, 1))
     .catch(err => console.log(err))
   }
 
@@ -85,6 +96,24 @@ function Dashboard(){
         </section>
         <h3>{moment(expense.date_paid).format('MM/DD')}</h3>
         <h2>$ {expense.amount}</h2>
+        <section style={{display: 'flex', flexDirection: 'column'}}>
+          <img
+            src={update}
+            alt='update'
+            style={{height: '20px', width: '20px'}}
+            onClick={() => {
+              handleEdit(expense.expense_id)
+            }}
+            />
+          <img
+            src={remove}
+            alt='remove'
+            style={{height: '20px', width: '20px'}}
+            onClick={() => {
+              handleDelete(expense.expense_id, i)
+            }}
+          />
+        </section>
       </div>
     )
   })
@@ -92,8 +121,7 @@ function Dashboard(){
   return (
     <div>
       {loading ? (
-        <div>
-          <div style={{height: '30vh', width: '100vw'}}></div>
+        <div className='loading'>
           <Loading />
         </div>
       ) : (
@@ -108,7 +136,7 @@ function Dashboard(){
             <h3 className='dash-budget spent'>
               Monthly Spent:
               <br/>
-              $ {current.monthly}
+              $ {+current.monthly}
               </h3>
               </div>
               <div className='budget-expenses'>
@@ -120,7 +148,7 @@ function Dashboard(){
             <h3 className='dash-budget spent'>
               Weekly Spent:
               <br/>
-              $ {current.weekly}
+              $ {+current.weekly}
             </h3>
           </div>
         </div>

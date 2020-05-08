@@ -23,6 +23,7 @@ app.get('/api/expenses/current', expensesCtrl.getCurrent)
 app.put('/api/expenses/:id', expensesCtrl.updateExpenses)
 app.post('/api/expenses/quick', expensesCtrl.quickAdd)
 app.post('/api/expenses/new', expensesCtrl.addNew)
+app.delete('/api/expenses/:id', expensesCtrl.deleteExpense)
 
 app.get('/api/upcoming', upcomingCtrl.getUpcoming)
 app.post('/api/upcoming/new', upcomingCtrl.newUpcoming)

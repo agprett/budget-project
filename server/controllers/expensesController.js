@@ -56,6 +56,11 @@ module.exports = {
 
     let [condensed] = await db.expenses.get_condensed([id])
 
+    delete condensed.condensed_id
+    delete condensed.user_id
+
+    console.log(condensed)
+
     res.status(200).send(condensed)
   },
 
@@ -76,5 +81,14 @@ module.exports = {
     let current = {...weekly, ...monthly}
 
     res.status(200).send(current)
+  },
+
+  deleteExpense: async (req, res) => {
+    const db = req.app.get('db')
+    const {id} = req.params
+
+    await db.expenses.delete_expense([+id])
+
+    res.sendStatus(200)
   }
 }

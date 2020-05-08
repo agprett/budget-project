@@ -4,7 +4,7 @@ import './Nav.css'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {getUser} from '../../ducks/userReducer'
-import {home, budget, friends, groups, logout} from './img.json'
+import {home, budget, friends, groups, logout} from '../img.json'
 
 function Nav(props){
 
@@ -20,7 +20,7 @@ function Nav(props){
     <div className='nav-bar'>
       <div className='nav-prof'>
         <div className='prof-pic'></div>
-        <p>{props.user.username}</p>
+        <p>{props.userReducer.user.username}</p>
       </div>
       <img
         className='nav-button'

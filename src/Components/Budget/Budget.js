@@ -3,6 +3,7 @@ import axios from 'axios'
 import './Budget.css'
 import BudgetDisplay from './BudgetDisplay'
 import Loading from '../Loading/Loading'
+import DonutChart from './DonutChart'
 
 function Budget(){
   const [budget, setBudget] = useState({})
@@ -10,9 +11,22 @@ function Budget(){
   const [newUpcoming, setNewUpcoming] = useState({name: '', category: '', amount: 0})
   const [expenses, setExpenses] = useState([])
   const [current, setCurrent] = useState({weekly: 0, monthly: 0})
+  // const [condensed, setCondensed] = useState({personal: 0, groceries: 0, travel: 0, other: 0})
   const [newExpense, setNewExpense] = useState({name: '', category: '', amount: 0})
   const [time, setTime] = useState('monthly')
   const [loading, setLoading] = useState(false)
+
+  let chartData = time === 'monthly' ? (
+    {
+      budget: budget.monthly - current.monthly,
+      expense: +current.monthly
+    }
+  ) : (
+    {
+      budget: budget.weekly - current.weekly,
+      expense: +current.weekly
+    }
+  )
   
   useEffect(() => {
     setLoading(true)
@@ -24,6 +38,12 @@ function Budget(){
       setBudget(res.data)
     })
     .catch(err => console.log(err))
+
+    // axios.get('/api/expenses/condensed')
+    // .then(res => {
+    //   setCondensed(res.data)
+    // })
+    // .catch(err => console.log(err))
 
     axios.get('/api/upcoming')
     .then(res => {
@@ -90,8 +110,7 @@ function Budget(){
   return (
   <div>
     {loading ? (
-      <div>
-        <div style={{height: '30vh', width: '100vw'}}></div>
+      <div className='loading'>
         <Loading />
       </div>
     ) : (
@@ -109,7 +128,9 @@ function Budget(){
           >Weekly</button>
         </section>
         <section className='budget'>
-          <section className='pie-chart'>budget pie chart</section>
+          <section className='pie-chart'>
+            <DonutChart data={chartData}/>
+          </section>
           <BudgetDisplay budget={budget} setBudget={setBudget} current={current} time={time}/>
           <section className='line-graph'>
             expense line graph

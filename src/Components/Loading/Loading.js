@@ -19,7 +19,7 @@ function Loading() {
       speed = 4,
       start = Date.now();
 
-    const svg = d3.select("body").insert("svg:svg", "form")
+    const svg = d3.select(".loading").insert("svg:svg", "form")
       .attr("width", w)
       .attr("height", h)
       .append("svg:g")
@@ -98,7 +98,7 @@ function Loading() {
       const angle = (Date.now() - start) * speed,
         transform = function (d) { return "rotate(" + angle / d.radius + ")"; };
       svg.selectAll("path").attr("transform", transform);
-      svg.attr("transform", transform); // frame of reference
+      svg.attr("transform", transform)
     });
   }
 
