@@ -16,10 +16,10 @@ module.exports = {
 
   updateBudget: async (req, res) => {
     const db = req.app.get('db')
-    const {monthly, entertainment, personal_care, groceries, travel, other} = req.body
+    const {monthly, bills, personal, groceries, travel, other} = req.body
     const id = 1
 
-    await db.budget.update_budget([monthly, entertainment, personal_care, groceries, travel, other, id])
+    await db.budget.update_budget([monthly, bills, personal, groceries, travel, other, id])
 
     res.sendStatus(200)
   }

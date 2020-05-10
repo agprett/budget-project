@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import axios from 'axios'
 
 function BudgetDisplay(props){
-  const {budget, setBudget, current, time} = props
+  const {budget, setBudget, condensed, current, time} = props
   const [editting, setEditting] = useState(false)
   const weeklyBudget = [
     {name: 'Personal', category: 'personal', amount: budget.personal},
@@ -12,8 +12,15 @@ function BudgetDisplay(props){
   ]
   const [updatedBudget, setUpdatedBudget] = useState({})
 
+  const weeklyExpense = [
+    {name: 'Personal', category: 'personal', amount: condensed.personal},
+    {name: 'Groceries', category: 'groceries', amount: condensed.groceries},
+    {name: 'Travel', category: 'travel', amount: condensed.travel},
+    {name: 'Other', category: 'other', amount: condensed.other}
+  ]
+
   const handleUpdate = () => {
-    axios.put('/api/budget', budget)
+    axios.put('/api/budget', updatedBudget)
     .then(() => {
       setEditting(false)
       setUpdatedBudget({})
@@ -28,11 +35,20 @@ function BudgetDisplay(props){
         {editting ? (
           <input
             placeholder={column.amount}
-            onChange={event => setUpdatedBudget({...updatedBudget, [column.category]: +event.target.value})}
+            onChange={event => setUpdatedBudget({...budget, ...updatedBudget, [column.category]: +event.target.value})}
           />
         ) : (
           <h3 style={{fontWeight: 400}}>$ {column.amount}</h3>
         )}
+      </section>
+    )
+  })
+
+  const expenseAmount = weeklyExpense.map((column, i) => {
+    return (
+      <section key={i}>
+        <h4 style={{marginTop: '10px'}}>{column.name}</h4>
+        {column.amount ? <h3 style={{fontWeight: 400}}>$ {column.amount}</h3> : <h3 style={{fontWeight: 400}}>$ 0</h3>}
       </section>
     )
   })
@@ -45,7 +61,7 @@ function BudgetDisplay(props){
           {editting ? (
             <input
               placeholder={budget.monthly}
-              onChange={event => setUpdatedBudget({monthly: +event.target.value})}
+              onChange={event => setUpdatedBudget({...budget, monthly: +event.target.value})}
             />
           ) : (
             <p className='amount'>$ {budget.monthly}</p>
@@ -67,7 +83,7 @@ function BudgetDisplay(props){
             <button style={{margin: '10px 0 15px'}} onClick={() => setEditting(true)}>Edit</button>
           )}
           <h4>Monthly Expense:</h4>
-          <p className='amount'>$ {current.monthly}</p>
+          {current.monthly ? <p className='amount'>$ {current.monthly}</p> : <p className='amount'>$ 0</p>}
         </section>
       ) : (
         <section className='budget-amounts'>
@@ -93,7 +109,10 @@ function BudgetDisplay(props){
             <button style={{margin: '10px 0'}} onClick={() => setEditting(true)}>Edit</button>
           )}
           <h4>Weekly Expense:</h4>
-          <p className='amount'>$ {current.weekly}</p>
+          {current.weekly ? <p className='amount'>$ {current.weekly}</p> : <p className='amount'>$ 0</p>}
+          <section className='weekly-budget'>
+            {expenseAmount}
+          </section>
         </section>
       )}
     </section>

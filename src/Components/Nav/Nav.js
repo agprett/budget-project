@@ -8,12 +8,13 @@ import {home, budget, friends, groups, logout} from '../img.json'
 
 function Nav(props){
 
-  useEffect(() => {
+  useEffect(() => {    
     axios.get('/api/getUser')
     .then(res => {
       props.getUser(res.data)
     })
     .catch(err => console.log(err))
+    console.log('hit')
   }, [])
   
   return (

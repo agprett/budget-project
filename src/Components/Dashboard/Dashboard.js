@@ -4,7 +4,6 @@ import './Dash.css'
 import axios from 'axios'
 import BarChart from '../BarChart/BarChart'
 import Loading from '../Loading/Loading'
-import {remove, update} from '../img.json'
 
 function Dashboard(){
   const [budget, setBudget] = useState({monthly: 0, weekly: 0, personal: 0, groceries: 0, travel: 0, other: 0})
@@ -14,7 +13,8 @@ function Dashboard(){
   const [quickAdd, setQuickAdd] = useState({name: '', category: '', amount: 0})
   // const [upcoming, setUpcoming] = useState([])
   const [loading, setLoading] = useState(false)
-  // const [display, setDisplay] = useState(false)
+  const [display, setDisplay] = useState(false)
+  const [displayed, setDisplayed] = useState('')
   
   let budgetData = [
     {category: 'Personal', amount: budget.personal},
@@ -47,6 +47,10 @@ function Dashboard(){
     })
     .catch(err => console.log(err))
 
+    axios.put('/api/expenses/condensed')
+    .then(() => console.log('recondensed'))
+    .catch(err => console.log(err))
+
     axios.get('/api/expenses/current')
     .then(res => {
       setCurrent(res.data)
@@ -63,7 +67,7 @@ function Dashboard(){
       setExpenses(res.data)
       setTimeout(() => {
         setLoading(false)
-      }, 200);
+      }, 500);
     })
     .catch(err => console.log(err))
     console.log('hit')
@@ -73,18 +77,13 @@ function Dashboard(){
     axios.post('/api/expenses/new', quickAdd)
     .then(() => {
       setQuickAdd({name: '', category: '', amount: 0})
+      setDisplayed('')
     })
     .catch(err => console.log(err))
   }
 
-  const handleEdit = (id) => {
-    console.log(id)
-  }
-
-  const handleDelete = (id, index) => {
-    axios.delete(`/api/expenses/${id}`)
-    .then(() => expenses.splice(index, 1))
-    .catch(err => console.log(err))
+  const handleQuickClick = (data) => {
+    setQuickAdd({...quickAdd, category: data})
   }
 
   const view = expenses.map((expense, i) => {
@@ -94,26 +93,8 @@ function Dashboard(){
           <h3>{expense.name}</h3>
           <p>{expense.category}</p>
         </section>
-        <h3>{moment(expense.date_paid).format('MM/DD')}</h3>
+        <h3 style={{position: 'absolute', right: '125px'}}>{moment(expense.date_paid).format('MM/DD')}</h3>
         <h2>$ {expense.amount}</h2>
-        <section style={{display: 'flex', flexDirection: 'column'}}>
-          <img
-            src={update}
-            alt='update'
-            style={{height: '20px', width: '20px'}}
-            onClick={() => {
-              handleEdit(expense.expense_id)
-            }}
-            />
-          <img
-            src={remove}
-            alt='remove'
-            style={{height: '20px', width: '20px'}}
-            onClick={() => {
-              handleDelete(expense.expense_id, i)
-            }}
-          />
-        </section>
       </div>
     )
   })
@@ -163,36 +144,58 @@ function Dashboard(){
               placeholder='name'
               name='name'
               value={quickAdd.name}
+              style={{position: 'absolute', top: '60px', width: '90%'}}
               onChange={event => setQuickAdd({...quickAdd, name: event.target.value})}
             />
-            <input
-              placeholder='category'
-              name='category'
-              value={quickAdd.category}
-              onChange={event => setQuickAdd({...quickAdd, category: event.target.value})}
-            />
-            {/* <button
+            <button
               className={display ? `cat-expanded cat-button` : `cat-button`}
               onClick={() => setDisplay((display ? false : true))}
             >
-              --Select Category--
-              <span className='selector' name='entertainment'>Entertainment</span>
-              <span className='selector' name='personal_care'>Personal Care</span>
-              <span className='selector' name='groceries'>Groceries</span>
-              <span className='selector' name='travel'>Travel</span>
-              <span className='selector' name='other'>Other</span>
-            </button> */}
-            <div>
-              $<input
+              {displayed ? displayed : '--Select Category--'}
+              <span
+                className='selector'
+                id='personal'
+                onClick={event => {
+                  handleQuickClick(event.target.id)
+                  setDisplayed('Personal')
+                }}
+                >Personal</span>
+              <span
+                className='selector'
+                id='groceries'                
+                onClick={event => {
+                  handleQuickClick(event.target.id)
+                  setDisplayed('Groceries')
+                }}
+                >Groceries</span>
+              <span
+                className='selector'
+                id='travel'                
+                onClick={event => {
+                  handleQuickClick(event.target.id)
+                  setDisplayed('Travel')
+                }}
+                >Travel</span>
+              <span
+                className='selector'
+                id='other'                
+                onClick={event => {
+                  handleQuickClick(event.target.id)
+                  setDisplayed('Other')
+                }}
+              >Other</span>
+            </button>
+            <div style={{position: 'absolute', top: '160px', zIndex: 0}}>
+              Amount: <input
                 placeholder='amount'
                 name='amount'
                 value={quickAdd.amount}
                 onChange={event => setQuickAdd({...quickAdd, amount: event.target.value})}
               />
             </div>
-            <section>
+            <section style={{display: 'flex', justifyContent: 'space-around'}}>
               <button className='quick-add-buttons' onClick={() => handleQuickAdd()}>Add</button>
-              <button className='quick-add-buttons' onClick={() => setQuickAdd({name: '', category: '', amount: 0})}>Cancel</button>
+              <button className='quick-add-buttons' onClick={() => setQuickAdd({name: '', category: '', amount: 0}, setDisplayed(''))}>Cancel</button>
             </section>
           </section>
           <section className='recent-view'>{view}</section>

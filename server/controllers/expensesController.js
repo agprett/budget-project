@@ -12,10 +12,10 @@ module.exports = {
 
   updateExpenses: async (req, res) => {
     const db = req.app.get('db')
-    const {name, category, amount} = req.body
+    const {name, date_paid, amount} = req.body
     const {id} = req.params
 
-    await db.expenses.update_expense([name, category, amount, id])
+    await db.expenses.update_expense([name, date_paid, amount, id])
 
     res.sendStatus(200)
   },
@@ -27,16 +27,6 @@ module.exports = {
     const recent = await db.expenses.get_recent([id])
 
     res.status(200).send(recent)
-  },
-
-  quickAdd: async (req, res) => {
-    const db = req.app.get('db')
-    const {name, category, amount} = req.body
-    const id = 1
-
-    await db.expenses.new_expense([id, name, category, amount])
-
-    res.sendStatus(200)
   },
 
   addNew: async (req, res) => {
@@ -59,9 +49,21 @@ module.exports = {
     delete condensed.condensed_id
     delete condensed.user_id
 
-    console.log(condensed)
-
     res.status(200).send(condensed)
+  },
+
+  updateCondensed: async (req, res) => {
+    const db = req.app.get('db')
+    const id = 1
+
+    const date = moment().format('L')
+    const today = new Date(date)
+    let number = today.getDay()
+    let sunday = moment(today).subtract(number, 'd').format('L')
+
+    await db.expenses.update_condensed([id, sunday, date])
+
+    res.sendStatus(200)
   },
 
   getCurrent: async (req, res) => {
