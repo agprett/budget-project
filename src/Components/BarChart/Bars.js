@@ -26,7 +26,7 @@ export default class Bars extends Component {
           y={yScale(budget.amount)}
           height={height - margins.bottom - scales.yScale(budget.amount)}
           width={xScale.bandwidth()}
-          fill={'green'}
+          fill={'blue'}
         />,
       )
     ) : (
@@ -37,7 +37,7 @@ export default class Bars extends Component {
           y={yScale(expense.amount)}
           height={height - margins.bottom - scales.yScale(expense.amount)}
           width={xScale.bandwidth()}
-          fill={'red'}
+          fill={expense.color}
         />,
       )
     )

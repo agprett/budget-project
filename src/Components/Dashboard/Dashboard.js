@@ -24,10 +24,10 @@ function Dashboard(){
   ]
 
   let expensesData = [
-    {category: 'Personal', amount: condensed.personal},
-    {category: 'Groceries', amount: condensed.groceries},
-    {category: 'Travel', amount: condensed.travel},
-    {category: 'Other', amount: condensed.other}
+    {category: 'Personal', amount: condensed.personal, color: condensed.personal > budget.personal ? 'red' : budget.personal * .8 < condensed.personal ? 'orange' : 'green'},
+    {category: 'Groceries', amount: condensed.groceries, color: condensed.groceries > budget.groceries ? 'red' : budget.groceries * .8 < condensed.groceries ? 'orange' : 'green'},
+    {category: 'Travel', amount: condensed.travel, color: condensed.travel > budget.travel ? 'red' : budget.travel * .8 < condensed.travel ? 'orange' : 'green'},
+    {category: 'Other', amount: condensed.other, color: condensed.other > budget.other ? 'red' : budget.other * .8 < condensed.other ? 'orange' : 'green'}
   ]
 
   useEffect(() => {

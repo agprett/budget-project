@@ -179,6 +179,13 @@ function Budget(){
                 alt='update'
               />
               <img
+                onClick={() => {
+                  axios.delete(`/api/expenses/${expense_id}`)
+                  .then(() => {
+                  alert('Expense deleted, please refresh page')
+                })
+                  .catch(err => console.log(err))
+                }}
                 className='bud-button'
                 src={remove}
                 alt='remove'
@@ -226,13 +233,13 @@ function Budget(){
                 alt='update'
               />
               <img
-                onClick={() => {
-                axios.delete(`/api/upcoming/${upcoming_id}`)
-                .then(() => {
-                alert('Upcoming payment deleted, please refresh page')
-                })
-                .catch(err => console.log(err))
-                }}
+                // onClick={() => {
+                //   axios.delete(`/api/upcoming/${upcoming_id}`)
+                //   .then(() => {
+                //   alert('Upcoming payment deleted, please refresh page')
+                // })
+                //   .catch(err => console.log(err))
+                // }}
                 className='bud-button'
                 src={remove}
                 alt='remove'
