@@ -1,9 +1,9 @@
 module.exports = {
   getBudget: async (req, res) => {
     const db = req.app.get('db')
-    const id = 1
+    const {user_id} = req.session.user
 
-    let [budget] = await db.budget.get_budget([id])
+    let [budget] = await db.budget.get_budget([user_id])
 
     const {personal, groceries, travel, other} = budget
 
@@ -17,9 +17,9 @@ module.exports = {
   updateBudget: async (req, res) => {
     const db = req.app.get('db')
     const {monthly, bills, personal, groceries, travel, other} = req.body
-    const id = 1
+    const {user_id} = req.session.user
 
-    await db.budget.update_budget([monthly, bills, personal, groceries, travel, other, id])
+    await db.budget.update_budget([monthly, bills, personal, groceries, travel, other, user_id])
 
     res.sendStatus(200)
   }

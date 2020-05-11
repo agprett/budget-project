@@ -3,6 +3,7 @@ const massive = require('massive')
 require('dotenv').config()
 const session = require('express-session')
 const {SERVER_PORT, CONNECTION_STRING, SESSION_SECRET} = process.env
+const path = require('path')
 const usersCtrl = require('./controllers/usersController')
 const budgetCtrl = require('./controllers/budgetController')
 const expensesCtrl = require('./controllers/expensesController')
@@ -21,6 +22,7 @@ app.use(session({
 app.get('/api/user', usersCtrl.getUser)
 app.post('/api/user/new', usersCtrl.newUser)
 app.post('/api/user/login', usersCtrl.loginUser)
+app.post('/api/user/logout', usersCtrl.logoutUser)
 
 app.get('/api/budget', budgetCtrl.getBudget)
 app.put('/api/budget', budgetCtrl.updateBudget)
@@ -36,6 +38,12 @@ app.delete('/api/expenses/:id', expensesCtrl.deleteExpense)
 
 app.get('/api/upcoming', upcomingCtrl.getUpcoming)
 app.post('/api/upcoming/new', upcomingCtrl.newUpcoming)
+
+app.use(express.static(__dirname + '/../build'))
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build/index.html'))
+})
 
 massive({
   connectionString: CONNECTION_STRING,

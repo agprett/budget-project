@@ -2,11 +2,12 @@ const bcrypt = require('bcryptjs')
 
 module.exports = {
   getUser: async (req, res) => {
-    db = req.app.get('db')
+    if(req.session.user){
+      res.status(200).send(req.session.user)
+    } else {
+      res.sendStatus(404)
+    }
 
-    const [user] = await db.users.get_user()
-
-    res.status(200).send(user)
   },
 
   newUser: async (req, res) => {
@@ -28,8 +29,6 @@ module.exports = {
 
     const [newUser] = await db.users.update_user([id.user_id, profile_pic])
 
-    req.session.userid = id.user_id
-
     req.session.user = newUser
 
     res.status(200).send(req.session.user)
@@ -50,7 +49,6 @@ module.exports = {
     if(authenticated){
       delete existingUser.password
 
-      req.session.userid = existingUser.user_id
       req.session.user = existingUser
 
       res.status(200).send(req.session.user)
@@ -59,5 +57,8 @@ module.exports = {
     }
   },
 
-  logoutUser: async (req, res) => {}
+  logoutUser: (req, res) => {
+    req.session.destroy()
+    res.sendStatus(200)
+  }
 }

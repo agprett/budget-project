@@ -1,9 +1,9 @@
 module.exports = {
   getUpcoming: async (req, res) => {
     const db = req.app.get('db')
-    const id = 1
+    const {user_id}= req.session.user
 
-    let upcomingPayments = await db.upcoming.get_upcoming([id])
+    let upcomingPayments = await db.upcoming.get_upcoming([user_id])
 
     res.status(200).send(upcomingPayments)
   },
@@ -11,9 +11,9 @@ module.exports = {
   newUpcoming: async(req, res) => {
     const db = req.app.get('db')
     const {name, category, amount} = req.body
-    const id = 1
+    const {user_id} = req.session.user
 
-    await db.upcoming.add_upcoming([id, name, category, amount])
+    await db.upcoming.add_upcoming([user_id, name, category, amount])
 
     res.sendStatus(200)
   }

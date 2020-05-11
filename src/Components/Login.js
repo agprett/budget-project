@@ -1,21 +1,36 @@
-import React from 'react'
-import moment from 'moment'
+import React, {useState} from 'react'
+import axios from 'axios'
+import {Link} from 'react-router-dom'
 
-function Login(){
-  const date = moment().format('L')
-  const today = new Date(date)
-  let number = today.getDay()
-  let sunday = moment(today).subtract(number, 'd').format('L')
-  let monthNum = today.getDate()
-  let month = moment(today).subtract(monthNum - 1, 'd').format('L')
-  
+function Login(props){
+  const [user, setUser] = useState({username: '', password: ''})
+
   return (
     <div>
-      {date}
-      <br/>
-      {sunday}
-      <br/>
-      {month}
+      <section>
+        username:
+        <input
+          value={user.username}
+          onChange={event => setUser({...user, username: event.target.value})}
+        />
+        password:
+        <input
+          type='password'
+          value={user.password}
+          onChange={event => setUser({...user, password: event.target.value})}        
+        />
+        <button
+          onClick={() => {
+            axios.post('/api/user/login', user)
+            .then(() => props.history.push('/dash'))
+            .catch(() => alert('Username or password incorrect'))
+          }}
+        >Login</button>
+        <button
+          onClick={() => setUser({username: '', password: ''})}
+        >Cancel</button>
+        <p>New to the site? <Link to='/register'>Click here!</Link></p>
+      </section>
     </div>
   )
 }
