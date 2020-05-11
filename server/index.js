@@ -1,7 +1,8 @@
 const express = require('express')
 const massive = require('massive')
 require('dotenv').config()
-const {SERVER_PORT, CONNECTION_STRING} = process.env
+const session = require('express-session')
+const {SERVER_PORT, CONNECTION_STRING, SESSION_SECRET} = process.env
 const usersCtrl = require('./controllers/usersController')
 const budgetCtrl = require('./controllers/budgetController')
 const expensesCtrl = require('./controllers/expensesController')
@@ -10,8 +11,16 @@ const upcomingCtrl = require('./controllers/upcomingController')
 const app = express()
 
 app.use(express.json())
+app.use(session({
+  resave: false,
+  saveUninitialized: true,
+  secret: SESSION_SECRET,
+  cookie: {maxAge: 1000 * 60 * 60 * 24}
+}))
 
-app.get('/api/getUser', usersCtrl.getUser)
+app.get('/api/user', usersCtrl.getUser)
+app.post('/api/user/new', usersCtrl.newUser)
+app.post('/api/user/login', usersCtrl.loginUser)
 
 app.get('/api/budget', budgetCtrl.getBudget)
 app.put('/api/budget', budgetCtrl.updateBudget)
