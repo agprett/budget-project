@@ -37,6 +37,7 @@ app.post('/api/expenses/new', expensesCtrl.addNew)
 app.delete('/api/expenses/:id', expensesCtrl.deleteExpense)
 
 app.get('/api/upcoming', upcomingCtrl.getUpcoming)
+app.get('/api/upcoming/next', upcomingCtrl.getNext)
 app.post('/api/upcoming/new', upcomingCtrl.newUpcoming)
 
 app.use(express.static(__dirname + '/../build'))

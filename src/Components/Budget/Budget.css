@@ -25,18 +25,21 @@
 .pie-chart {
   height: 300px;
   width: 300px;
-  background-color: #006989;
+  background-color: #67597a;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 50%;
+  box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
+  border-radius: 15%;
 }
 
 .budget-amounts {
   width: 300px;
   padding: 15px;
-  background-color: #00abe7;
+  background-color: #a4b8c4;
   text-align: center;
+  box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
+  border-radius: 25px;
 }
 
 .weekly-budget {
@@ -53,7 +56,14 @@
 .line-graph {
   height: 300px;
   width: 350px;
-  background-color: #006989;
+  background-color: #67597a;
+  color: white;
+  border-radius: 15%;
+  box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* display: none; */
 }
 
 .new-section {
@@ -64,13 +74,26 @@
 
 .add-forms {
   height: 75px;
-  width: 40%;
-  background-color: #01a7c2;
-  margin: 20px;
+  width: 90%;
+  background-color: #3a606e;
+  margin: 0 20px 40px;
   padding: 0 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
+  border-radius: 20px;
+}
+
+.add-left {
+  position: relative;
+  height: 70%;
+  width: 33%;
+}
+
+.add-form-buttons {
+  display: flex;
+  flex-direction: column;
 }
 
 .select-cat {
@@ -94,24 +117,21 @@
   height: auto;
 }
 
-.viewer {
-  width: 100%;
-  display: flex;
-  justify-content: space-evenly;
-}
-
 .expenses {
   max-height: 500px;
-  width: 45%;
-  background-color: #007090;
+  width: 100%;
+  background-color: #67597a;
   padding: 15px;
   overflow: auto;
+  box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
+  border-radius: 25px;
 }
 
 .view-expense {
   height: 60px;
   width: 95%;
   background-color: #01a7c2;
+  border-radius: 8px 20px;
   margin: 5px auto;
   padding: 5px 40px 5px 10px;
   position: relative;
@@ -139,7 +159,77 @@
 
 .upcoming {
   min-height: 300px;
-  width: 45%;
-  background-color: orange;
+  width: 100%;
+  background-color: #67597a;
   padding: 15px;
+  box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
+  border-radius: 25px;
+}
+
+.bottom-section {
+  min-height: 500px;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.viewer {
+  min-height: 460px;
+  width: 50%;
+  margin: 10px;
+}
+
+@media (max-width: 1050px) {
+  .budget-route {
+    padding: 110px 20px 20px 20px;
+  }
+
+  .line-graph {
+    display: none;
+  }
+}
+
+@media (max-width: 1000px) {
+  .bottom-section {
+    flex-direction: column;
+  }
+
+  .viewer {
+    width: 98%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 650px) {
+  .budget {
+    flex-direction: column;
+    height: auto;
+  }
+  .pie-chart {
+    margin-bottom: 15px;
+  }
+
+  .add-forms {
+    position: relative;
+  }
+
+  .add-left {
+    width: 50%;
+  }
+
+  .form-amount {
+    width: 40%;
+    position: absolute;
+    right: 5%;
+    top: 12px;
+  }
+
+  .add-form-buttons {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+  }
 }

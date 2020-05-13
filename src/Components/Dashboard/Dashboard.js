@@ -11,10 +11,11 @@ function Dashboard(){
   const [current, setCurrent] = useState({weekly: 0, monthly: 0})
   const [condensed, setCondensed] = useState({personal: 0, groceries: 0, travel: 0, other: 0})
   const [quickAdd, setQuickAdd] = useState({name: '', category: '', amount: 0})
-  // const [upcoming, setUpcoming] = useState([])
+  const [upcoming, setUpcoming] = useState([])
   const [loading, setLoading] = useState(false)
   const [display, setDisplay] = useState(false)
   const [displayed, setDisplayed] = useState('')
+  const [rerender, setRerender] = useState(false)
   
   let budgetData = [
     {category: 'Personal', amount: budget.personal},
@@ -24,10 +25,10 @@ function Dashboard(){
   ]
 
   let expensesData = [
-    {category: 'Personal', amount: condensed.personal, color: condensed.personal > budget.personal ? 'red' : budget.personal * .8 < condensed.personal ? 'orange' : 'green'},
-    {category: 'Groceries', amount: condensed.groceries, color: condensed.groceries > budget.groceries ? 'red' : budget.groceries * .8 < condensed.groceries ? 'orange' : 'green'},
-    {category: 'Travel', amount: condensed.travel, color: condensed.travel > budget.travel ? 'red' : budget.travel * .8 < condensed.travel ? 'orange' : 'green'},
-    {category: 'Other', amount: condensed.other, color: condensed.other > budget.other ? 'red' : budget.other * .8 < condensed.other ? 'orange' : 'green'}
+    {category: 'Personal', amount: condensed.personal, color: condensed.personal > budget.personal ? '#bb0a21' : budget.personal * .8 < condensed.personal ? '#eae151' : '#0cce6b'},
+    {category: 'Groceries', amount: condensed.groceries, color: condensed.groceries > budget.groceries ? '#bb0a21' : budget.groceries * .8 < condensed.groceries ? '#eae151' : '#0cce6b'},
+    {category: 'Travel', amount: condensed.travel, color: condensed.travel > budget.travel ? '#bb0a21' : budget.travel * .8 < condensed.travel ? '#eae151' : '#0cce6b'},
+    {category: 'Other', amount: condensed.other, color: condensed.other > budget.other ? '#bb0a21' : budget.other * .8 < condensed.other ? '#eae151' : '#0cce6b'}
   ]
 
   useEffect(() => {
@@ -57,10 +58,11 @@ function Dashboard(){
     })
     .catch(err => console.log(err))
 
-    // axios.get('/api/upcoming')
-    // .then(res => {
-    //   setUpcoming({})
-    // })
+    axios.get('/api/upcoming/next')
+    .then(res => {
+      setUpcoming(res.data)
+    })
+    .catch(err => console.log(err))
 
     axios.get('/api/expenses/recent')
     .then(res => {
@@ -70,14 +72,16 @@ function Dashboard(){
       }, 500);
     })
     .catch(err => console.log(err))
-    console.log('hit')
-  }, [quickAdd.name === ''])
+
+    setRerender(false)
+  }, [rerender])
 
   const handleQuickAdd = () => {
     axios.post('/api/expenses/new', quickAdd)
     .then(() => {
       setQuickAdd({name: '', category: '', amount: 0})
       setDisplayed('')
+      setRerender(true)
     })
     .catch(err => console.log(err))
   }
@@ -86,6 +90,27 @@ function Dashboard(){
     setQuickAdd({...quickAdd, category: data})
   }
 
+  const next = upcoming.map((next, i) => {
+    return (
+      <div className='next' key ={i}>
+        <section>
+          <h3>{next.name}</h3>
+          <p>{next.category}</p>
+        </section>
+        <section>
+          <p>Due On:</p>
+          <h3>{moment(next.pay_date).format('MM/DD')}</h3>
+        </section>
+        <section
+          onClick={() => console.log(next)}
+        >
+          {/* <p>Pay Now:</p> */}
+          <h3>$ {next.amount}</h3>
+        </section>
+      </div>
+    )
+  })
+
   const view = expenses.map((expense, i) => {
     return (
       <div className='recent' key ={i}>
@@ -93,7 +118,7 @@ function Dashboard(){
           <h3>{expense.name}</h3>
           <p>{expense.category}</p>
         </section>
-        <h3 style={{position: 'absolute', right: '125px'}}>{moment(expense.date_paid).format('MM/DD')}</h3>
+        <h3 className='expense-date'>{moment(expense.date_paid).format('MM/DD')}</h3>
         <h2>$ {expense.amount}</h2>
       </div>
     )
@@ -107,6 +132,9 @@ function Dashboard(){
         </div>
       ) : (
       <div className='dash'>
+        <div className='expense-graph'>
+          <BarChart budget={budgetData} expenses={expensesData}/>
+        </div>
         <div className='dash-budget-expense'>
           <div className='budget-expenses'>
             <h3 className='dash-budget'>
@@ -133,10 +161,9 @@ function Dashboard(){
             </h3>
           </div>
         </div>
-        <div className='expense-graph'>
-          <BarChart budget={budgetData} expenses={expensesData}/>
-        </div>
-        <section className='dash-upcoming'>list of upcoming</section>
+        <section className='dash-upcoming'>
+          {next}
+        </section>
         <div className='recent-expenses'>
           <section className='quick-add'>
             <h3>Quick Add:</h3>
@@ -144,7 +171,7 @@ function Dashboard(){
               placeholder='name'
               name='name'
               value={quickAdd.name}
-              style={{position: 'absolute', top: '60px', width: '90%'}}
+              className='quick-input'
               onChange={event => setQuickAdd({...quickAdd, name: event.target.value})}
             />
             <button
@@ -185,7 +212,7 @@ function Dashboard(){
                 }}
               >Other</span>
             </button>
-            <div style={{position: 'absolute', top: '160px', zIndex: 0}}>
+            <div className='quick-amount'>
               Amount: <input
                 placeholder='amount'
                 name='amount'
@@ -193,14 +220,16 @@ function Dashboard(){
                 onChange={event => setQuickAdd({...quickAdd, amount: event.target.value})}
               />
             </div>
-            <section style={{display: 'flex', justifyContent: 'space-around'}}>
-              <button className='quick-add-buttons' onClick={() => handleQuickAdd()}>Add</button>
-              <button className='quick-add-buttons' onClick={() => setQuickAdd({name: '', category: '', amount: 0}, setDisplayed(''))}>Cancel</button>
+            <section className='quick-add-buttons'>
+              <button className='quick-add-button' onClick={() => handleQuickAdd()}>Add</button>
+              <button className='quick-add-button' onClick={() => setQuickAdd({name: '', category: '', amount: 0}, setDisplayed(''))}>Cancel</button>
             </section>
           </section>
           <section className='recent-view'>{view}</section>
         </div>
-        <div className='dash-friends'></div>
+        <div className='dash-friends'>
+          <p>Feature coming soon!</p>
+        </div>
       </div>)}
     </div>
   )

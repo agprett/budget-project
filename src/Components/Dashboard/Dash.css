@@ -8,10 +8,15 @@
   background-color: #eaebed;
 }
 
+.expense-graph {
+  box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
+  background-color: #a3bac3;
+}
+
 .dash-budget-expense {
   height: 200px;
   width: 40%;
-  background-color: #006989;
+  background-color: #67597a;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,6 +33,7 @@
   box-shadow: 10px 0 20px 0 rgba(0,0,0,.1), 5px 0 5px rgba(0,0,0,.2);
   display: flex;
   justify-content: space-evenly;
+  border-radius: 10px 25px;
 }
 
 .dash-budget {
@@ -37,22 +43,30 @@
   text-align: center;
 }
 
-.expense-graph {
-  box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
-  background-color: #a3bac3;
-}
-
 .dash-upcoming {
   height: 225px;
   width: 25%;
-  background-color: #01a7c2;
+  padding: 5px 10px;
+  background-color: #67597a;
   box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
+}
+
+.next {
+  height: 30%;
+  width: 100%;
+  margin: 5px 0;
+  padding: 10px;
+  background-color: #01a7c2;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 7px 25px;
+  box-shadow: 10px 0 20px 0 rgba(0,0,0,.1), 5px 0 5px rgba(0,0,0,.2);
 }
 
 .recent-expenses {
   height: 350px;
   width: 60%;
-  background-color: #01a7c2;
+  background-color: #67597a;
   margin: 20px 0;
   box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
   display: flex;
@@ -63,12 +77,18 @@
   height: 250px;
   width: 30%;
   margin: auto;
-  background-color: #a3bac3;
+  background-color: #a4b8c4;
   padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   position: relative;
+}
+
+.quick-input {
+  position: absolute;
+  top: 60px;
+  width: 90%;
 }
 
 .cat-button {
@@ -102,10 +122,21 @@
 }
 
 .quick-add-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.quick-add-button {
   padding: 7px 15px;
   background-color: #2f323a;
   color: white;
   border: 0;
+}
+
+.quick-amount {
+  position: absolute;
+  top: 160px;
+  z-index: 0;
 }
 
 .recent-view {
@@ -116,18 +147,153 @@
   height: 60px;
   margin: 5px;
   padding: 0 25px;
-  background-color: #006989;
+  background-color: #01a7c2;
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
+  border-radius: 10px 25px;
+  box-shadow: 10px 0 20px 0 rgba(0,0,0,.1), 5px 0 5px rgba(0,0,0,.2);
+}
+
+.expense-date {
+  position: absolute;
+  right: 125px;
 }
 
 .dash-friends {
   height: 300px;
   width: 300px;
   background-color: #006989;
+  color: white;
   margin: 40px 0;
   box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 1050px) {
+  .dash {
+    padding: 110px 20px 20px 20px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .expense-graph {
+    display: none;
+  }
+
+  .dash-budget-expense {
+    width: 50%;
+  }
+
+  .dash-upcoming {
+    width: 35%;
+  }
+
+  .recent-expenses {
+    min-height: 350px;
+    width: 90%;
+    flex-direction: column;
+  }
+
+  .quick-add {
+    width: 85%;
+    flex-direction: row;
+    margin-bottom: 10px;
+  }
+
+  .quick-input {
+    top: 55px;
+    width: 40%;
+  }
+
+  .cat-button {
+    width: 40%;
+    top: 80px;
+  }
+
+  .quick-amount {
+    top: 30px;
+    right: 5%;
+  }
+
+  .quick-add-buttons {
+    height: 50%;
+    position: absolute;
+    bottom: 10px;
+    right: 10%;
+  }
+
+  .quick-add-button {
+    padding: 5px 15px;
+    margin: 10px 5px;
+  }
+
+  .dash-friends {
+    display: none;
+  }
+
+  .recent-view {
+    width: 100%;
+  }
+}
+
+@media (max-width: 735px) {
+  .dash {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dash-budget-expense {
+    width: 80%;
+  }
+
+  .recent-expenses {
+    min-height: 500px;
+  }
+
+  .dash-upcoming {
+    width: 75%;
+    margin-top: 15px;
+  }
+
+  .quick-add {
+    width: 100%;
+    margin: auto;
+    padding-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .quick-input {
+    position: absolute;
+    top: 35px;
+    width: 90%;
+  }
+  
+  .cat-button {
+    height: 25px;
+    width: 90%;
+    top: 82px;
+  }
+  
+  .quick-add-buttons {
+    height: 55px;
+    display: flex;
+    margin: -5px 10px;
+    justify-content: space-around;
+    position: static;
+  }
+
+  .quick-amount {
+    top: 58px;
+    right: 18%;
+  }
+
+  .expense-date {
+    right: 95px;
+  }
 }

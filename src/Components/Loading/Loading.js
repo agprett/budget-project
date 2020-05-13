@@ -3,6 +3,7 @@ import './Loading.css'
 import * as d3 from 'd3'
 
 function Loading() {
+
   useEffect(() => {
     gears()
     console.log('hit')

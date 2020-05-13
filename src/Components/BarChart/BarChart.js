@@ -19,7 +19,7 @@ class BarChart extends React.Component {
     const margins = { top: 20, right: 20, bottom: 80, left: 60 }
     const svgDimensions = {
       width: Math.max(this.props.parentWidth, 300),
-      height: 250
+      height: 225
     }
 
     const maxValue = Math.max(...budget.map(d => d.amount)) > Math.max(...expenses.map(d => d.amount)) ? Math.max(...budget.map(d => d.amount)) : Math.max(...expenses.map(d => d.amount))

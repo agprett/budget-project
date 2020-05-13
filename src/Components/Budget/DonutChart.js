@@ -31,7 +31,7 @@ function DonutChart(props){
   // set the color scale
     var color = d3.scaleOrdinal()
       .domain(data)
-      .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"])
+      .range(["#e89005", "#00a5cf", "#f3e37c", "#c84c09", "#388659"])
 
   // Compute the position of each group on the pie:
     var pie = d3.pie()
@@ -53,6 +53,9 @@ function DonutChart(props){
       .style("stroke-width", "2px")
       .style("opacity", 0.7)
   }
+
+  //Adds category name to arcs
+  
 
   return (
     <></>
