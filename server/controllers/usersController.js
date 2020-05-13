@@ -8,6 +8,12 @@ module.exports = {
       res.sendStatus(404)
     }
 
+    // const db = req.app.get('db')
+    // const id = 1
+
+    // const [user] = await db.users.get_user([id])
+
+    // res.status(200).send(user)
   },
 
   newUser: async (req, res) => {

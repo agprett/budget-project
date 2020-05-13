@@ -1,12 +1,23 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import './Nav.css'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {getUser, logoutUser} from '../../ducks/userReducer'
-import {home, budget, friends, groups, logout} from '../img.json'
+import {home, budget, logout} from '../img.json'
 
 function Nav(props){
+  const [local, setLocal] = useState({})
+
+  let rerender = () => {
+    if(local === props.userReducer.user) {
+      return false
+    } else {
+      setLocal(props.userReducer.user)
+      return true
+    }
+  }
+
   useEffect(() => {    
     axios.get('/api/user')
     .then(res => {
@@ -14,12 +25,11 @@ function Nav(props){
     })
     .catch(() => props.history.push('/'))
     console.log('hit')
-  }, [])
+  }, [rerender()])
   
   return (
     <div
       className='nav-bar'
-      style={props.location.pathname === '/' ? {display: 'none'} : props.location.pathname === '/register' ? {display: 'none'} : null}
     >
       <div className='nav-prof'>
         <img

@@ -4,13 +4,14 @@ import axios from 'axios'
 function BudgetDisplay(props){
   const {budget, setBudget, condensed, current, time} = props
   const [editting, setEditting] = useState(false)
+  const [updatedBudget, setUpdatedBudget] = useState({})
+  
   const weeklyBudget = [
     {name: 'Personal', category: 'personal', amount: budget.personal},
     {name: 'Groceries', category: 'groceries', amount: budget.groceries},
     {name: 'Travel', category: 'travel', amount: budget.travel},
     {name: 'Other', category: 'other', amount: budget.other}
   ]
-  const [updatedBudget, setUpdatedBudget] = useState({})
 
   const weeklyExpense = [
     {name: 'Personal', category: 'personal', amount: condensed.personal},

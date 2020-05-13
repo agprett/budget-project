@@ -22,6 +22,7 @@ function Budget(){
   const [editting, setEditting] = useState({expense: null, upcoming: null})
   const [editExpense, setEditExpense] = useState({})
   // const [editUpcoming, setEditUpcoming] = useState({})
+  const [rerender, setRerender] = useState(false)
 
   let chartData = time === 'monthly' ? (
     {
@@ -77,10 +78,11 @@ function Budget(){
       setTimeout(() => {
         setLoading(false)
       }, 500)
-      console.log('hit')
     })
     .catch(err => console.log(err))
-  }, [newExpense.name === ''], [newUpcoming.name === ''])
+    
+    setRerender(false)
+  }, [rerender])
 
   const addNewExpense = () => {
     axios.post('/api/expenses/new', newExpense)
@@ -100,6 +102,7 @@ function Budget(){
     .then(() => {
       setNewExpense({name: '', category: '', amount: 0})
       setDisplayed({...displayed, upcoming: ''})
+      setRerender(true)
     })
     .catch(err => console.log(err))
   }
@@ -113,7 +116,7 @@ function Budget(){
     .then(() => {
       setEditting({...editting, expense: null})
       setEditExpense({})
-      alert('Update sucessful, please refresh page')
+      setRerender(true)
     })
     .catch(err => console.log(err))
   }
@@ -136,23 +139,26 @@ function Budget(){
           <input
             onChange={event => setEditExpense({...editExpense, date_paid: event.target.value})}
             placeholder='mm/dd/yyyy'
-            style={{position: 'absolute', right: '150px', width: '15%'}}
+            style={{position: 'absolute', right: '60px', bottom: '7px', width: '20%'}}
           />
         ) : (
-          <h3 style={{position: 'absolute', right: '150px'}}>{moment(date_paid).format('MM/DD')}</h3>
+          <h4 style={{position: 'absolute', right: '60px', bottom: '7px'}}>{moment(date_paid).format('MM/DD')}</h4>
         )}
         {editting.expense === expense_id ? (
           <input
             onChange={event => setEditExpense({...editExpense, amount: event.target.value})}
-            style={{width: '10%'}}
+            style={{position: 'absolute', right: '60px', top: '7px', width: '15%'}}
             placeholder={amount}
           />
-        ) : <h2>$ {amount}</h2>}
+        ) : <h2 style={{position: 'absolute', right: '60px', top: '7px'}}>$ {amount}</h2>}
         <section className='buttons-section'>
           {editting.expense === expense_id ? (
             <section className='expense-buttons'>
               <img
-                onClick={() => handleEditExpense()}
+                onClick={() => {
+                  handleEditExpense()
+                  setRerender(true)
+                }}
                 className='bud-button'
                 src={check}
                 alt='check'
@@ -181,10 +187,10 @@ function Budget(){
               <img
                 onClick={() => {
                   axios.delete(`/api/expenses/${expense_id}`)
-                  .then(() => {
-                  alert('Expense deleted, please refresh page')
-                })
-                  .catch(err => console.log(err))
+                    .then(() => {
+                      setRerender(true)
+                    })
+                    .catch(err => console.log(err))
                 }}
                 className='bud-button'
                 src={remove}
@@ -277,163 +283,181 @@ function Budget(){
           </section>
           <BudgetDisplay budget={budget} setBudget={setBudget} condensed={condensed} current={current} time={time}/>
           <section className='line-graph'>
-            expense line graph
+            <p>Feature coming soon!</p>
           </section>
         </section>
-        <section className='new-section'>
 
-          {/* new expense */}
-          <section className='add-forms'>
-            <section style={{position: 'relative', height: '70%', width: '33%'}}>
+        <section className='bottom-section'>
+
+          {/* expenses */}
+          <section className='viewer'>
+            <section className='add-forms'>
+              <section className='add-left'>
+                <input
+                  placeholder='Name'
+                  value={newExpense.name}
+                  style={{width: '100%', position: 'absolute', top: 0}}
+                  onChange={event => setNewExpense({...newExpense, name: event.target.value})}
+                />
+                <button
+                  style={{width: '100%', position: 'absolute', bottom: 0}}
+                  className={display.expense ? `cat-expanded select-cat` : `select-cat`}
+                  onClick={() => setDisplay({...display, expense: !display.expense})}
+                >
+                  {displayed.expense ? displayed.expense : '--Select Category--'}
+                  <span
+                    className='selector'
+                    id='personal'
+                    onClick={event => {
+                      handleClick(event.target.id)
+                      setDisplayed({...displayed, expense: 'Personal'})
+                    }}
+                  >Personal</span>
+                  <span
+                    className='selector'
+                    id='groceries'
+                    onClick={event => {
+                      handleClick(event.target.id)
+                      setDisplayed({...displayed, expense: 'Groceries'})
+                    }}
+                  >Groceries</span>
+                  <span
+                    className='selector'
+                    id='travel'
+                    onClick={event => {
+                      handleClick(event.target.id)
+                      setDisplayed({...displayed, expense: 'Travel'})
+                    }}
+                  >Travel</span>
+                  <span
+                    className='selector'
+                    id='other'
+                    onClick={event => {
+                      handleClick(event.target.id)
+                      setDisplayed({...displayed, expense: 'Other'})
+                    }}
+                  >Other</span>
+                </button>
+              </section>
               <input
-                placeholder='Name'
-                value={newExpense.name}
-                style={{width: '100%', position: 'absolute', top: 0}}
-                onChange={event => setNewExpense({...newExpense, name: event.target.value})}
+                className='form-amount'
+                value={newExpense.amount}
+                onChange={event => setNewExpense({...newExpense, amount: event.target.value})}
               />
-              <button
-                style={{width: '100%', position: 'absolute', bottom: 0}}
-                className={display.expense ? `cat-expanded select-cat` : `select-cat`}
-                onClick={() => setDisplay({...display, expense: !display.expense})}
-              >
-                {displayed.expense ? displayed.expense : '--Select Category--'}
-                <span
-                  className='selector'
-                  id='personal'
-                  onClick={event => {
-                    handleClick(event.target.id)
-                    setDisplayed({...displayed, expense: 'Personal'})
-                }}
-                >Personal</span>
-                <span
-                  className='selector'
-                  id='groceries'
-                  onClick={event => {
-                    handleClick(event.target.id)
-                    setDisplayed({...displayed, expense: 'Groceries'})
+              <div className='add-form-buttons'>
+                <button
+                  onClick={() => {
+                    addNewExpense()
+                    setNewExpense({name: '', category: '', amount: 0})
+                    setRerender(true)
                   }}
-                >Groceries</span>
-                <span
-                  className='selector'
-                  id='travel'
-                  onClick={event => {
-                    handleClick(event.target.id)
-                    setDisplayed({...displayed, expense: 'Travel'})
+                >Add</button>
+                <button
+                  onClick={() => {
+                    setNewExpense({name: '', category: '', amount: 0})
+                    setDisplayed({...displayed, expense: ''})
                   }}
-                >Travel</span>
-                <span
-                  className='selector'
-                  id='other'
-                  onClick={event => {
-                    handleClick(event.target.id)
-                    setDisplayed({...displayed, expense: 'Other'})
-                  }}
-                >Other</span>
-              </button>
+                >Cancel</button>
+              </div>
             </section>
-            <input
-              value={newExpense.amount}
-              onChange={event => setNewExpense({...newExpense, amount: event.target.value})}
-            />
-            <div style={{display: 'flex', flexDirection: 'column'}}>
-              <button
-                onClick={() => {
-                  addNewExpense()
-                  setNewExpense({name: '', category: '', amount: 0})
-                }}
-              >Add</button>
-              <button
-                onClick={() => {
-                setNewExpense({name: '', category: '', amount: 0})
-                setDisplayed({...displayed, expense: ''})
-              }}
-              >Cancel</button>
+            <div className='expenses' style={{marginBottom: '10px'}}>
+              <h2>Expenses:</h2>
+              {expenses[0] ? viewExpenses : <section className='view-expense' style={{textAlign: 'center'}}>No Expenses to Show</section>}
             </div>
           </section>
-          
+
           {/* upcoming */}
-          <section className='add-forms'>
-            <section style={{position: 'relative', height: '70%', width: '33%'}}>
-              <input
-                placeholder='Name'
-                value={newUpcoming.name}
-                style={{width: '100%', position: 'absolute', top: 0}}
-                onChange={event => setNewUpcoming({...newUpcoming, name: event.target.value})}
-              />
-              <button
-                style={{width: '100%', position: 'absolute', bottom: 0}}
-                className={display.upcoming ? `cat-expanded select-cat` : `select-cat`}
-                onClick={() => setDisplay({...display, upcoming: !display.upcoming})}
-              >
-                {displayed.upcoming ? displayed.upcoming : '--Select Category--'}
-                <span
-                  className='selector'
-                  id='personal'
-                  onClick={event => {
-                    handleClickU(event.target.id)
-                    setDisplayed({...displayed, upcoming: 'Personal'})
+          <section className='viewer'>
+            <section className='add-forms'>
+              <section className='add-left'>
+                <input
+                  placeholder='Name'
+                  value={newUpcoming.name}
+                  style={{width: '100%', position: 'absolute', top: 0}}
+                  onChange={event => setNewUpcoming({...newUpcoming, name: event.target.value})}
+                />
+                <input
+                  placeholder='Category'
+                  value={newUpcoming.category}
+                  style={{width: '100%', position: 'absolute', top: 30}}
+                  onChange={event => setNewUpcoming({...newUpcoming, category: event.target.value})}
+                />
+                <button
+                  style={{width: '100%', position: 'absolute', bottom: 0}}
+                  className={display.upcoming ? `cat-expanded select-cat` : `select-cat`}
+                  onClick={() => setDisplay({...display, upcoming: !display.upcoming})}
+                >
+                  {displayed.upcoming ? displayed.upcoming : '--Select Category--'}
+                  <span
+                    className='selector'
+                    id='bills'
+                    onClick={event => {
+                      handleClickU(event.target.id)
+                      setDisplayed({...displayed, upcoming: 'Bills'})
+                    }}
+                  >Bills</span>
+                  <span
+                    className='selector'
+                    id='personal'
+                    onClick={event => {
+                      handleClickU(event.target.id)
+                      setDisplayed({...displayed, upcoming: 'Personal'})
+                    }}
+                  >Personal</span>
+                  <span
+                    className='selector'
+                    id='groceries'
+                    onClick={event => {
+                      handleClickU(event.target.id)
+                      setDisplayed({...displayed, upcoming: 'Groceries'})
+                    }}
+                  >Groceries</span>
+                  <span
+                    className='selector'
+                    id='travel'
+                    onClick={event => {
+                      handleClickU(event.target.id)
+                      setDisplayed({...displayed, upcoming: 'Travel'})
+                    }}
+                  >Travel</span>
+                  <span
+                    className='selector'
+                    id='other'
+                    onClick={event => {
+                      handleClickU(event.target.id)
+                      setDisplayed({...displayed, upcoming: 'Other'})
                   }}
-                >Personal</span>
-                <span
-                  className='selector'
-                  id='groceries'
-                  onClick={event => {
-                    handleClickU(event.target.id)
-                    setDisplayed({...displayed, upcoming: 'Groceries'})
+                  >Other</span>
+                </button>
+              </section>
+              <section>              
+                <input
+                  className='form-amount'
+                  value={newUpcoming.amount}
+                  onChange={event => setNewUpcoming({...newUpcoming, amount: event.target.value})}
+                />
+              </section>
+              <div className='add-form-buttons'>
+                <button
+                  onClick={() => {
+                    addNewUpcoming()
+                    setNewUpcoming({name: '', category: '', amount: 0})
+                    setRerender(true)
                   }}
-                >Groceries</span>
-                <span
-                  className='selector'
-                  id='travel'
-                  onClick={event => {
-                    handleClickU(event.target.id)
-                    setDisplayed({...displayed, upcoming: 'Travel'})
+                >Add</button>
+                <button
+                  onClick={() => {
+                    setNewUpcoming({name: '', category: '', amount: 0})
+                    setDisplayed({...displayed, upcoming: ''})
                   }}
-                >Travel</span>
-                <span
-                  className='selector'
-                  id='other'
-                  onClick={event => {
-                    handleClickU(event.target.id)
-                    setDisplayed({...displayed, upcoming: 'Other'})
-                }}
-                >Other</span>
-              </button>
+                >Cancel</button>
+              </div>
             </section>
-            <section>
-              {/* <input type='checkbox'/> */}
-              <input
-                value={newUpcoming.amount}
-                onChange={event => setNewUpcoming({...newUpcoming, amount: event.target.value})}
-              />
-            </section>
-            <div style={{display: 'flex', flexDirection: 'column'}}>
-              <button
-                onClick={() => {
-                  addNewUpcoming()
-                  setNewUpcoming({name: '', category: '', amount: 0})
-                }}
-              >Add</button>
-              <button
-                onClick={() => {
-                  setNewUpcoming({name: '', category: '', amount: 0})
-                  setDisplayed({...displayed, upcoming: ''})
-                }}
-              >Cancel</button>
+            <div className='upcoming'>
+              <h2>Upcoming:</h2>
+              {upcoming[0] ? viewUpcoming : <section className='view-expense' style={{textAlign: 'center'}}>No Upcoming to Show</section>}
             </div>
           </section>
-        </section>
-
-        {/* bottom part */}
-        <section className='viewer'>
-          <div className='expenses'>
-            <h2>Expenses:</h2>
-            {expenses[0] ? viewExpenses : <section className='view-expense' style={{textAlign: 'center'}}>No Expenses to Show</section>}
-          </div>
-          <div className='upcoming'>
-            <h2>Upcoming:</h2>
-            {upcoming[0] ? viewUpcoming : <section className='view-expense' style={{textAlign: 'center'}}>No Upcoming to Show</section>}
-          </div>
         </section>
       </div>
     )}

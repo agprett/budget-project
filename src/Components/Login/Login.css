@@ -1,0 +1,46 @@
+.log-back {
+  height: 100vh;
+  width: 100vw;
+  background-image: -webkit-linear-gradient(351deg,#00120b,#67597a 40%,#35605a 73%,#01a7c2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login {
+  height: 400px;
+  width: 40%;
+  box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
+  background-image: linear-gradient(97deg,#67597a,#35605a);
+  color: white;
+  border-radius: 5% 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  text-align: center;
+}
+
+.title {
+  font-size: 42px;
+}
+
+.log-input {
+  margin: 0 25px;
+}
+
+.log-button {
+  margin: 0 30px;
+}
+
+@media (max-width: 904px) {
+  .log-input {
+    margin: 15px 25px;
+  }
+}
+
+@media (max-width: 655px) {
+  .login {
+    width: 75%;
+  }
+}

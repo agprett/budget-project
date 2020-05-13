@@ -4,6 +4,7 @@ module.exports = {
   getExpenses: async (req, res) => {
     const db = req.app.get('db')
     const {user_id} = req.session.user
+    // const user_id = 1
 
     const expenses = await db.expenses.get_expenses([user_id])
 
@@ -23,6 +24,7 @@ module.exports = {
   getRecent: async (req, res) => {
     const db = req.app.get('db')
     const {user_id} = req.session.user
+    // const user_id = 1
 
     const recent = await db.expenses.get_recent([user_id])
 
@@ -33,6 +35,7 @@ module.exports = {
     const db = req.app.get('db')
     const {name, category, amount} = req.body
     const {user_id} = req.session.user
+    // const user_id = 1
     const date = moment().format()
 
     await db.expenses.new_expense([user_id, name, category, amount, date])
@@ -43,6 +46,7 @@ module.exports = {
   getCondensed: async (req, res) => {
     const db = req.app.get('db')
     const {user_id} = req.session.user
+    // const user_id = 1
 
     let [condensed] = await db.expenses.get_condensed([user_id])
 
@@ -55,6 +59,7 @@ module.exports = {
   updateCondensed: async (req, res) => {
     const db = req.app.get('db')
     const {user_id} = req.session.user
+    // const user_id = 1
 
     const date = moment().format('L')
     const today = new Date(date)
@@ -69,6 +74,7 @@ module.exports = {
   getCurrent: async (req, res) => {
     const db = req.app.get('db')
     const {user_id} = req.session.user
+    // const user_id = 1
 
     const date = moment().format('L')
     const today = new Date(date)

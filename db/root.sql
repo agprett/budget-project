@@ -37,7 +37,7 @@ CREATE TABLE upcoming (
   name VARCHAR(20),
   category VARCHAR(20),
   amount INTEGER,
-  date_paid DATE
+  pay_date DATE
 );
 
 CREATE TABLE condensed (
