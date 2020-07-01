@@ -2,18 +2,18 @@ const bcrypt = require('bcryptjs')
 
 module.exports = {
   getUser: async (req, res) => {
-    if(req.session.user){
-      res.status(200).send(req.session.user)
-    } else {
-      res.sendStatus(404)
-    }
+    // if(req.session.user){
+    //   res.status(200).send(req.session.user)
+    // } else {
+    //   res.sendStatus(404)
+    // }
 
-    // const db = req.app.get('db')
-    // const id = 1
+    const db = req.app.get('db')
+    const id = 1
 
-    // const [user] = await db.users.get_user([id])
+    const [user] = await db.users.get_user([id])
 
-    // res.status(200).send(user)
+    res.status(200).send(user)
   },
 
   newUser: async (req, res) => {

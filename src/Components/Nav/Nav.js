@@ -23,7 +23,7 @@ function Nav(props){
     .then(res => {
       props.getUser(res.data)
     })
-    .catch(() => props.history.push('/'))
+    // .catch(() => props.history.push('/'))
     console.log('hit')
   }, [rerender()])
   

@@ -10,11 +10,8 @@ function Dashboard(){
   const [expenses, setExpenses] = useState([])
   const [current, setCurrent] = useState({weekly: 0, monthly: 0})
   const [condensed, setCondensed] = useState({personal: 0, groceries: 0, travel: 0, other: 0})
-  const [quickAdd, setQuickAdd] = useState({name: '', category: '', amount: 0})
   const [upcoming, setUpcoming] = useState([])
   const [loading, setLoading] = useState(false)
-  const [display, setDisplay] = useState(false)
-  const [displayed, setDisplayed] = useState('')
   const [rerender, setRerender] = useState(false)
   
   let budgetData = [
@@ -76,20 +73,6 @@ function Dashboard(){
     setRerender(false)
   }, [rerender])
 
-  const handleQuickAdd = () => {
-    axios.post('/api/expenses/new', quickAdd)
-    .then(() => {
-      setQuickAdd({name: '', category: '', amount: 0})
-      setDisplayed('')
-      setRerender(true)
-    })
-    .catch(err => console.log(err))
-  }
-
-  const handleQuickClick = (data) => {
-    setQuickAdd({...quickAdd, category: data})
-  }
-
   const next = upcoming.map((next, i) => {
     return (
       <div className='next' key ={i}>
@@ -113,7 +96,7 @@ function Dashboard(){
 
   const view = expenses.map((expense, i) => {
     return (
-      <div className='recent' key ={i}>
+      <div className='recent-expenses' key ={i}>
         <section>
           <h3>{expense.name}</h3>
           <p>{expense.category}</p>
@@ -161,75 +144,17 @@ function Dashboard(){
             </h3>
           </div>
         </div>
-        <section className='dash-upcoming'>
-          {next}
-        </section>
-        <div className='recent-expenses'>
-          <section className='quick-add'>
-            <h3>Quick Add:</h3>
-            <input
-              placeholder='name'
-              name='name'
-              value={quickAdd.name}
-              className='quick-input'
-              onChange={event => setQuickAdd({...quickAdd, name: event.target.value})}
-            />
-            <button
-              className={display ? `cat-expanded cat-button` : `cat-button`}
-              onClick={() => setDisplay((display ? false : true))}
-            >
-              {displayed ? displayed : '--Select Category--'}
-              <span
-                className='selector'
-                id='personal'
-                onClick={event => {
-                  handleQuickClick(event.target.id)
-                  setDisplayed('Personal')
-                }}
-                >Personal</span>
-              <span
-                className='selector'
-                id='groceries'                
-                onClick={event => {
-                  handleQuickClick(event.target.id)
-                  setDisplayed('Groceries')
-                }}
-                >Groceries</span>
-              <span
-                className='selector'
-                id='travel'                
-                onClick={event => {
-                  handleQuickClick(event.target.id)
-                  setDisplayed('Travel')
-                }}
-                >Travel</span>
-              <span
-                className='selector'
-                id='other'                
-                onClick={event => {
-                  handleQuickClick(event.target.id)
-                  setDisplayed('Other')
-                }}
-              >Other</span>
-            </button>
-            <div className='quick-amount'>
-              Amount: <input
-                placeholder='amount'
-                name='amount'
-                value={quickAdd.amount}
-                onChange={event => setQuickAdd({...quickAdd, amount: event.target.value})}
-              />
-            </div>
-            <section className='quick-add-buttons'>
-              <button className='quick-add-button' onClick={() => handleQuickAdd()}>Add</button>
-              <button className='quick-add-button' onClick={() => setQuickAdd({name: '', category: '', amount: 0}, setDisplayed(''))}>Cancel</button>
-            </section>
-          </section>
-          <section className='recent-view'>{view}</section>
-        </div>
         <div className='dash-friends'>
           <p>Feature coming soon!</p>
         </div>
+        <section className='recents'>
+          <h3>Expenses:</h3>
+          {view}
+        </section>
+        <section className='recents'>
+          <h3>Upcoming:</h3>
+          {next}
+        </section>
       </div>)}
     </div>
   )
