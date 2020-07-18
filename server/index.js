@@ -7,7 +7,6 @@ const path = require('path')
 const usersCtrl = require('./controllers/usersController')
 const budgetCtrl = require('./controllers/budgetController')
 const expensesCtrl = require('./controllers/expensesController')
-const upcomingCtrl = require('./controllers/upcomingController')
 
 const app = express()
 
@@ -28,17 +27,10 @@ app.get('/api/budget', budgetCtrl.getBudget)
 app.put('/api/budget', budgetCtrl.updateBudget)
 
 app.get('/api/expenses', expensesCtrl.getExpenses)
-app.get('/api/expenses/recent', expensesCtrl.getRecent)
-app.get('/api/expenses/condensed', expensesCtrl.getCondensed)
-app.put('/api/expenses/condensed', expensesCtrl.updateCondensed)
 app.get('/api/expenses/current', expensesCtrl.getCurrent)
 app.put('/api/expenses/:id', expensesCtrl.updateExpenses)
 app.post('/api/expenses/new', expensesCtrl.addNew)
 app.delete('/api/expenses/:id', expensesCtrl.deleteExpense)
-
-app.get('/api/upcoming', upcomingCtrl.getUpcoming)
-app.get('/api/upcoming/next', upcomingCtrl.getNext)
-app.post('/api/upcoming/new', upcomingCtrl.newUpcoming)
 
 app.use(express.static(__dirname + '/../build'))
 

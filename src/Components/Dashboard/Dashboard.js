@@ -108,8 +108,8 @@ function Dashboard(){
   })
 
   return (
-    <div>
-      {loading ? (
+    <div style={{display: 'flex', justifyContent: 'center'}}>
+      {/* {loading ? (
         <div className='loading'>
           <Loading />
         </div>
@@ -155,7 +155,8 @@ function Dashboard(){
           <h3>Upcoming:</h3>
           {next}
         </section>
-      </div>)}
+      </div>)} */}
+      <p>Coming Soon</p>
     </div>
   )
 }

@@ -3,7 +3,7 @@ import {Switch, Route} from 'react-router-dom'
 import Login from './Components/Login/Login'
 import Register from './Components/Register/Register'
 import Dashboard from './Components/Dashboard/Dashboard'
-import Budget from './Components/Budget/Budget'
+import Budget from './Pages/Budget/Budget'
 
 export default (
   <Switch>

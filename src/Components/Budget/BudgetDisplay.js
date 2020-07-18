@@ -69,18 +69,6 @@ function BudgetDisplay(props){
             )}
             <h4>Monthly Expense:</h4>
             {current.monthly ? <p className='amount'>$ {current.monthly}</p> : <p className='amount'>$ 0</p>}</section>
-          <section>
-            <h4>Total Weekly Budget:</h4>
-            <p className='amount'>$ {budget.weekly}</p>
-            <section className='weekly-budget'>
-            {budgetAmount}
-            </section>
-            <h4>Weekly Expense:</h4>
-            {current.weekly ? <p className='amount'>$ {current.weekly}</p> : <p className='amount'>$ 0</p>}
-            <section className='weekly-budget'>
-            {expenseAmount}
-            </section>
-            </section>
             {editting ? (
             <section className='budget-edit'>
             <button
