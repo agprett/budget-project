@@ -1,2 +1,2 @@
-SELECT monthly, bills, groceries, personal, travel, other FROM budget
+SELECT monthly FROM budget
 WHERE user_id = $1;

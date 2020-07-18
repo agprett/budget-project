@@ -2,11 +2,11 @@ import React, {useState, useEffect} from 'react'
 import moment from 'moment'
 import axios from 'axios'
 import './Budget.css'
-import BudgetDisplay from './BudgetDisplay'
-import Loading from '../Loading/Loading'
-import DonutChart from './DonutChart'
-import Dropdown from '../Dropdown/Dropdown'
-import {remove, update, check, x} from '../img.json'
+import BudgetDisplay from '../../Components/Budget/BudgetDisplay'
+import Loading from '../../Components/Loading/Loading'
+import DonutChart from '../../Components/Budget/DonutChart'
+import Dropdown from '../../Components/Dropdown/Dropdown'
+import {remove, update, check, x} from '../../Components/img.json'
 
 function Budget(){
   const [budget, setBudget] = useState({})
@@ -37,32 +37,32 @@ function Budget(){
     }
   )
   
-  useEffect(() => {
-    setLoading(true)
-  }, [])
+  // useEffect(() => {
+  //   setLoading(true)
+  // }, [])
 
   useEffect(() => {
-    axios.get('/api/budget')
-    .then(res => {
-      setBudget(res.data)
-    })
-    .catch(err => console.log(err))
+    // axios.get('/api/budget')
+    // .then(res => {
+    //   setBudget(res.data)
+    // })
+    // .catch(err => console.log(err))
 
-    axios.get('/api/expenses/condensed')
-    .then(res => {
-      setCondensed(res.data)
-    })
-    .catch(err => console.log(err))
+    // axios.get('/api/expenses/condensed')
+    // .then(res => {
+    //   setCondensed(res.data)
+    // })
+    // .catch(err => console.log(err))
 
-    axios.put('/api/expenses/condensed')
-    .then(() => console.log('recondensed'))
-    .catch(err => console.log(err))
+    // axios.put('/api/expenses/condensed')
+    // .then(() => console.log('recondensed'))
+    // .catch(err => console.log(err))
 
-    axios.get('/api/expenses/current')
-    .then(res => {
-      setCurrent(res.data)
-    })
-    .catch(err => console.log(err))
+    // axios.get('/api/expenses/current')
+    // .then(res => {
+    //   setCurrent(res.data)
+    // })
+    // .catch(err => console.log(err))
 
     axios.get('/api/expenses')
     .then(res => {
