@@ -7,6 +7,7 @@ const path = require('path')
 const usersCtrl = require('./controllers/usersController')
 const budgetCtrl = require('./controllers/budgetController')
 const expensesCtrl = require('./controllers/expensesController')
+const savingsCtrl = require('./controllers/savingsController')
 
 const app = express()
 
@@ -27,10 +28,12 @@ app.get('/api/budget', budgetCtrl.getBudget)
 app.put('/api/budget', budgetCtrl.updateBudget)
 
 app.get('/api/expenses', expensesCtrl.getExpenses)
-app.get('/api/expenses/current', expensesCtrl.getCurrent)
+app.post('/api/expenses', expensesCtrl.newExpense)
 app.put('/api/expenses/:id', expensesCtrl.updateExpenses)
-app.post('/api/expenses/new', expensesCtrl.addNew)
 app.delete('/api/expenses/:id', expensesCtrl.deleteExpense)
+app.get('/api/expenses/current', expensesCtrl.getCurrent)
+
+app.put('/api/savings/:overall', savingsCtrl.updateSavings)
 
 app.use(express.static(__dirname + '/../build'))
 

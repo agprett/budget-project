@@ -4,6 +4,7 @@ import './Nav.css'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {getUser, logoutUser} from '../../ducks/userReducer'
+import {getBudget} from '../../ducks/budgetReducer'
 import {home, budget, logout} from '../img.json'
 
 function Nav(props){
@@ -22,10 +23,14 @@ function Nav(props){
     axios.get('/api/user')
     .then(res => {
       props.getUser(res.data)
+      axios.get('/api/budget')
+      .then(res => {
+        props.getBudget(res.data)
+      })
     })
     // .catch(() => props.history.push('/'))
     console.log('hit')
-  }, [rerender()])
+  }, [])
   
   return (
     <div
@@ -39,28 +44,18 @@ function Nav(props){
         />
         <p>{props.userReducer.user.username}</p>
       </div>
-      <img
+      {/* <img
         className='nav-button'
         src={home}
         alt='home'
         onClick={() => props.history.push('/dash')}
-      />
+      /> */}
       <img
         className='nav-button'
         src={budget}
         alt='budget'
         onClick={() => props.history.push('/budget')}
       />
-      {/* <img
-        className='nav-button'
-        src={friends}
-        alt='friends'
-      />
-      <img
-        className='nav-button'
-        src={groups}
-        alt='groups'
-      /> */}
       <img
         className='nav-logout'
         src={logout}
@@ -83,4 +78,4 @@ function Nav(props){
 
 const mapStateToProps = state => state
 
-export default connect(mapStateToProps, {getUser, logoutUser})(withRouter(Nav))
+export default connect(mapStateToProps, {getUser, logoutUser, getBudget})(withRouter(Nav))
