@@ -2,8 +2,8 @@ DROP TABLE IF EXISTS expenses;
 DROP TABLE IF EXISTS recurring;
 DROP TABLE IF EXISTS budget;
 DROP TABLE IF EXISTS debts;
-DROP TABLE IF EXISTS savings;
 DROP TABLE IF EXISTS goals;
+DROP TABLE IF EXISTS savings;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
@@ -25,7 +25,7 @@ CREATE TABLE expenses (
   name VARCHAR(20),
   category VARCHAR(20),
   amount INTEGER,
-  date DATE
+  date TIMESTAMP
 );
 
 CREATE TABLE recurring (
@@ -46,7 +46,8 @@ CREATE TABLE savings (
 CREATE TABLE goals (
   goal_id SERIAL PRIMARY KEY,
   savings_id INTEGER REFERENCES savings(savings_id),
-  saved INTEGER,
+  goal_amount INTEGER,
+  saved_amount INTEGER,
   name VARCHAR(20),
   goal_date DATE,
   monthly_amount INT

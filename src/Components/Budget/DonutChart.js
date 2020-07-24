@@ -5,7 +5,6 @@ function DonutChart(props){
 
   useEffect(() => {
     donut()
-    console.log('hit')
     return (() => {
       d3.selectAll("svg").remove()
     })

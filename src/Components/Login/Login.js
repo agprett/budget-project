@@ -30,7 +30,7 @@ function Login(props){
           className='log-button'
           onClick={() => {
             axios.post('/api/user/login', user)
-            .then(() => props.history.push('/dash'))
+            .then(() => props.history.push('/budget'))
             .catch(() => alert('Username or password incorrect'))
           }}
           >Login</button>

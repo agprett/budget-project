@@ -10,18 +10,8 @@ module.exports = {
 
     res.status(200).send(expenses)
   },
-
-  updateExpenses: async (req, res) => {
-    const db = req.app.get('db')
-    const {name, date_paid, amount} = req.body
-    const {id} = req.params
-
-    await db.expenses.update_expense([name, date_paid, amount, id])
-
-    res.sendStatus(200)
-  },
-
-  addNew: async (req, res) => {
+  
+  newExpense: async (req, res) => {
     const db = req.app.get('db')
     const {name, category, amount} = req.body
     // const {user_id} = req.session.user
@@ -29,7 +19,26 @@ module.exports = {
     const date = moment().format()
 
     await db.expenses.new_expense([user_id, name, category, amount, date])
+  
+    res.sendStatus(200)
+  },
 
+  updateExpenses: async (req, res) => {
+    const db = req.app.get('db')
+    const {name, date, amount} = req.body
+    const {id} = req.params
+
+    await db.expenses.update_expense([name, date, amount, +id])
+
+    res.sendStatus(200)
+  },
+
+  deleteExpense: async (req, res) => {
+    const db = req.app.get('db')
+    const {id} = req.params
+    
+    await db.expenses.delete_expense([+id])
+    
     res.sendStatus(200)
   },
 
@@ -37,28 +46,17 @@ module.exports = {
     const db = req.app.get('db')
     // const {user_id} = req.session.user
     const user_id = 1
+  
+    // let startWeek = moment().startOf('week').format()
+    // let endWeek = moment().endOf('week').format()
+    let startMonth = moment().startOf('month').format()
+    let endMonth = moment().endOf('month').format()
 
-    const date = moment().format('L')
-    const today = new Date(date)
-    let number = today.getDay()
-    let sunday = moment(today).subtract(number, 'd').format('L')
-    let monthNum = today.getDate()
-    let month = moment(today).subtract(monthNum - 1, 'd').format('L')
-
-    let [weekly] = await db.expenses.get_weekly([user_id, sunday, date])
-    let [monthly] = await db.expenses.get_monthly([user_id, month, date])
-
-    let current = {...weekly, ...monthly}
-
+    // let [weekly] = await db.expenses.get_weekly([user_id, startWeek, endWeek])
+    let [monthly] = await db.expenses.get_monthly_spent([user_id, startMonth, endMonth])
+  
+    let current = {...monthly}
+  
     res.status(200).send(current)
-  },
-
-  deleteExpense: async (req, res) => {
-    const db = req.app.get('db')
-    const {id} = req.params
-
-    await db.expenses.delete_expense([+id])
-
-    res.sendStatus(200)
   }
 }
