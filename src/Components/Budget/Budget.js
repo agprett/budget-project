@@ -10,7 +10,7 @@ import DonutChart from './DonutChart'
 import {remove, update, check, x} from '../img.json'
 
 function Budget(props){
-  const {budget} = props.budgetReducer
+  const budget = props.userReducer.monthly
   const [expenses, setExpenses] = useState([])
   const [newExpense, setNewExpense] = useState({name: '', category: '', amount: 0})
   const [current, setCurrent] = useState({monthly: 0})
@@ -148,7 +148,7 @@ function Budget(props){
       <div className='budget-route'>
         <section className='budget'>
           <section className='pie-chart'>
-            <DonutChart data={budget}/>
+            <DonutChart data={{monthly: budget}}/>
           </section>
           <BudgetDisplay budget={budget} current={current} time={time}/>
         </section>

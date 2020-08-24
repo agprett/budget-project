@@ -33,6 +33,7 @@ app.put('/api/expenses/:id', expensesCtrl.updateExpenses)
 app.delete('/api/expenses/:id', expensesCtrl.deleteExpense)
 app.get('/api/expenses/current', expensesCtrl.getCurrent)
 
+app.get('/api/savings', savingsCtrl.getSavings)
 app.put('/api/savings/:overall', savingsCtrl.updateSavings)
 
 app.use(express.static(__dirname + '/../build'))

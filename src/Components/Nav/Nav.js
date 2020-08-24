@@ -5,16 +5,18 @@ import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {getUser, logoutUser} from '../../ducks/userReducer'
 import {getBudget} from '../../ducks/budgetReducer'
+import {getSavings} from '../../ducks/savingsReducer'
 import {home, budget, logout} from '../img.json'
 
 function Nav(props){
   const [local, setLocal] = useState({})
+  const user = props.userReducer
 
   let rerender = () => {
-    if(local === props.userReducer.user) {
+    if(local === props.userReducer) {
       return false
     } else {
-      setLocal(props.userReducer.user)
+      setLocal(props.userReducer)
       return true
     }
   }
@@ -23,10 +25,16 @@ function Nav(props){
     axios.get('/api/user')
     .then(res => {
       props.getUser(res.data)
-      axios.get('/api/budget')
-      .then(res => {
-        props.getBudget(res.data)
-      })
+
+      // axios.get('/api/budget')
+      // .then(res => {
+      //   props.getBudget(res.data)
+      // })
+
+      // axios.get('/api/savings')
+      // .then(res => {
+      //   props.getSavings(res.data)
+      // })
     })
     // .catch(() => props.history.push('/'))
     console.log('hit')
@@ -39,10 +47,10 @@ function Nav(props){
       <div className='nav-prof'>
         <img
           className='prof-pic'
-          src={props.userReducer.user.profile_pic}
+          src={user.profile_pic}
           alt='prof-pic'
         />
-        <p>{props.userReducer.user.username}</p>
+        <p>{user.username}</p>
       </div>
       {/* <img
         className='nav-button'
@@ -56,6 +64,9 @@ function Nav(props){
         alt='budget'
         onClick={() => props.history.push('/budget')}
       />
+      <div
+        onClick={() => props.history.push('/savings')}
+      >Debt</div>
       <img
         className='nav-logout'
         src={logout}
@@ -78,4 +89,4 @@ function Nav(props){
 
 const mapStateToProps = state => state
 
-export default connect(mapStateToProps, {getUser, logoutUser, getBudget})(withRouter(Nav))
+export default connect(mapStateToProps, {getUser, logoutUser, getBudget, getSavings})(withRouter(Nav))
