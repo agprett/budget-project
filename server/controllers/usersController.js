@@ -13,6 +13,8 @@ module.exports = {
 
     const [user] = await db.users.get_user([id])
 
+    // console.log(user)
+
     res.status(200).send(user)
   },
 

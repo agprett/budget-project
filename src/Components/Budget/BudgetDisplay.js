@@ -30,7 +30,7 @@ function BudgetDisplay(props){
               onChange={event => setUpdatedBudget({...budget, monthly: +event.target.value})}
             />
           ) : (
-            <p className='amount'>$ {budget.monthly}</p>
+            <p className='amount'>$ {budget}</p>
           )}
         </section>
         {editting ? (
