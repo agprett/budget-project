@@ -25,8 +25,8 @@ module.exports = {
 
   updateExpenses: async (req, res) => {
     const db = req.app.get('db')
-    const {name, date, amount} = req.body
     const {id} = req.params
+    const {name, date, amount} = req.body
 
     await db.expenses.update_expense([name, date, amount, +id])
 

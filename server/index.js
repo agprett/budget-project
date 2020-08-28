@@ -8,6 +8,7 @@ const usersCtrl = require('./controllers/usersController')
 const budgetCtrl = require('./controllers/budgetController')
 const expensesCtrl = require('./controllers/expensesController')
 const savingsCtrl = require('./controllers/savingsController')
+const debtsCtrl = require('./controllers/debtsController')
 
 const app = express()
 
@@ -35,6 +36,13 @@ app.get('/api/expenses/current', expensesCtrl.getCurrent)
 
 app.get('/api/savings', savingsCtrl.getSavings)
 app.put('/api/savings/:overall', savingsCtrl.updateSavings)
+app.get('/api/goals', savingsCtrl.getGoals)
+app.post('/api/goals', savingsCtrl.newGoal)
+app.put('/api/goals', savingsCtrl.updateGoal)
+
+app.post('/api/debts', debtsCtrl.newDebt)
+app.get('/api/debts', debtsCtrl.getDebts)
+app.put('/api/debts/:id', debtsCtrl.updateDebts)
 
 app.use(express.static(__dirname + '/../build'))
 
