@@ -13,6 +13,10 @@ class BarChart extends React.Component {
 
   }
 
+  // <div className='expense-graph'>
+  //   <BarChart budget={budgetData} expenses={expensesData}/>
+  // </div>
+
   render() {
     const {budget, expenses} = this.props
 
