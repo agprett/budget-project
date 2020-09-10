@@ -10,7 +10,7 @@ import DonutChart from './DonutChart'
 import {remove, update, check, x} from '../img.json'
 
 function Budget(props){
-  const budget = props.userReducer.monthly
+  const budget = props.user.monthly
   const [expenses, setExpenses] = useState([])
   const [newExpense, setNewExpense] = useState({name: '', category: '', amount: 0})
   const [current, setCurrent] = useState({monthly: 0})

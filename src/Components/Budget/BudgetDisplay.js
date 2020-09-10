@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
-import {updateBudget} from '../../ducks/budgetReducer'
 import axios from 'axios'
 
 function BudgetDisplay(props){
@@ -36,7 +35,6 @@ function BudgetDisplay(props){
         {editting ? (
           <section className='budget-edit'>
             <button onClick={() => {
-              props.updateBudget({...budget, ...updatedBudget})
               handleUpdate()
             }}>Update</button>
             <button onClick={() => {
@@ -54,4 +52,4 @@ function BudgetDisplay(props){
 
 const mapStateToProps = state => state
 
-export default connect(mapStateToProps, {updateBudget})(BudgetDisplay)
+export default connect(mapStateToProps, )(BudgetDisplay)

@@ -4,13 +4,11 @@ import './Nav.css'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {getUser, logoutUser} from '../../ducks/userReducer'
-import {getBudget} from '../../ducks/budgetReducer'
-import {getSavings} from '../../ducks/savingsReducer'
 import {home, budget, logout} from '../img.json'
 
 function Nav(props){
   const [local, setLocal] = useState({})
-  const user = props.userReducer
+  const {user} = props
 
   let rerender = () => {
     if(local === props.userReducer) {
@@ -64,9 +62,9 @@ function Nav(props){
         alt='budget'
         onClick={() => props.history.push('/budget')}
       />
-      <div
+      {/* <div
         onClick={() => props.history.push('/savings')}
-      >Debt</div>
+      >Debt</div> */}
       <img
         className='nav-logout'
         src={logout}
@@ -89,4 +87,4 @@ function Nav(props){
 
 const mapStateToProps = state => state
 
-export default connect(mapStateToProps, {getUser, logoutUser, getBudget, getSavings})(withRouter(Nav))
+export default connect(mapStateToProps, {getUser, logoutUser})(withRouter(Nav))
