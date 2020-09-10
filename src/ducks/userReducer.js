@@ -1,11 +1,5 @@
 const initialState = {
-  user_id: 0,
-  username: '',
-  profile_pic: '',
-  savings_id: '',
-  overall: '',
-  budget_id: '',
-  monthly: ''
+  user: {}
 }
 
 const GET_USER = 'GET_USER'
@@ -28,7 +22,7 @@ export function logoutUser(){
 export default function userReducer(state = initialState, action){
   switch(action.type){
     case GET_USER:
-      return {...state, ...action.payload}
+      return {...state, user: action.payload}
     case LOGOUT_USER:
       return {...state, ...action.payload}
     default:

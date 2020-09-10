@@ -89,7 +89,7 @@
 
 .add-form {
   height: 70%;
-  width: 33%;
+  width: 18%;
   background-color: #3a606e;
   padding: 0 20px;
   display: flex;
@@ -134,7 +134,7 @@
 
 .expenses {
   height: 450px;
-  width: 60%;
+  width: 45%;
   background-color: #67597a;
   padding: 15px;
   overflow: auto;
