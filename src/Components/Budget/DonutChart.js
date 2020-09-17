@@ -37,7 +37,7 @@ function DonutChart(props){
       .value(function(d) {return d.value; })
     var data_ready = pie(d3.entries(data))
 
-  // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+  // Build the pie chart
     svg
       .selectAll('whatever')
       .data(data_ready)
