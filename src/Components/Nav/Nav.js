@@ -4,7 +4,7 @@ import './Nav.css'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {getUser, logoutUser} from '../../ducks/userReducer'
-import {home, budget, logout} from '../img.json'
+import {budget, logout} from '../img.json'
 
 function Nav(props){
   const [local, setLocal] = useState({})

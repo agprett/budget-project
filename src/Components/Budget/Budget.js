@@ -5,21 +5,23 @@ import axios from 'axios'
 import './Budget.css'
 import BudgetDisplay from './BudgetDisplay'
 import Loading from '../Loading/Loading'
-import DonutChart from './DonutChart'
+// import DonutChart from './DonutChart'
+// import BarChart from '../BarChart/BarChart'
 // import Dropdown from '../Dropdown/Dropdown'
 import {remove, update, check, x} from '../img.json'
 
-function Budget(props){
-  const budget = props.user.monthly
+function Budget(){
+  const [loading, setLoading] = useState(false)
+  const [budget, setBudget] = useState([])
   const [expenses, setExpenses] = useState([])
   const [newExpense, setNewExpense] = useState({name: '', category: '', amount: 0})
   const [current, setCurrent] = useState({monthly: 0})
-  const [time, setTime] = useState('monthly')
-  const [loading, setLoading] = useState(false)
-  const [display, setDisplay] = useState({expense: false, upcoming: false})
+  // const [display, setDisplay] = useState({expense: false, upcoming: false})
   const [editting, setEditting] = useState({expense: null, upcoming: null})
   const [editExpense, setEditExpense] = useState({})
   const [rerender, setRerender] = useState(false)
+  // const budgetData = [{amount: budget, category: 'Overall'}]
+  // const expensesData = []
   
   useEffect(() => {
     setLoading(true)
@@ -35,6 +37,12 @@ function Budget(props){
     // axios.put('/api/expenses/condensed')
     // .then(() => console.log('recondensed'))
     // .catch(err => console.log(err))
+    
+    axios.get('/api/budget')
+    .then(res => {
+      setBudget(res.data)
+    })
+    .catch(err => console.log(err))
 
     axios.get('/api/expenses/current')
     .then(res => {
@@ -77,7 +85,7 @@ function Budget(props){
     const {expense_id, name, category, date, amount} = expense
 
     return (
-      <section key={i} className='view-expense'>
+      <section key={i} className='expenses'>
         <div>
           <h2>{name}</h2>
           <p>{category}</p>
@@ -146,54 +154,59 @@ function Budget(props){
       </div>
     ) : (
       <div className='budget-route'>
-        <section className='budget'>
-          <section className='pie-chart'>
+        <section className='top-section'>
+          <BudgetDisplay budget={budget[0]} current={current}/>
+          {/* <div className='expense-graph'>
+            <BarChart budget={budgetData} expenses={expensesData}/>
+          </div> */}
+          {/* <section className='pie-chart'>
             <DonutChart data={{monthly: budget}}/>
-          </section>
-          <BudgetDisplay budget={budget} current={current} time={time}/>
+          </section> */}
         </section>
 
         <section className='bottom-section'>
           {/* <section className='viewer'> */}
-            <section className='add-form'>
-              {/* <section className='add-left'> */}
-                <input
-                  placeholder='Name'
-                  value={newExpense.name}
-                  onChange={event => setNewExpense({...newExpense, name: event.target.value})}
-                />
-                <input
-                  placeholder='Category'
-                  value={newExpense.category}
-                  onChange={event => setNewExpense({...newExpense, category: event.target.value})}
-                />
-                {/* <Dropdown /> */}
-              {/* </section> */}
-              <input
-                className='form-amount'
-                value={newExpense.amount}
-                onChange={event => setNewExpense({...newExpense, amount: event.target.value})}
-              />
-              <div className='add-form-buttons'>
-                <button
-                  style={{margin: '10px'}}
-                  onClick={() => {
-                    addNewExpense()
-                    setNewExpense({name: '', category: '', amount: 0})
-                    setRerender(true)
-                  }}
-                  >Add</button>
-                <button
-                  style={{margin: '10px'}}
-                  onClick={() => {
-                    setNewExpense({name: '', category: '', amount: 0})
-                  }}
-                >Cancel</button>
-              </div>
-            </section>
-            <div className='expenses' style={{marginBottom: '10px'}}>
+            <div className='expense-section' style={{marginBottom: '10px'}}>
               <h2>Expenses:</h2>
-              {expenses[0] ? viewExpenses : <section className='view-expense' style={{textAlign: 'center'}}>No Expenses to Show</section>}
+              <section className='expense-view'>
+                <section className='add-form'>
+                  <input
+                    placeholder='Name'
+                    value={newExpense.name}
+                    onChange={event => setNewExpense({...newExpense, name: event.target.value})}
+                  />
+                  <input
+                    placeholder='Category'
+                    value={newExpense.category}
+                    onChange={event => setNewExpense({...newExpense, category: event.target.value})}
+                  />
+                  {/* <Dropdown /> */}
+                  <input
+                    className='form-amount'
+                    value={newExpense.amount}
+                    onChange={event => setNewExpense({...newExpense, amount: event.target.value})}
+                  />
+                  <div className='add-form-buttons'>
+                    <button
+                      style={{margin: '10px'}}
+                      onClick={() => {
+                        addNewExpense()
+                        setNewExpense({name: '', category: '', amount: 0})
+                        setRerender(true)
+                      }}
+                      >Add</button>
+                    <button
+                      style={{margin: '10px'}}
+                      onClick={() => {
+                        setNewExpense({name: '', category: '', amount: 0})
+                      }}
+                    >Cancel</button>
+                  </div>
+                </section>
+                <section className='expense-viewer'>
+                  {expenses[0] ? viewExpenses : <section className='expenses' style={{textAlign: 'center'}}>No Expenses to Show</section>}
+                </section>
+              </section>
             </div>
           </section>
         {/* </section> */}

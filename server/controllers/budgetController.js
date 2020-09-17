@@ -4,7 +4,7 @@ module.exports = {
     // const {user_id} = req.session.user
     const user_id = 1
 
-    let [budget] = await db.budget.get_budget([user_id])
+    let budget = await db.budget.get_budget([user_id])
 
     res.status(200).send(budget)
   },
@@ -18,5 +18,7 @@ module.exports = {
     await db.budget.update_budget([monthly, user_id])
 
     res.sendStatus(200)
-  }
+  },
+
+  
 }

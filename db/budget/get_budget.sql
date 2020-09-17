@@ -1,2 +1,2 @@
-SELECT monthly FROM budget
+SELECT category, amount FROM budget
 WHERE user_id = $1;

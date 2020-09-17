@@ -1,6 +1,6 @@
 .budget-route {
   background-color: #eaebed;
-  padding: 20px 20px 20px 120px;
+  padding: 0px 20px 0px 120px;
   min-height: 100vh;
   box-sizing: border-box;
   display: flex;
@@ -8,18 +8,12 @@
   align-items: center;
 }
 
-.pressed {
-  background-color: #2f323a;
-  color: white;
-}
-
-.budget {
+.top-section {
   height: 45vh;
   width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin-bottom: 30px;
 }
 
 .pie-chart {
@@ -34,8 +28,8 @@
 }
 
 .budget-amounts {
-  height: 275px;
-  width: 500px;
+  height: 175px;
+  width: 300px;
   padding: 0 0 15px 0;
   background-color: #a4b8c4;
   text-align: center;
@@ -84,12 +78,25 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /* background-color: orange; */
+}
+
+.expense-section {
+  height: 450px;
+  width: 60%;
+  background-color: #67597a;
+  padding: 15px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
+  border-radius: 25px;
 }
 
 .add-form {
-  height: 70%;
-  width: 18%;
+  height: 80%;
+  width: 35%;
   background-color: #3a606e;
   padding: 0 20px;
   display: flex;
@@ -104,7 +111,6 @@
 .add-form-buttons {
   display: flex;
   /* flex-direction: column; */
-  
 }
 
 /* .select-cat {
@@ -132,17 +138,22 @@
   height: auto;
 } */
 
-.expenses {
-  height: 450px;
-  width: 45%;
-  background-color: #67597a;
-  padding: 15px;
-  overflow: auto;
-  box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
-  border-radius: 25px;
+.expense-view {
+  height: 95%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
 }
 
-.view-expense {
+.expense-viewer {
+  height: 100%;
+  width: 63%;
+  overflow: auto;
+}
+
+.expenses {
   height: 60px;
   width: 95%;
   background-color: #01a7c2;

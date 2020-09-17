@@ -1,6 +1,5 @@
 import React from 'react'
 import { scaleBand, scaleLinear } from 'd3-scale'
-
 import Axes from './Axes'
 import Bars from './Bars'
 import ResponsiveWrapper from './ResponsiveWrapper'
@@ -12,10 +11,6 @@ class BarChart extends React.Component {
     this.yScale = scaleLinear()
 
   }
-
-  // <div className='expense-graph'>
-  //   <BarChart budget={budgetData} expenses={expensesData}/>
-  // </div>
 
   render() {
     const {budget, expenses} = this.props

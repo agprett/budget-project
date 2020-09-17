@@ -14,9 +14,9 @@ CREATE TABLE users (
 );
 
 CREATE TABLE budget (
-  budget_id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES users(user_id),
-  monthly INTEGER
+  category VARCHAR(15),
+  amount INTEGER
 );
 
 CREATE TABLE expenses (

@@ -18,7 +18,7 @@ export default class Bars extends Component {
     const { height } = svgDimensions
     const {budget, expenses} = this.props
 
-    const bars = budget ? (
+    const bars = budget ? (      
       budget.map(budget =>
         <rect
           key={budget.category}

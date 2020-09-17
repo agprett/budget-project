@@ -13,12 +13,12 @@ function Loading() {
   }, [])
 
   function gears(){
-    let w = 480,
-      h = 250,
-      r = 40,
+    let w = 600,
+      h = 320,
+      r = 50,
       x = Math.sin(2 * Math.PI / 3),
       y = Math.cos(2 * Math.PI / 3),
-      speed = 4,
+      speed = 3,
       start = Date.now();
 
     const svg = d3.select(".loading").insert("svg:svg", "form")

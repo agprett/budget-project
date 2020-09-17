@@ -1,0 +1,1 @@
+INSERT INTO budget(user_id, )
