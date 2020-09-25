@@ -20,17 +20,18 @@ function BudgetDisplay(props){
     <section>
       <section className='budget-amounts'>
         <section>
-          <h4>Monthly Expense:</h4>
-          <p className='amount'>$ {current.monthly}</p>
-          <h4>Monthly Budget:</h4>
-          {/* {editting ? (
-            <input
-              placeholder={budget.amount}
-              onChange={event => setUpdatedBudget({...budget, amount: +event.target.value})}
-            />
-          ) : ( */}
-            <p className='amount'>$ {props.budget ? props.budget.amount : 0}</p>
-          {/* )} */}
+          <h4>Monthly:</h4>
+          <p className='amount'>
+            $ {current.monthly ? current.monthly : 0}/
+          {editting ? (
+              <input
+                placeholder={budget.amount}
+                onChange={event => setUpdatedBudget({category: 'Overall', amount: +event.target.value})}
+              />
+            ) : (
+              <p className='amount'>$ {props.budget ? props.budget.amount : 0}</p>
+            )}
+          </p>
         </section>
         {editting ? (
           <section className='budget-edit'>

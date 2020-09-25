@@ -3,8 +3,8 @@ import axios from 'axios'
 import './Nav.css'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {getUser, logoutUser} from '../../ducks/userReducer'
-import {budget, logout} from '../img.json'
+import {getUser, logoutUser, getRecurring, getSavings} from '../../ducks/reducer'
+import {home, budget, expense, logout} from '../img.json'
 
 function Nav(props){
   const [local, setLocal] = useState({})
@@ -23,16 +23,26 @@ function Nav(props){
     axios.get('/api/user')
     .then(res => {
       props.getUser(res.data)
+    })
 
-      // axios.get('/api/budget')
-      // .then(res => {
-      //   props.getBudget(res.data)
-      // })
+    // axios.get('/api/budget')
+    // .then(res => {
+    //   props.getBudget(res.data)
+    // })
 
-      // axios.get('/api/savings')
-      // .then(res => {
-      //   props.getSavings(res.data)
-      // })
+    axios.get('/api/savings')
+    .then(res => {
+      props.getSavings(res.data)
+    })
+
+    // axios.get('/api/expenses')
+    // .then(res => {
+    //   props.getExpenses(res.data)
+    // })
+
+    axios.get('/api/recurring')
+    .then(res => {
+      props.getRecurring(res.data)
     })
     // .catch(() => props.history.push('/'))
     console.log('hit')
@@ -50,18 +60,24 @@ function Nav(props){
         />
         <p>{user.username}</p>
       </div>
-      {/* <img
+      <img
         className='nav-button'
         src={home}
         alt='home'
-        onClick={() => props.history.push('/dash')}
-      /> */}
-      <img
+        onClick={() => props.history.push('/home')}
+      />
+      {/* <img
         className='nav-button'
         src={budget}
         alt='budget'
         onClick={() => props.history.push('/budget')}
       />
+      <img
+        className='nav-button'
+        src={expense}
+        alt='expense'
+        onClick={() => props.history.push('/expense')}
+      /> */}
       {/* <div
         onClick={() => props.history.push('/savings')}
       >Debt</div> */}
@@ -87,4 +103,6 @@ function Nav(props){
 
 const mapStateToProps = state => state
 
-export default connect(mapStateToProps, {getUser, logoutUser})(withRouter(Nav))
+const functions = {getUser, logoutUser, getSavings, getRecurring}
+
+export default connect(mapStateToProps, functions)(withRouter(Nav))

@@ -42,21 +42,19 @@ module.exports = {
     res.sendStatus(200)
   },
 
-  getCurrent: async (req, res) => {
-    const db = req.app.get('db')
-    // const {user_id} = req.session.user
-    const user_id = 1
+  // getCurrent: async (req, res) => {
+  //   const db = req.app.get('db')
+  //   // const {user_id} = req.session.user
+  //   const user_id = 1
   
-    // let startWeek = moment().startOf('week').format()
-    // let endWeek = moment().endOf('week').format()
-    let startMonth = moment().startOf('month').format()
-    let endMonth = moment().endOf('month').format()
+  //   // let startWeek = moment().startOf('week').format()
+  //   // let endWeek = moment().endOf('week').format()
+  //   let startMonth = moment().startOf('month').format()
+  //   let endMonth = moment().endOf('month').format()
 
-    // let [weekly] = await db.expenses.get_weekly([user_id, startWeek, endWeek])
-    let [monthly] = await db.expenses.get_monthly_spent([user_id, startMonth, endMonth])
+  //   // let [weekly] = await db.expenses.get_weekly([user_id, startWeek, endWeek])
+  //   let [current] = await db.expenses.get_current([user_id, startMonth, endMonth])
   
-    let current = {...monthly}
-  
-    res.status(200).send(current)
-  }
+  //   res.status(200).send(current)
+  // }
 }

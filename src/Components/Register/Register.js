@@ -30,7 +30,7 @@ function Register(props){
             className='reg-button'
             onClick={() => {
               axios.post('/api/user/new', user)
-              .then(() => props.history.push('/dash'))
+              .then(() => props.history.push('/home'))
               .catch(() => alert('Username taken'))
             }}
             >Register</button>

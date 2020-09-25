@@ -50,7 +50,7 @@ CREATE TABLE goals (
   saved_amount INTEGER,
   name VARCHAR(20),
   goal_date DATE,
-  monthly_amount INT
+  monthly_amount INTEGER
 );
 
 CREATE TABLE debts (
@@ -58,7 +58,7 @@ CREATE TABLE debts (
   user_id INTEGER REFERENCES users(user_id),
   total INTEGER,
   monthly INTEGER,
-  paid INT,
+  paid INTEGER,
   due DATE
 );
 

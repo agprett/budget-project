@@ -9,6 +9,7 @@ const budgetCtrl = require('./controllers/budgetController')
 const expensesCtrl = require('./controllers/expensesController')
 const savingsCtrl = require('./controllers/savingsController')
 const debtsCtrl = require('./controllers/debtsController')
+const recurringCtrl = require('./controllers/recurringController')
 
 const app = express()
 
@@ -26,13 +27,14 @@ app.post('/api/user/login', usersCtrl.loginUser)
 app.post('/api/user/logout', usersCtrl.logoutUser)
 
 app.get('/api/budget', budgetCtrl.getBudget)
+app.post('/api/budget', budgetCtrl.newBudget)
 app.put('/api/budget', budgetCtrl.updateBudget)
 
 app.get('/api/expenses', expensesCtrl.getExpenses)
 app.post('/api/expenses', expensesCtrl.newExpense)
 app.put('/api/expenses/:id', expensesCtrl.updateExpenses)
 app.delete('/api/expenses/:id', expensesCtrl.deleteExpense)
-app.get('/api/expenses/current', expensesCtrl.getCurrent)
+// app.get('/api/expenses/current', expensesCtrl.getCurrent)
 
 app.get('/api/savings', savingsCtrl.getSavings)
 app.put('/api/savings/:overall', savingsCtrl.updateSavings)
@@ -40,9 +42,12 @@ app.get('/api/goals', savingsCtrl.getGoals)
 app.post('/api/goals', savingsCtrl.newGoal)
 app.put('/api/goals', savingsCtrl.updateGoal)
 
-app.post('/api/debts', debtsCtrl.newDebt)
 app.get('/api/debts', debtsCtrl.getDebts)
+app.post('/api/debts', debtsCtrl.newDebt)
 app.put('/api/debts/:id', debtsCtrl.updateDebts)
+
+app.get('/api/recurring', recurringCtrl.getRecurring)
+app.post('/api/recurring', recurringCtrl.newRecurring)
 
 app.use(express.static(__dirname + '/../build'))
 
