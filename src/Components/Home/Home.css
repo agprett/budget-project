@@ -1,6 +1,6 @@
 .home-route {
   background-color: #eaebed;
-  padding: 0px 20px 0px 120px;
+  padding: 80px 20px 0px 20px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -42,7 +42,7 @@
 }
 
 .expenses {
-  height: 55px;
+  height: 60px;
   width: 95%;
   background-color: #01a7c2;
   border-radius: 8px 20px;
@@ -81,5 +81,11 @@
 .quick-view {
   height: 250px;
   width: 30%;
+  border-radius: 25px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
   background-color: #67597a;
 }

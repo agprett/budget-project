@@ -3,8 +3,8 @@ import axios from 'axios'
 import './Nav.css'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {getUser, logoutUser, getRecurring, getSavings} from '../../ducks/reducer'
-import {home, budget, expense, logout} from '../img.json'
+import {getUser, logoutUser, getRecurring, getSavings, getDebt} from '../../ducks/reducer'
+import {home, budget, expense, profile_pic} from '../img.json'
 
 function Nav(props){
   const [local, setLocal] = useState({})
@@ -44,65 +44,73 @@ function Nav(props){
     .then(res => {
       props.getRecurring(res.data)
     })
+    .catch(() => rerender())
     // .catch(() => props.history.push('/'))
-    console.log('hit')
+
+    axios.get('/api/debts')
+    .then(res => {
+      props.getDebt(res.data)
+    })
   }, [])
   
   return (
     <div
       className='nav-bar'
     >
-      <div className='nav-prof'>
+      <div className='nav-left'>
+        <div
+          onClick={() => props.history.push('/home')}
+        >Home</div>
+        {/* <img
+          className='nav-button'
+          src={home}
+          alt='home'
+          onClick={() => props.history.push('/home')}
+        /> */}
+        {/* <img
+          className='nav-button'
+          src={budget}
+          alt='budget'
+          onClick={() => props.history.push('/budget')}
+        /> */}
+        {/* <img
+          className='nav-button'
+          src={expense}
+          alt='expense'
+          onClick={() => props.history.push('/expense')}
+        /> */}
+        {/* <div
+          onClick={() => props.history.push('/savings')}
+        >Savings</div> */}
+      </div>
+      <section className='nav-right'>
+        <div>Welcome, {user.username}</div>
         <img
           className='prof-pic'
-          src={user.profile_pic}
+          src={profile_pic}
           alt='prof-pic'
         />
-        <p>{user.username}</p>
-      </div>
-      <img
-        className='nav-button'
-        src={home}
-        alt='home'
-        onClick={() => props.history.push('/home')}
-      />
-      {/* <img
-        className='nav-button'
-        src={budget}
-        alt='budget'
-        onClick={() => props.history.push('/budget')}
-      />
-      <img
-        className='nav-button'
-        src={expense}
-        alt='expense'
-        onClick={() => props.history.push('/expense')}
-      /> */}
-      {/* <div
-        onClick={() => props.history.push('/savings')}
-      >Debt</div> */}
-      <img
-        className='nav-logout'
-        src={logout}
-        alt='logout'
-        onClick={() => {
-          axios.post('/api/user/logout')
+        <button
+          className='nav-button'
+          onClick={() => {
+            axios.post('/api/user/logout')
             .then(() => {
               props.logoutUser()
               props.history.push('/')
             })
             .catch(err => {
-              alert('Failed to log out')
+              alert('Failed to sign out')
               console.log(err)
             })
-        }}
-      />
+          }}
+        >Sign Out</button>
+      </section>
     </div>
   )
 }
 
 const mapStateToProps = state => state
 
-const functions = {getUser, logoutUser, getSavings, getRecurring}
+const functions = {getUser, logoutUser, getSavings, getRecurring, getDebt}
 
 export default connect(mapStateToProps, functions)(withRouter(Nav))
