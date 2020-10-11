@@ -1,13 +1,3 @@
-.budget-route {
-  background-color: #eaebed;
-  padding: 0px 20px 0px 120px;
-  min-height: 100vh;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .budget-amounts {
   height: 175px;
   width: 300px;
@@ -21,21 +11,4 @@
   align-content: center;
   align-items: center;
   position: relative;
-}
-
-.weekly-budget {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
-.amount {
-  font-size: 22px;
-}
-
-.budget-edit {
-  position: absolute;
-  bottom: 10px;
-  left: 45%;
 }

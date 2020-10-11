@@ -6,7 +6,6 @@ function Loading() {
 
   useEffect(() => {
     gears()
-    console.log('hit')
     return (() => {
       d3.selectAll("svg").remove()
     })

@@ -1,9 +1,9 @@
-DROP TABLE IF EXISTS expenses;
-DROP TABLE IF EXISTS recurring;
-DROP TABLE IF EXISTS budget;
 DROP TABLE IF EXISTS debts;
 DROP TABLE IF EXISTS goals;
 DROP TABLE IF EXISTS savings;
+DROP TABLE IF EXISTS recurring;
+DROP TABLE IF EXISTS expenses;
+DROP TABLE IF EXISTS budget;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
@@ -66,6 +66,6 @@ SELECT * FROM users;
 SELECT * FROM budget;
 SELECT * FROM expenses;
 SELECT * FROM recurring;
-SELECT * FROM debts;
 SELECT * FROM savings;
 SELECT * FROM goals;
+SELECT * FROM debts;

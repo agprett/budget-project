@@ -46,31 +46,25 @@ module.exports = {
     const db = req.app.get('db')
     // const {user_id} = req.session.user
     const user_id = 1
-    const {categories} = req.body
-    let current = {}
+    let current = []
   
-    // let startWeek = moment().startOf('week').format()
-    // let endWeek = moment().endOf('week').format()
     let startMonth = moment().startOf('month').format()
     let endMonth = moment().endOf('month').format()
 
-    // let [weekly] = await db.expenses.get_weekly([user_id, startWeek, endWeek])
-    let [overall] = await db.expenses.get_current([user_id, startMonth, endMonth])
-    current.overall = overall.overall
+    let [response] = await db.expenses.get_current([user_id, startMonth, endMonth])
+    current.push({category: 'Overall', amount: response.sum})
     
-    // let expenses = await db.expenses.get_monthly_expense([user_id, startMonth, endMonth])
+    let monthly = await db.expenses.get_monthly_expense([user_id, startMonth, endMonth])
+    
+    for(let i = 0; i < monthly.length; i++){
+      monthly[i].amount = monthly[i].sum
+      delete monthly[i].sum
+      current.push(monthly[i])
 
-    // console.log(categories)
-    // categories.forEach(e => {
-    //   let monthly = expenses.filter(expense => expense.category = e)
+      current[i].amount = +current[i].amount
 
-    //   let sum = 0
-    //   for(amount in monthly)(
-    //     sum += parseInt(monthly.amount)
-    //   )
       
-    //   current.e = sum
-    // })
+    }
 
     res.status(200).send(current)
   }

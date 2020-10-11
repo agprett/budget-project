@@ -1,51 +1,37 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
-import axios from 'axios'
+import './Budget.css'
 
 function BudgetDisplay(props){
   const {budget, current} = props
-  const [editting, setEditting] = useState(false)
-  const [updatedBudget, setUpdatedBudget] = useState({})
 
-  const handleUpdate = () => {
-    axios.put('/api/budget', updatedBudget)
-      .then(() => {
-        setEditting(false)
-        setUpdatedBudget({})
-      })
-      .catch(err => console.log(err))
+  const spent = (category) => {
+    let amount
+
+    for(let i = 0; i < current.length; i++){
+      if(current[i].category === category){
+        amount = current[i].amount ? current[i].amount : 0
+      }
+    }
+
+    return amount
   }
+
+  const displayed = budget.map((budget, i) => {
+    const {category, amount} = budget
+
+    return (
+      <section key={i}>
+        <p>{category}:</p>
+        <p>${spent(category)} / ${amount}</p>
+      </section>
+    )
+  })
 
   return (
     <section>
       <section className='budget-amounts'>
-        <section>
-          <h4>Monthly:</h4>
-          <p className='amount'>
-            $ {current.monthly ? current.monthly : 0}/
-          {editting ? (
-              <input
-                placeholder={budget.amount}
-                onChange={event => setUpdatedBudget({category: 'Overall', amount: +event.target.value})}
-              />
-            ) : (
-              <p className='amount'>$ {props.budget ? props.budget.amount : 0}</p>
-            )}
-          </p>
-        </section>
-        {editting ? (
-          <section className='budget-edit'>
-            <button onClick={() => {
-              handleUpdate()
-            }}>Update</button>
-            <button onClick={() => {
-              setUpdatedBudget({})
-              setEditting(false)
-            }}>Cancel</button>
-          </section>
-        ) : (
-          <button className='budget-edit' onClick={() => setEditting(true)}>Edit</button>
-        )}
+        {displayed}
       </section>
     </section>
   )

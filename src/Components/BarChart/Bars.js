@@ -6,17 +6,17 @@ export default class Bars extends Component {
   // constructor(props) {
   //   super(props)
 
-    // this.colorScale = scaleLinear()
-    //   .domain([0, this.props.maxValue])
-    //   .range(['#F3E5F5', '#7B1FA2'])
-    //   .interpolate(interpolateLab)
+  //   this.colorScale = scaleLinear()
+  //     .domain([0, this.props.maxValue])
+  //     .range(['#F3E5F5', '#7B1FA2'])
+  //     .interpolate(interpolateLab)
   // }
 
   render() {
     const { scales, margins, svgDimensions } = this.props
     const { xScale, yScale } = scales
     const { height } = svgDimensions
-    const {budget, expenses} = this.props
+    const {budget, current} = this.props
 
     const bars = budget ? (      
       budget.map(budget =>
@@ -30,14 +30,14 @@ export default class Bars extends Component {
         />,
       )
     ) : (
-      expenses.map(expense =>
+      current.map(current =>
         <rect
-          key={expense.category}
-          x={xScale(expense.category)}
-          y={yScale(expense.amount)}
-          height={height - margins.bottom - scales.yScale(expense.amount)}
+          key={current.category}
+          x={xScale(current.category)}
+          y={yScale(current.amount)}
+          height={height - margins.bottom - scales.yScale(current.amount)}
           width={xScale.bandwidth()}
-          fill={expense.color}
+          fill={current.color}
         />,
       )
     )

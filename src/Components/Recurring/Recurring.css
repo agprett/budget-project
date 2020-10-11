@@ -1,0 +1,13 @@
+.viewRecurring {
+  height: 200px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  scroll-behavior: auto;
+  background-color: yellow;
+}
+
+.recurrings {
+  height: 100px;
+  width: 45%;
+}

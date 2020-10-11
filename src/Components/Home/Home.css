@@ -1,6 +1,6 @@
 .home-route {
   background-color: #eaebed;
-  padding: 80px 20px 0px 20px;
+  padding: 60px 20px 0px 20px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -8,8 +8,9 @@
 }
 
 .top-section {
-  height: 55vh;
+  /* height: 55vh; */
   width: 100%;
+  margin: 20px 0px;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -28,51 +29,10 @@
   /* display: none; */
 }
 
-.expense-section {
-  height: 360px;
-  width: 50%;
-  /* padding: 10px 15px; */
-  background-color: #67597a;
-  display: flex;
-  flex-direction: column;
-  /* justify-content: space-around; */
-  align-items: center;
-  box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
-  border-radius: 25px;
-}
-
-.expenses {
-  height: 60px;
-  width: 95%;
-  background-color: #01a7c2;
-  border-radius: 8px 20px;
-  padding: 5px 15px 5px 15px;
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.expense-buttons{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.bud-button{
-  height: 20px;
-  width: 20px;
-}
-
-.see-expenses{
-  margin-top: 5px;
-}
-
 .bottom-section {
-  height: 45vh;
+  /* height: 45vh; */
   width: 100%;
+  margin: 20px 0px;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -80,7 +40,7 @@
 
 .quick-view {
   height: 250px;
-  width: 30%;
+  width: 32%;
   border-radius: 25px;
   padding: 25px;
   display: flex;
@@ -88,4 +48,5 @@
   justify-content: space-around;
   align-items: center;
   background-color: #67597a;
+  box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
 }

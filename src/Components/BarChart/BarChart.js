@@ -13,7 +13,7 @@ class BarChart extends React.Component {
   }
 
   render() {
-    const {budget, expenses} = this.props
+    const {budget, current} = this.props
 
     const margins = { top: 10, right: 10, bottom: 50, left: 50 }
     const svgDimensions = {
@@ -21,9 +21,7 @@ class BarChart extends React.Component {
       height: 225
     }
 
-    // const maxValue = Math.max(...budget.map(d => d.amount)) > Math.max(...expenses.map(d => d.amount)) ? Math.max(...budget.map(d => d.amount)) : Math.max(...expenses.map(d => d.amount))
-
-    const maxValue = Math.max(budget[0].amount)
+    const maxValue = Math.max(...budget.map(d => d.amount)) > Math.max(...current.map(d => d.amount)) ? Math.max(...budget.map(d => d.amount)) : Math.max(...current.map(d => d.amount))
 
     const xScale = this.xScale
       .padding(0.5)
@@ -51,7 +49,7 @@ class BarChart extends React.Component {
         <Bars
           scales={{ xScale, yScale }}
           margins={margins}
-          expenses={expenses}
+          current={current}
           maxValue={maxValue}
           svgDimensions={svgDimensions}
         />
