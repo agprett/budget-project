@@ -67,5 +67,35 @@ module.exports = {
     }
 
     res.status(200).send(current)
+  },
+
+  filterExpenses: async (req, res) => {
+    const db = req.app.get('db')
+    // const {user_id} = req.session.user
+    const user_id = 1
+    const {name, category, end, start, low, high} = req.body
+    const filters = req.body
+
+    const expenses = await db.expenses.get_expenses([user_id])
+
+    const filtered = expenses.filter(expense => {
+      if(name){
+        return expense.name == name
+      } else if(category){
+        return expense.category == category
+      } else if(start){
+        console.log(start)
+        return moment(expense.date).format('MM/DD/YY') >= moment(start).format('MM/DD/YY')
+      } else if(end){
+        console.log(end)
+        return moment(expense.date).format('MM/DD/YY') <= moment(end).formant('MM/DD/YY')
+      } else if(low){
+        return expense.amount >= low
+      } else if(high){
+        return expense.amount <= high
+      }
+    })
+      
+    res.status(200).send({filtered, filters})
   }
 }

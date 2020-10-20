@@ -4,30 +4,29 @@
   margin: 20px;
   /* padding: 10px 15px; */
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   background-color: #67597a;
 }
 
-.expense-filter {
-  height: 300px;
-  width: 200px;
-  background-color: #3a606e;
+.expense-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.add-expense {
+.expense-forms {
   height: 300px;
   width: 200px;
   background-color: #3a606e;
   padding: 0 20px;
-  margin: 20px;
+  margin: 5px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
   box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
   border-radius: 20px;
-  position: relative;
 }
 
 .add-expense-buttons {

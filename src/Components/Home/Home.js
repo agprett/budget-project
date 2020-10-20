@@ -83,14 +83,6 @@ function Home(){
   //   })
   //   .catch(err => console.log(err))
   // }
-
-  // const addNewExpense = () => {
-  //   axios.post('/api/expenses', newExpense)
-  //   .then(() => {
-  //     setNewExpense({name: '', category: '', amount: 0})
-  //     setRerender(true)
-  //   })
-  // }
   
   return (
   <div>
@@ -110,7 +102,7 @@ function Home(){
           </section>
         </section>
 
-        <Expenses expenses={expenses} setRerender={setRerender}/>
+        <Expenses expenses={expenses} setExpenses={setExpenses} setRerender={setRerender}/>
 
         {/* <section className='bottom-section'>
           {recurring[0] ? (
