@@ -1,14 +1,53 @@
-.budget-amounts {
+.budget-section {
   height: 175px;
-  width: 300px;
-  padding: 0 0 15px 0;
+  min-width: 300px;
+  max-width: 450px;
+  padding: 15px 20px;
   background-color: #a4b8c4;
   text-align: center;
   box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
   border-radius: 25px;
   display: flex;
   justify-content: space-evenly;
-  align-content: center;
+  /* align-content: center; */
   align-items: center;
+  align-content: space-evenly;
+  flex-wrap: wrap;
   position: relative;
+}
+
+.edit-dropdown {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.button-img {
+  height: 15px;
+  width: 15px;
+  margin-bottom: 5px;
+}
+
+.dropdown-options {
+  display: flex;
+  flex-direction: column;
+  background-color: red;
+}
+
+.dropdown-option {
+  height: 25px;
+  border-width: .05px;
+  background-color: white;
+}
+
+.new-budget {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
 }

@@ -11,7 +11,6 @@ import BudgetDisplay from '../Budget/BudgetDisplay'
 import Expenses from '../Expenses/Expenses'
 // import Savings from '../Savings/Savings'
 // import Recurring from '../Recurring/Recurring'
-// import {remove, update, check, x} from '../img.json'
 
 function Home(){
 
@@ -93,7 +92,7 @@ function Home(){
     ) : (
       <div className='home-route'>
         <section className='top-section'>
-          <BudgetDisplay budget={budget} current={current}/>
+          <BudgetDisplay budget={budget} current={current} setRerender={setRerender}/>
           {/* <div className='line-graph'>
             <BarChart budget={budget} current={current}/>
           </div> */}

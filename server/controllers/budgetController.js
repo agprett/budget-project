@@ -11,11 +11,13 @@ module.exports = {
 
   updateBudget: async (req, res) => {
     const db = req.app.get('db')
-    const {category, amount} = req.body
+    const updated = req.body
     // const {user_id} = req.session.user
     const user_id = 1
 
-    await db.budget.update_budget([amount, user_id, category])
+    for(let key in updated){
+      await db.budget.update_budget([updated[key], user_id, key])
+    }
 
     res.sendStatus(200)
   },
