@@ -1,14 +1,14 @@
-.nav-bar {
-  height: 60px;
-  width: 100vw;
+.upper-nav {
+  height: 50px;
+  width: 100%;
   padding: 0px 15px;
-  position: fixed;
+  /* position: fixed; */
   top: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   z-index: 10;
-  background-color: #6b818c;
+  background-color: #6F49AB;
 }
 
 .nav-left {
@@ -22,6 +22,7 @@
 .nav-right {
   height: 100%;
   width: auto;
+  /* color: white; */
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -39,10 +40,30 @@
   padding: 5px;
 }
 
-/* .nav-logout {
-  height: 60px;
-  width: 60px;
-  margin: 10px;
-  position: absolute;
-  right: 5px;
-} */
+.nav-button:focus {
+  background-color: #B39FCC;
+  color: #564276;
+  border: 2.5px solid  #564276;
+}
+
+.lower-nav{
+  /* background-color: teal; */
+  display: flex;
+  background-color: #6F49AB;
+}
+
+.nav-lower-buttons{
+  height: 30px;
+  /* width: 75px; */
+  margin: 0px 10px;
+  padding: 5px 25px;
+  background-color: tomato;
+  border-radius: 0px 0px 10px 10px;
+  text-align: middle;
+  font-size: 17px;
+  border: none;
+}
+
+.stuff {
+  background-color: teal;
+}

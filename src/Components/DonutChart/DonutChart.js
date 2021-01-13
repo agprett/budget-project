@@ -3,7 +3,6 @@ import * as d3 from 'd3'
 import './DonutChart.css'
 
 function DonutChart(props){
-
   useEffect(() => {
     donut()
     return (() => {

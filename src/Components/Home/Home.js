@@ -12,9 +12,9 @@ import Expenses from '../Expenses/Expenses'
 // import Savings from '../Savings/Savings'
 // import Recurring from '../Recurring/Recurring'
 
-function Home(){
-
-  const [loading, setLoading] = useState(false)
+function Home(props){
+  const {overall} = props.user
+  const [loading, setLoading] = useState(true)
   const [budget, setBudget] = useState([])
   const [current, setCurrent] = useState([])
   const [expenses, setExpenses] = useState([])
@@ -25,9 +25,9 @@ function Home(){
   // const [editExpense, setEditExpense] = useState({})
   const [rerender, setRerender] = useState(false)
   
-  useEffect(() => {
-    setLoading(true)
-  }, [])
+  // useEffect(() => {
+  //   setLoading(true)
+  // }, [])
 
   useEffect(() => {
     axios.get('/api/budget')
@@ -87,21 +87,28 @@ function Home(){
   <div>
     {loading ? (
       <div className='loading'>
-        <Loading />
+        <Loading/>
       </div>
     ) : (
       <div className='home-route'>
         <section className='top-section'>
-          <BudgetDisplay budget={budget} current={current} setRerender={setRerender}/>
+          <BudgetDisplay overall={overall} budget={budget} current={current} setRerender={setRerender}/>
           {/* <div className='line-graph'>
             <BarChart budget={budget} current={current}/>
           </div> */}
           <section className='pie-chart'>
-            <DonutChart data={chartData}/>
+            <p className='title-one'>Title One</p>
+            <p className='title-two'>Title Two</p>
+            <p className='title-three'>Title Three</p>
+            <p className='text-one'>Text One</p>
+            <p className='text-two'>Text Two</p>
+            <p className='text-three'>Text Three</p>
+            <p className='text-four'>Text Four</p>
+            {/* {chartData[0] ? <DonutChart data={chartData}/> : <p>No Expenses</p>} */}
           </section>
         </section>
 
-        <Expenses expenses={expenses} setExpenses={setExpenses} setRerender={setRerender}/>
+        {/* <Expenses expenses={expenses} setExpenses={setExpenses} setRerender={setRerender}/> */}
 
         {/* <section className='bottom-section'>
           {recurring[0] ? (

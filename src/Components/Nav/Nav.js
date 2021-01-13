@@ -17,35 +17,49 @@ function Nav(props){
   }, [])
   
   return (
-    <div
-      className='nav-bar'
-    >
-      <div className='nav-left'>
-        
+    <section>
+      <div className='upper-nav'>
+        <div className='nav-left'>
+          
+        </div>
+        <section className='nav-right'>
+          <p className='title-three'>Welcome, {user.username}</p>
+          <img
+            className='prof-pic'
+            src={profile_pic}
+            alt='prof-pic'
+          />
+          <button
+            className='nav-button'
+            // onClick={() => {
+            //   axios.post('/api/user/logout')
+            //   .then(() => {
+            //     props.logoutUser()
+            //     props.history.push('/')
+            //   })
+            //   .catch(err => {
+            //     alert('Failed to sign out')
+            //     console.log(err)
+            //   })
+            // }}
+          >Sign Out</button>
+        </section>
       </div>
-      <section className='nav-right'>
-        <div>Welcome, {user.username}</div>
-        <img
-          className='prof-pic'
-          src={profile_pic}
-          alt='prof-pic'
-        />
+      <div className='lower-nav'>
         <button
-          className='nav-button'
+          className={props.location.pathname === '/home' ? 'nav-lower-buttons stuff' : 'nav-lower-buttons'}
           onClick={() => {
-            axios.post('/api/user/logout')
-            .then(() => {
-              props.logoutUser()
-              props.history.push('/')
-            })
-            .catch(err => {
-              alert('Failed to sign out')
-              console.log(err)
-            })
+            if(props.location.pathname !== '/home'){
+              props.history.push('/home')
+            }
           }}
-        >Sign Out</button>
-      </section>
-    </div>
+        >Home</button>
+        <button className='nav-lower-buttons'>Budget</button>
+        <button className='nav-lower-buttons'>Expenses</button>
+        <button className='nav-lower-buttons'>Savings</button>
+        <button className='nav-lower-buttons'>Debt</button>
+      </div>
+    </section>
   )
 }
 

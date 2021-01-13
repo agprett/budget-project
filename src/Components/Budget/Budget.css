@@ -1,9 +1,8 @@
 .budget-section {
-  height: 175px;
-  min-width: 300px;
-  max-width: 450px;
-  padding: 15px 20px;
-  background-color: #a4b8c4;
+  height: 285px;
+  width: 35%;
+  padding: 10px 15px;
+  background-color: #987DC1;
   text-align: center;
   box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
   border-radius: 25px;
@@ -50,4 +49,58 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
+}
+
+.budget-display {
+  height: 100%;
+  width: 100%;
+  padding: 0px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.main-budget {
+  height: 55px;
+  width: 80%;
+  margin: 5px auto;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.sub-budgets {
+  height: 150px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-content: space-between;
+  flex-wrap: wrap;
+  overflow-y: auto;
+  /* background-color: red; */
+}
+
+.sub-budget {
+  height: 50px;
+  width: 50%;
+  padding: 5px 10px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-content: space-between;
+  /* background-color: orange; */
+}
+
+.amount-bar {
+  height: 10px;
+  width: 100%;
+  background-color: #e0e0de;
+  border-radius: 10px;
+}
+
+.spent-bar {
+  height: 100%;
+  background-color: green;
+  border-radius: inherit;
+  text-align: right
 }

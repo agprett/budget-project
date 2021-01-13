@@ -5,7 +5,7 @@ import './Budget.css'
 import {x, dots} from '../img.json'
 
 function BudgetDisplay(props){
-  const {budget, current, setRerender} = props
+  const {budget, overall, current, setRerender} = props
   const [budgetView, setBudgetView] = useState('view')
   const [displayDropdown, setDisplayDropdown] = useState(false)
   const [updated, setUpdated] = useState({})
@@ -16,7 +16,7 @@ function BudgetDisplay(props){
 
     for(let i = 0; i < current.length; i++){
       if(current[i].category === category){
-        return amount = current[i].amount
+        return amount = (current[i].amount ? current[i].amount : 0)
       }
       amount = 0
     }
@@ -29,16 +29,23 @@ function BudgetDisplay(props){
 
     if(budgetView === 'view'){
       return (
-        <section key={i}>
+        <section className='sub-budget' key={i}>
           <p>{category}:</p>
-          <p>${spent(category)} / ${amount}</p> 
+          <p>${spent(category)} / ${amount}</p>
+          <div className='amount-bar'>
+            <div className='spent-bar'
+              style={{width: `${spent(category)/amount*100}%`}}
+            >
+            </div>
+          </div>
         </section>
       )
     } else if(budgetView === 'edit'){
       return (
-        <section key={i}>
+        <section className='sub-budget' key={i}>
           <p>{category}:</p>
           <input
+            style={{width: '100%'}}
             placeholder={amount}
             value={updated[category]}
             onChange={data => (
@@ -51,7 +58,6 @@ function BudgetDisplay(props){
   })
 
   return (
-    <section>
       <section className='budget-section'>
         {displayDropdown ? (
           <section className='edit-dropdown'>
@@ -76,7 +82,7 @@ function BudgetDisplay(props){
               >Edit Budget Amounts</button>
               <button className='dropdown-option'
                 onClick={() => {
-                  // setBudgetView('new')
+                  setBudgetView('new')
                   setDisplayDropdown(false)
                 }}
               >New Budget</button>
@@ -119,8 +125,31 @@ function BudgetDisplay(props){
             >Save</button>
           </section>
         ) : (
-          <section>
-            {displayed}
+          <section className='budget-display'>
+            {budgetView === 'edit' ? (
+              <div className='main-budget'>
+                <p className='title-three'>Monthly Budget:</p>
+                <input
+                  style={{width: '80%'}}
+                  placeholder={overall}
+                  // onChange
+                />
+              </div>
+            ) : (
+              <div className='main-budget'>
+                <p className='title-three'>Monthly Budget:</p>
+                <p>${spent('Overall')} / ${overall}</p>
+                <div className='amount-bar'>
+                  <div className='spent-bar'
+                    style={{width: `${spent('Overall')/overall*100}%`}}
+                  >
+                  </div>
+                </div>
+              </div>
+            )}
+            <div className='sub-budgets'>
+              {displayed}
+            </div>
             {budgetView === 'edit' ? (
               <button
                 onClick={() => {
@@ -135,7 +164,6 @@ function BudgetDisplay(props){
           </section>
         )}
       </section>
-    </section>
   )
 }
 

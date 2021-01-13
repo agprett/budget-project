@@ -2,164 +2,234 @@ import React, {useState} from 'react'
 import moment from 'moment'
 import axios from 'axios'
 import './Expenses.css'
+import {remove} from '../img.json'
 
 function Expenses(props) {
   const {expenses, setExpenses, setRerender} = props
-  const [display, setDisplay] = useState('New')
-  const [newExpense, setNewExpense] = useState({name: '', category: '', amount: ''})
+  const [form, setForm] = useState(false)
+  const [edit, setEdit] = useState(false)
+  const [filterDisplay, setFilterDisplay] = useState(false)
   const [filters, setFilters] = useState({name: '', category: '', start: '', end: '', low: '', high: ''})
+  const [newExpense, setNewExpense] = useState({name: '', category: '', date: '', amount: ''})
+  // const [filters, setFilters] = useState({name: '', category: '', start: '', end: '', low: '', high: ''})
 
   const addNewExpense = () => {
     axios.post('/api/expenses', newExpense)
     .then(() => {
-      setNewExpense({name: '', category: '', amount: 0})
+      setNewExpense({name: '', category: '', date: '', amount: 0})
       setRerender(true)
     })
   }
 
-  const filterExpenses = (filters, reset) => {
-    if(reset){
-      axios.get('/api/expenses')
-      .then(res => {
-        setExpenses(res.data)
-      })
-    } else {
-      axios.post('/api/filter', filters)
-      .then(res => {
-        setExpenses(res.data.filtered)
-        setFilters(res.data.filters)
-      })
-    }
-  }
+  // const filterExpenses = (filters, reset) => {
+  //   if(reset){
+  //     axios.get('/api/expenses')
+  //     .then(res => {
+  //       setExpenses(res.data)
+  //     })
+  //   } else {
+  //     axios.post('/api/filter', filters)
+  //     .then(res => {
+  //       setExpenses(res.data.filtered)
+  //       setFilters(res.data.filters)
+  //     })
+  //   }
+  // }
   
   const viewExpenses = expenses.map((expense, i) => { 
     const {name, category, date, amount} = expense
 
     return (
-      <section key={i} className='expenses' style={{backgroundColor: i % 2 === 1 ? 'grey' : '#01a7c2'}}>
-        <h2 className='expense-name'>{name}</h2>
-        <p className='expense-category'>{category}</p>
-        <h4 className='expense-date'>{moment(date).format('MM/DD/YY')}</h4>
-        <h2 className='expense-amount'>$ {amount}</h2>
-      </section>
+      edit ? (
+        <section key={i} className='expenses' style={{backgroundColor: i % 2 === 1 ? '#F5F5F5' : '#987DC1'}}>
+          <input
+            className='expense-name'
+            placeholder={name}
+          />
+          <input
+            className='expense-category'
+            placeholder={category}
+          />
+          <input
+            className='expense-date'
+            placeholder={moment(date).format('MM/DD/YY')}
+          />
+          <input
+            className='expense-amount'
+            placeholder={amount}
+          />
+          <img
+            className={edit ? 'remove' : 'null'}
+            src={remove}
+            alt='delete'
+          />
+        </section>
+      ) : (
+        <section key={i} className='expenses' style={{backgroundColor: i % 2 === 1 ? '#F5F5F5' : '#987DC1'}}>
+          <h2 className='expense-name'>{name}</h2>
+          <p className='expense-category'>{category}</p>
+          <h4 className='expense-date'>{moment(date).format('MM/DD/YY')}</h4>
+          <h2 className='expense-amount'>$ {amount}</h2>
+        </section>
+      )
     )
   })
 
   return (
     <section className='expense-section'>
-      <section className='expense-left'>
-        <section className='expense-left-buttons'>
+
+      <section className={form ? 'new-expense-form' : 'null'}>
+        <div>
+          <p>Name</p>
+          <input
+            value={newExpense.name}
+            onChange={event => setNewExpense({...newExpense, name: event.target.value})}
+            />
+        </div>
+        <div>
+          <p>Category</p>
+          <input
+            value={newExpense.category}
+            onChange={event => setNewExpense({...newExpense, category: event.target.value})}
+          />
+        </div>
+        <div>
+          <p>Amount</p>
+          <input
+            value={newExpense.amount}
+            onChange={event => setNewExpense({...newExpense, amount: event.target.value})}
+          />
+        </div>
+        <section>
           <button
-            onClick={() => setDisplay('New')}
-          >New</button>
+            style={{margin: '10px'}}
+            onClick={() => {
+              addNewExpense()
+            }}
+          >Add</button>
           <button
-            onClick={() => setDisplay('Filter')}
-          >Filter</button>
+            style={{margin: '10px'}}
+            onClick={() => {
+              setNewExpense({name: '', category: '', date: '', amount: 0})
+              setForm(false)
+            }}
+          >Cancel</button>
         </section>
-        {display === 'New' ? (
-          <section className='expense-forms'>
+      </section>
+
+      <section className='expense-left'>
+        <section className='filter-expense-form'>
+          <p className='title-two'>Filters:</p>
+          <div className='filter-options'>
+            <p>Name</p>
             <input
-              placeholder='Name'
-              value={newExpense.name}
-              onChange={event => setNewExpense({...newExpense, name: event.target.value})}
-            />
-            <input
-              placeholder='Category'
-              value={newExpense.category}
-              onChange={event => setNewExpense({...newExpense, category: event.target.value})}
-            />
-            {/* <Dropdown /> */}
-            <input
-              placeholder='Amount'
-              value={newExpense.amount}
-              onChange={event => setNewExpense({...newExpense, amount: event.target.value})}
-            />
-            <div className='add-expense-buttons'>
-              <button
-                style={{margin: '10px'}}
-                onClick={() => {
-                  addNewExpense()
-                }}
-              >Add</button>
-              <button
-                style={{margin: '10px'}}
-                onClick={() => {
-                  setNewExpense({name: '', category: '', amount: 0})
-                }}
-              >Cancel</button>
-            </div>
-          </section>
-        ) : (
-          <section className='expense-forms'>
-            <input
+              className='filter-input-l'
               value={filters.name}
-              placeholder='Name'
-              onChange={event => {
-                setFilters({...filters, name: event.target.value})
-              }}
-            />
-            <input
-              value={filters.category}
-              placeholder='Category'
               onChange={event => (
-                setFilters({...filters, category: event.target.value})
+                setFilters({...filters, name: event.target.value})
               )}
             />
-            <section>
+          </div>
+          <div className='filter-options'>
+            <p>Category</p>
+            <input
+              className='filter-input-l'
+              value={filters.category}
+              onChange={event => {
+                setFilters({...filters, category: event.target.value})
+              }}
+            />
+          </div>
+          <div className='filter-options'>
+            <p>Dates</p>
+            <div className='filter-split'>
               <input
+                className='filter-input-s'
                 value={filters.start}
-                placeholder='MM/DD/YY'
-                onChange={event => {
+                onChange={event => (
                   setFilters({...filters, start: event.target.value})
-                }}
+                )}
               />
-              to 
+              <div className='filter-spacer'>to</div>
               <input
+                className='filter-input-s'
                 value={filters.end}
-                placeholder='MM/DD/YY'
                 onChange={event => {
                   setFilters({...filters, end: event.target.value})
                 }}
               />
-            </section>
-            <section>
+            </div>
+          </div>
+          <div className='filter-options'>
+            <p>Amount</p>
+            <div className='filter-split'>
+              <div>
+                <p>Low:</p>
+                <input
+                  className='filter-input-s'
+                  value={filters.low}
+                  onChange={event => {
+                    setFilters({...filters, low: event.target.value})
+                  }}
+                />
+              </div>
+              <div className='filter-spacer'>to</div>
+              <p>High:</p>
               <input
-                value={filters.low}
-                placeholder='Minimum'
-                onChange={event => {
-                  setFilters({...filters, low: event.target.value})
-                }}
-              />
-              to
-              <input
+                className='filter-input-s'
                 value={filters.high}
-                placeholder='Maximum'
                 onChange={event => {
                   setFilters({...filters, high: event.target.value})
                 }}
               />
-            </section>
-            <section>
-              <button
-                onClick={() => {
-                  filterExpenses(filters, false)
-                  setFilters({name: '', category: '', start: '', end: '', low: '', high: ''})
-                }}
-              >Filter</button>
-              <button
-                onClick={() => {
-                  filterExpenses(filters, true)
-                  setFilters({name: '', category: '', start: '', end: '', low: '', high: ''})
-                }}
-              >Cancel</button>
-            </section>
-          </section>
-        )}
-      </section>
-          <section className='expenses-view'>
-            {expenses[0] ? viewExpenses : <section style={{textAlign: 'center'}}>No Expenses to Show</section>}
-          </section>
+            </div>
+          </div>
+          <div>
+            <button
+              onClick={() => {
+                // set
+              }}
+            >Add Filter(s)</button>
+            <button
+              onClick={() => {
+                setFilters({name: '', category: '', start: '', end: '', low: '', high: ''})
+              }}
+            >Clear All</button>
+          </div>
         </section>
+      </section>
+
+      <section className='expense-right'>
+        {edit ? (
+          <div>
+            <button className='expense-button'>Save</button>
+            <button
+              className='expense-button'
+              onClick={() => setEdit(false)}
+            >Cancel</button>
+          </div>
+        ) : (
+          <div>
+            <button
+              className='expense-button'
+              onClick={() => setForm(true)}
+            >New Expense</button>
+            <button
+              className='expense-button'
+              onClick={() => setEdit(true)}
+            >Edit Expenses</button>
+            <button
+              className='expense-button'
+              onClick={() => (setFilterDisplay(true))}
+            >Filter Expenses</button>
+          </div>
+        )}
+        <section className='expenses-view'>
+          {expenses[0] ? viewExpenses : <section style={{textAlign: 'center'}}>No Expenses to Show</section>}
+        </section>
+      </section>
+
+    </section>
   )
 }
 

@@ -13,8 +13,9 @@ CREATE TABLE users (
   profile_pic TEXT
 );
 
-CREATE TABLE budget (
+CREATE TABLE budgets (
   user_id INTEGER REFERENCES users(user_id),
+  order INTEGER,
   category VARCHAR(15),
   amount INTEGER
 );
@@ -63,7 +64,7 @@ CREATE TABLE debts (
 );
 
 SELECT * FROM users;
-SELECT * FROM budget;
+SELECT * FROM budgets;
 SELECT * FROM expenses;
 SELECT * FROM recurring;
 SELECT * FROM savings;
