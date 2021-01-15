@@ -110,17 +110,17 @@ function Home(props){
 
         {/* <Expenses expenses={expenses} setExpenses={setExpenses} setRerender={setRerender}/> */}
 
-        {/* <section className='bottom-section'>
-          {recurring[0] ? (
-            <Recurring recurring={recurring}/>
-          ) : null}
-          {savings ? (
-            <Savings savings={savings}/>
-          ) : null}
+        <section className='bottom-section'>
+          <section className='quick-view'>
+            <h3>Savings</h3>
+          </section>
+          <section className='quick-view'>
+            <h3>Recurring</h3>
+          </section>
           <section className='quick-view'>
             <h3>Total Debt: $ 0</h3>
           </section>
-        </section> */}
+        </section>
       </div>
     )}
   </div>
