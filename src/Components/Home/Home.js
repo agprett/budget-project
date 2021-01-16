@@ -104,7 +104,6 @@ function Home(props){
             <p className='text-two'>Text Two</p>
             <p className='text-three'>Text Three</p>
             <p className='text-four'>Text Four</p>
-            {/* {chartData[0] ? <DonutChart data={chartData}/> : <p>No Expenses</p>} */}
           </section>
         </section>
 
