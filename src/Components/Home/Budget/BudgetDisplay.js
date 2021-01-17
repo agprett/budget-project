@@ -26,8 +26,7 @@ function BudgetDisplay(props){
 
   const displayed = budget.map((budget, i) => {
     const {category, amount} = budget
-
-    if(budgetView === 'view'){
+    
       return (
         <section className='sub-budget' key={i}>
           <p>{category}:</p>
@@ -40,102 +39,11 @@ function BudgetDisplay(props){
           </div>
         </section>
       )
-    } else if(budgetView === 'edit'){
-      return (
-        <section className='sub-budget' key={i}>
-          <p>{category}:</p>
-          <input
-            style={{width: '100%'}}
-            placeholder={amount}
-            value={updated[category]}
-            onChange={data => (
-              setUpdated({...updated, [category]: +data.target.value})
-            )}
-          />
-        </section>
-      )
-    }
   })
 
   return (
       <section className='budget-section'>
-        {displayDropdown ? (
-          <section className='edit-dropdown'>
-            <img
-              className='button-img'
-              src={x}
-              alt='x'
-              onClick={() => setDisplayDropdown(false)}
-            />
-            <section className='dropdown-options'>
-              <button className='dropdown-option'
-                onClick={() => {
-                  setBudgetView('view')
-                  setDisplayDropdown(false)
-                }}
-              >View Budget Amounts</button>
-              <button className='dropdown-option'
-                onClick={() => {
-                  setBudgetView('edit')
-                  setDisplayDropdown(false)
-                }}
-              >Edit Budget Amounts</button>
-              <button className='dropdown-option'
-                onClick={() => {
-                  setBudgetView('new')
-                  setDisplayDropdown(false)
-                }}
-              >New Budget</button>
-            </section>
-          </section>
-        ) : (
-          <img
-            className='edit-dropdown button-img'
-            src={dots}
-            alt='...'
-            onClick={() => {setDisplayDropdown(true)}}
-          />
-        )}
-        {budgetView === 'new' ? (
-          <section className='new-budget'>
-            <input
-              placeholder='Category'
-              value={newBudget.category}
-              onChange={data => {
-                setNewBudget({...newBudget, category: data.target.value})
-              }}
-            />
-            <input
-              placeholder='Amount'
-              value={newBudget.amount}
-              onChange={data => {
-                setNewBudget({...newBudget, amount: data.target.value})
-              }}
-            />
-            <button
-              onClick={() => {
-                axios.post('/api/budget', newBudget)
-                .then(() => {
-                  setRerender(true)
-                  setNewBudget({category: '', amount: 0})
-                  setBudgetView('view')
-                })
-                .catch(() => alert('Failed to add'))
-              }}
-            >Save</button>
-          </section>
-        ) : (
           <section className='budget-display'>
-            {budgetView === 'edit' ? (
-              <div className='main-budget'>
-                <p className='title-three'>Monthly Budget:</p>
-                <input
-                  style={{width: '80%'}}
-                  placeholder={overall}
-                  // onChange
-                />
-              </div>
-            ) : (
               <div className='main-budget'>
                 <p className='title-three'>Monthly Budget:</p>
                 <p>${spent('Overall')} / ${overall}</p>
@@ -146,23 +54,10 @@ function BudgetDisplay(props){
                   </div>
                 </div>
               </div>
-            )}
             <div className='sub-budgets'>
               {displayed}
             </div>
-            {budgetView === 'edit' ? (
-              <button
-                onClick={() => {
-                  axios.put('/api/budget', updated)
-                  .then(() => {
-                    setUpdated({})
-                    setRerender(true)
-                  })
-                }}
-              >Update</button>
-            ) : null }
           </section>
-        )}
       </section>
   )
 }

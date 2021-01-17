@@ -1,6 +1,6 @@
 .budget-section {
   height: 285px;
-  width: 35%;
+  width: 55%;
   padding: 10px 15px;
   background-color: #987DC1;
   text-align: center;
@@ -15,63 +15,28 @@
   position: relative;
 }
 
-.edit-dropdown {
-  position: absolute;
-  right: 20px;
-  top: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.button-img {
-  height: 15px;
-  width: 15px;
-  margin-bottom: 5px;
-}
-
-.dropdown-options {
-  display: flex;
-  flex-direction: column;
-  background-color: red;
-}
-
-.dropdown-option {
-  height: 25px;
-  border-width: .05px;
-  background-color: white;
-}
-
-.new-budget {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-}
-
 .budget-display {
   height: 100%;
   width: 100%;
   padding: 0px 10px;
   display: flex;
-  flex-direction: column;
   justify-content: space-evenly;
+  align-items: center;
 }
 
 .main-budget {
-  height: 55px;
-  width: 80%;
-  margin: 5px auto;
+  height: 80px;
+  width: 35%;
+  margin: 5px 15px;
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
   flex-wrap: wrap;
 }
 
 .sub-budgets {
-  height: 150px;
-  width: 100%;
+  min-height: 60%;
+  width: 60%;
   display: flex;
   justify-content: flex-start;
   align-content: space-between;
