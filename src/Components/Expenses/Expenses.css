@@ -3,6 +3,7 @@
   width: 90%;
   position: relative;
   margin: 10px;
+  margin-top: 80px;
   /* padding: 10px 15px; */
   display: flex;
   justify-content: space-evenly;
@@ -41,7 +42,7 @@
 .expenses-view {
   height: 350px;
   width: 100%;
-  /* padding: 15px; */
+  padding: 15px;
   border-radius: 10px;
   /* background-color: #67597A; */
   /* box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26); */

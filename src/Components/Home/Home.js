@@ -8,7 +8,6 @@ import Loading from '../Loading/Loading'
 // import BarChart from '../BarChart/BarChart'
 // import DonutChart from '../DonutChart/DonutChart'
 import BudgetDisplay from './BudgetDisplay/BudgetDisplay'
-// import Expenses from '../Expenses/Expenses'
 // import Savings from '../Savings/Savings'
 // import Recurring from '../Recurring/Recurring'
 
@@ -21,8 +20,6 @@ function Home(props){
   const [chartData, setChartData] = useState({})
   // const [recurring, setRecurring] = useState([])
   // const [savings, setSavings] = useState([])
-  // const [newExpense, setNewExpense] = useState({name: '', category: '', amount: ''})
-  // const [editExpense, setEditExpense] = useState({})
   const [rerender, setRerender] = useState(false)
   
   // useEffect(() => {
