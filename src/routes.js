@@ -5,6 +5,7 @@ import Register from './Components/Register/Register'
 import Home from './Components/Home/Home'
 import Budget from './Components/Budget/Budget'
 import Expenses from './Components/Expenses/Expenses'
+import Savings from './Components/Savings/Savings'
 
 export default (
   <Switch>
@@ -13,5 +14,6 @@ export default (
     <Route path='/home' component={Home} />
     <Route path='/budget' component={Budget} />
     <Route path='/expenses' component={Expenses} />
+    <Route path='/savings' component={Savings} />
   </Switch>
 )

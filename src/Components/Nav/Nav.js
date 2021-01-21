@@ -70,8 +70,14 @@ function Nav(props){
             }
           }}
         >Expenses</button>
-        <button className='nav-lower-buttons'>Savings</button>
-        <button className='nav-lower-buttons'>Debt</button>
+        <button
+          className={props.location.pathname === '/savings' ? 'nav-lower-buttons stuff' : 'nav-lower-buttons'}
+          onClick={() => {
+            if(props.location.pathname !== '/savings'){
+              props.history.push('/savings')
+            }
+          }}
+        >Savings</button>
       </div>
     </section>
   )
