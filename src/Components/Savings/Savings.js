@@ -15,7 +15,13 @@ function Savings() {
   
   return (
     <section className='savings'>
-      <h3> Total savings: $ {savings.overall}</h3>
+      <h3 className='overall-savings'> Total savings: $ {savings.overall}</h3>
+      <section className='goals'>
+        <div>goals</div>
+      </section>
+      <section className='accounts'>
+        <div>accounts</div>
+      </section>
     </section>
   )
 }

@@ -3,3 +3,22 @@
   width: 100%;
   background-color: powderblue;
 }
+
+.overall-savings {
+  height: 30%;
+  width: 45%;
+  background-color: purple;
+}
+
+.goals {
+  height: 100%;
+  width: 45%;
+  float: right;
+  background-color: orange;
+}
+
+.accounts {
+  height: 45%;
+  width: 45%;
+  background-color: red;
+}
