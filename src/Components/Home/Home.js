@@ -22,9 +22,9 @@ function Home(props){
   // const [savings, setSavings] = useState([])
   const [rerender, setRerender] = useState(false)
   
-  // useEffect(() => {
-  //   setLoading(true)
-  // }, [])
+  useEffect(() => {
+    setLoading(true)
+  }, [])
 
   useEffect(() => {
     axios.get('/api/budget')

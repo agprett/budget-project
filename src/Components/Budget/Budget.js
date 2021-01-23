@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react'
+import {connect} from 'react-redux'
 import axios from 'axios'
 import './Budget.css'
 
-function Budget(){
+function Budget(props){
+  const {overall} = props.user
   const [budget, setBudget] = useState([])
   const [current, setCurrent] = useState([])
 
@@ -54,7 +56,7 @@ function Budget(){
     <section className='budget-page'>
       <div className='budget-left'>
         <div className='budget-overall'>
-          <div>Monthly Budget</div>
+          <div>Monthly Budget: {overall}</div>
           <div>amounts</div>
         </div>
         <div className='budget-pie-chart'>Pie Chart</div>
@@ -66,4 +68,6 @@ function Budget(){
   )
 }
 
-export default(Budget)
+const mapStateToProps = state => state
+
+export default connect(mapStateToProps, {})(Budget)
