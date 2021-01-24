@@ -57,7 +57,7 @@ function Budget(props){
       <div className='budget-left'>
         <div className='budget-overall'>
           <div>Monthly Budget: {overall}</div>
-          <div>amounts</div>
+          <div>Spent: {spent("Overall")}</div>
         </div>
         <div className='budget-pie-chart'>Pie Chart</div>
       </div>
