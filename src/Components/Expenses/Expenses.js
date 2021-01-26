@@ -81,6 +81,7 @@ function Expenses() {
           <div className='expenses-view'>
             {expenses[0] ? viewExpenses : <div style={{textAlign: 'center'}}>No Expenses to Show</div>}
           </div>
+          <div>Hello</div>
         </section>
 
     </section>
