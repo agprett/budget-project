@@ -49,6 +49,13 @@
   margin: 10px;
 }
 
+.expense-filter {
+  width: 100%;
+  background-color: powderblue;
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .expenses-view {
   height: 350px;
   width: 100%;

@@ -78,10 +78,29 @@ function Expenses() {
           </div>
         </section>
         <section className='expense-right'>
+          <section className='expense-filter'>
+            <input
+              placeholder='Name'
+            />
+            <input 
+              placeholder='Category'
+            />
+            <input
+              placeholder='Start Date'
+            />
+            <input
+              placeholder='End Date'
+            />
+            <input
+              placeholder='Minimum'
+            />
+            <input
+              placeholder='Maximum'
+            />
+          </section>
           <div className='expenses-view'>
             {expenses[0] ? viewExpenses : <div style={{textAlign: 'center'}}>No Expenses to Show</div>}
           </div>
-          <div>Hello</div>
         </section>
 
     </section>
