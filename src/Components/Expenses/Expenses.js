@@ -6,9 +6,20 @@ import './Expenses.css'
 function Expenses() {
   const [expenses, setExpenses] = useState([])
   const [newExpense, setNewExpense] = useState({name: '', category: '', amount: 0})
+  const [recurring, setRecurring] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    setLoading(true)
+  }, [])
+
+  useEffect(() => {
+    axios.get('/api/recurring')
+    .then(res => {
+      setRecurring(res.data)
+    })
+    .catch(err => console.log(err))
+
     axios.get('/api/expenses')
     .then(res => {
       setExpenses(res.data)
@@ -17,7 +28,7 @@ function Expenses() {
       }, 500)
     })
     .catch(err => console.log(err))
-  })
+  }, [])
 
   const addNewExpense = newExpense => {
     axios.post('api/expenses', newExpense)
@@ -37,6 +48,24 @@ function Expenses() {
         <h4 className='expense-date'>{moment(date).format('MM/DD/YY')}</h4>
         <h2 className='expense-amount'>$ {amount}</h2>
       </section>
+    )
+  })
+
+  const viewRecurring = recurring.map((purchase, i) => {
+    const {name, category, date, amount} = purchase
+
+    return (
+      <div key={i} className='recure'>
+        <h2 className='recure-name'>{name}</h2>
+        <h2 className='recure-category'>{category}</h2>
+        <h2 className='recure-date'>{moment(date).format('MM/DD/YY')}</h2>
+        <h2 className='recure-amount'>$ {amount}</h2>
+        <button
+          onClick={() => {
+            newExpense(name, category, amount)
+          }}
+        >Pay now</button>
+      </div>
     )
   })
 
@@ -101,6 +130,9 @@ function Expenses() {
           <div className='expenses-view'>
             {expenses[0] ? viewExpenses : <div style={{textAlign: 'center'}}>No Expenses to Show</div>}
           </div>
+        </section>
+        <section className='recurring'>
+          {viewRecurring}
         </section>
 
     </section>
