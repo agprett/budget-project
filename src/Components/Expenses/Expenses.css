@@ -110,10 +110,13 @@
 .recurring {
   margin: 25px;
   display: flex;
-  background-color: purple;
 }
 
 .recure {
-  height: auto;
-  margin: 20px;
+  height: 200px;
+  width: auto;
+  padding: 25px;
+  margin: 20px 30px;
+  border-radius: 10px;
+  background-color: powderblue;
 }
