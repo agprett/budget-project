@@ -43,7 +43,7 @@ function BudgetDisplay(props){
 
   return (
       <section className='budget-section'>
-          <section className='budget-display'>
+          {/* <section className='budget-display'> */}
               <div className='main-budget'>
                 <p className='title-three'>Monthly Budget:</p>
                 <p>${spent('Overall')} / ${overall}</p>
@@ -57,7 +57,7 @@ function BudgetDisplay(props){
             <div className='sub-budgets'>
               {displayed}
             </div>
-          </section>
+          {/* </section> */}
       </section>
   )
 }

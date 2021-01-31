@@ -61,7 +61,7 @@ function Budget(props){
         </div>
         <div className='budget-pie-chart'>Pie Chart</div>
       </div>
-      <div className='sub-budgets'>
+      <div className='budgets-sub'>
         {viewSubs}
       </div>
     </section>
