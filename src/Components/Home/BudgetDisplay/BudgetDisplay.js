@@ -27,38 +27,36 @@ function BudgetDisplay(props){
   const displayed = budget.map((budget, i) => {
     const {category, amount} = budget
     
-      return (
-        <section className='sub-budget' key={i}>
-          <p>{category}:</p>
-          <p>${spent(category)} / ${amount}</p>
-          <div className='amount-bar'>
-            <div className='spent-bar'
-              style={{width: `${spent(category)/amount*100}%`}}
-            >
-            </div>
+    return (
+      <section className='sub-budget' key={i}>
+        <p>{category}:</p>
+        <p>${spent(category)} / ${amount}</p>
+        <div className='amount-bar'>
+          <div className='spent-bar'
+            style={{width: `${spent(category)/amount*100}%`}}
+          >
           </div>
-        </section>
-      )
+        </div>
+      </section>
+    )
   })
 
   return (
-      <section className='budget-section'>
-          {/* <section className='budget-display'> */}
-              <div className='main-budget'>
-                <p className='title-three'>Monthly Budget:</p>
-                <p>${spent('Overall')} / ${overall}</p>
-                <div className='amount-bar'>
-                  <div className='spent-bar'
-                    style={{width: `${spent('Overall')/overall*100}%`}}
-                  >
-                  </div>
-                </div>
-              </div>
-            <div className='sub-budgets'>
-              {displayed}
-            </div>
-          {/* </section> */}
-      </section>
+    <section className='budget-section'>
+      <div className='main-budget'>
+        <p className='title-three'>Monthly Budget:</p>
+        <p>${spent('Overall')} / ${overall}</p>
+        <div className='amount-bar'>
+          <div className='spent-bar'
+            style={{width: `${spent('Overall')/overall*100}%`}}
+          >
+          </div>
+        </div>
+      </div>
+      <div className='sub-budgets'>
+        {displayed}
+      </div>
+    </section>
   )
 }
 
