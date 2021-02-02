@@ -19,13 +19,13 @@ function Savings() {
       setGoals(res.data)
     })
     .catch(err => console.log(err))
-  })
+  }, [])
 
   const viewGoals = goals.map((goal, i) => {
     const {goal_amount, saved_amount, name, goal_date, monthly_amount} = goal
     
     return (
-      <section key={i}>
+      <section key={i} className='savings-goal'>
         <div>{goal_amount}</div>
         <div>{saved_amount}</div>
         <div>{name}</div>
@@ -39,9 +39,7 @@ function Savings() {
     <section className='savings'>
       <h3 className='overall-savings'> Total savings: $ {savings.overall}</h3>
       <section className='goals'>
-        <div>
-          {viewGoals}
-        </div>
+        {viewGoals}
       </section>
       <section className='accounts'>
         <div>accounts</div>

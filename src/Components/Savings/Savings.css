@@ -1,20 +1,30 @@
 .savings {
   margin-top: 80px;
-  width: 100%;
+  height: 85vh;
+  width: 100vw;
   background-color: powderblue;
 }
 
 .overall-savings {
   height: 30%;
   width: 45%;
+  margin: 25px;
   background-color: purple;
 }
 
 .goals {
-  height: 100%;
+  height: 85vh;
   width: 45%;
-  float: right;
+  position: absolute;
+  top: 80px;
+  right: 0px;
   background-color: orange;
+}
+
+.savings-goal {
+  height: 150px;
+  width: 170px;
+  background-color: blue;
 }
 
 .accounts {
