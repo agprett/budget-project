@@ -1,12 +1,18 @@
 import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
 import axios from 'axios'
+import Loading from '../Loading/Loading'
 import './Budget.css'
 
 function Budget(props){
   const {overall} = props.user
+  const [loading, setLoading] = useState(false)
   const [budget, setBudget] = useState([])
   const [current, setCurrent] = useState([])
+
+  useEffect(() => {
+    setLoading(true)
+  }, [])
 
   useEffect(() => {
     axios.get('api/expenses/current')
@@ -18,6 +24,9 @@ function Budget(props){
     axios.get('api/budget')
       .then(res => {
         setBudget(res.data)
+        setTimeout(() => {
+          setLoading(false)
+        }, 500)
       })
       .catch(err => console.log(err))
   }, [])
@@ -53,17 +62,25 @@ function Budget(props){
   })
 
   return (
-    <section className='budget-page'>
-      <div className='budget-left'>
-        <div className='budget-overall'>
-          <div>Monthly Budget: {overall}</div>
-          <div>Spent: {spent("Overall")}</div>
+    <section>
+      {loading == true ? (
+        <div className='loading'>
+          <Loading/>
         </div>
-        <div className='budget-pie-chart'>Pie Chart</div>
-      </div>
-      <div className='budgets-sub'>
-        {viewSubs}
-      </div>
+      ) : (
+        <section className='budget-page'>
+          <div className='budget-left'>
+            <div className='budget-overall'>
+            <div>Monthly Budget: {overall}</div>
+            <div>Spent: {spent("Overall")}</div>
+          </div>
+            <div className='budget-pie-chart'>Pie Chart</div>
+          </div>
+          <div className='budgets-sub'>
+            {viewSubs}
+          </div>
+        </section>
+      )}
     </section>
   )
 }
