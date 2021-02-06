@@ -1,11 +1,17 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import moment from 'moment'
+import Loading from '../Loading/Loading'
 import './Savings.css'
 
 function Savings() {
   const [savings, setSavings] = useState([])
   const [goals, setGoals] = useState([])
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    setLoading(true)
+  }, [])
 
   useEffect(() => {
     axios.get('/api/savings')
@@ -17,6 +23,9 @@ function Savings() {
     axios.get('/api/goals')
     .then(res => {
       setGoals(res.data)
+      setTimeout(() => {
+        setLoading(false)
+      }, 500)
     })
     .catch(err => console.log(err))
   }, [])
@@ -36,14 +45,22 @@ function Savings() {
   })
   
   return (
-    <section className='savings'>
-      <h3 className='overall-savings'> Total savings: $ {savings.overall}</h3>
-      <section className='goals'>
-        {viewGoals}
-      </section>
-      <section className='accounts'>
-        <div>accounts</div>
-      </section>
+    <section>
+      {loading ? (
+        <div className='loading'>
+          <Loading/>
+        </div>
+      ) : (
+        <section className='savings'>
+          <h3 className='overall-savings'> Total savings: $ {savings.overall}</h3>
+          <section className='goals'>
+            {viewGoals}
+          </section>
+          <section className='accounts'>
+            <div>accounts</div>
+          </section>
+        </section>
+      )}
     </section>
   )
 }
