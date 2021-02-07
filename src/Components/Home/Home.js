@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
-// import moment from 'moment'
+import moment from 'moment'
 import axios from 'axios'
 // import {Link} from 'react-router-dom'
 import './Home.css'
@@ -87,11 +87,13 @@ function Home(props){
   // }
 
   const viewRecuring = recurring.map((recure, i) => {
-    const {name} = recure
+    const {name, amount, date} = recure
 
     return (
-      <section className='view-recurring'>
+      <section className='view-recurring' key={i}>
         <div>{name}</div>
+        <div>{amount}</div>
+        <div>{moment(date).format('MM/DD/YY')}</div>
       </section>
     )
   })
