@@ -5,7 +5,7 @@ import './BudgetDisplay.css'
 import {x, dots} from '../../img.json'
 
 function BudgetDisplay(props){
-  const {budget, overall, current, setRerender} = props
+  const {budget, current, setRerender} = props
   const [budgetView, setBudgetView] = useState('view')
   const [displayDropdown, setDisplayDropdown] = useState(false)
   const [updated, setUpdated] = useState({})
@@ -43,16 +43,6 @@ function BudgetDisplay(props){
 
   return (
     <section className='budget-section'>
-      <div className='main-budget'>
-        <p className='title-three'>Monthly Budget:</p>
-        <p>${spent('Overall')} / ${overall}</p>
-        <div className='amount-bar'>
-          <div className='spent-bar'
-            style={{width: `${spent('Overall')/overall*100}%`}}
-          >
-          </div>
-        </div>
-      </div>
       <div className='sub-budgets'>
         {displayed}
       </div>

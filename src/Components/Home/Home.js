@@ -2,14 +2,11 @@ import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
 import moment from 'moment'
 import axios from 'axios'
-// import {Link} from 'react-router-dom'
 import './Home.css'
 import Loading from '../Loading/Loading'
 // import BarChart from '../BarChart/BarChart'
 // import DonutChart from '../DonutChart/DonutChart'
 import BudgetDisplay from './BudgetDisplay/BudgetDisplay'
-// import Savings from '../Savings/Savings'
-// import Recurring from '../Recurring/Recurring'
 
 function Home(props){
   const {overall} = props.user
@@ -76,15 +73,18 @@ function Home(props){
     
   }, [rerender])
 
-  // const handleEditExpense = () => {
-  //   axios.put(`/api/expenses/${editting.expense}`, editExpense)
-  //   .then(() => {
-  //     setEditting({...editting, expense: null})
-  //     setEditExpense({})
-  //     setRerender(true)
-  //   })
-  //   .catch(err => console.log(err))
-  // }
+  const spent = (category) => {
+    let amount
+
+    for(let i = 0; i < current.length; i++){
+      if(current[i].category === category){
+        return amount = (current[i].amount ? current[i].amount : 0)
+      }
+      amount = 0
+    }
+
+    return amount
+  }
 
   const viewRecuring = recurring.map((recure, i) => {
     const {name, amount, date} = recure
@@ -106,8 +106,11 @@ function Home(props){
       </div>
     ) : (
       <div className='home-route'>
-        <section className='top-section'>
-          <BudgetDisplay overall={overall} budget={budget} current={current} setRerender={setRerender}/>
+        <section className='left-section'>
+          <div className='main-budget'>
+            <p className='title-three'>Monthly Budget:</p>
+            <p>${spent('Overall')} / ${overall}</p>
+          </div>
           {/* <div className='line-graph'>
             <BarChart budget={budget} current={current}/>
           </div> */}
@@ -120,11 +123,12 @@ function Home(props){
             <p className='text-three'>Text Three</p>
             <p className='text-four'>Text Four</p>
           </section>
+          <BudgetDisplay budget={budget} current={current} setRerender={setRerender}/>
         </section>
 
         {/* <Expenses expenses={expenses} setExpenses={setExpenses} setRerender={setRerender}/> */}
 
-        <section className='bottom-section'>
+        <section className='right-section'>
           <section className='quick-view'>
             <h3>Savings</h3>
           </section>
