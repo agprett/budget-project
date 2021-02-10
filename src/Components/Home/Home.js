@@ -129,6 +129,9 @@ function Home(props){
         {/* <Expenses expenses={expenses} setExpenses={setExpenses} setRerender={setRerender}/> */}
 
         <section className='right-section'>
+          <section className='recent-expenses'>
+            expenses
+          </section>
           <section className='quick-view'>
             <h3>Savings</h3>
           </section>
