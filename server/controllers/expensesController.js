@@ -42,6 +42,16 @@ module.exports = {
     res.sendStatus(200)
   },
 
+  getRecent: async (req, res) => {
+    const db = req.app.get('db')
+    // const {user_id} = req.session.user
+    const user_id = 1
+
+    let recents = await db.expenses.get_recent([+user_id])
+
+    res.status(200).send(recents)
+  },
+
   getCurrent: async (req, res) => {
     const db = req.app.get('db')
     // const {user_id} = req.session.user

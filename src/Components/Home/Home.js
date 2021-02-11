@@ -14,6 +14,7 @@ function Home(props){
   const [budget, setBudget] = useState([])
   const [current, setCurrent] = useState([])
   const [expenses, setExpenses] = useState([])
+  const [recent, setRecent] = useState([])
   const [chartData, setChartData] = useState({})
   const [recurring, setRecuring] = useState([])
   // const [savings, setSavings] = useState([])
@@ -33,6 +34,12 @@ function Home(props){
     axios.get('/api/recurring')
     .then(res => {
       setRecuring(res.data)
+    })
+    .catch(err => console.log(err))
+
+    axios.get('/api/recent')
+    .then(res => {
+      setRecent(res.data)
     })
     .catch(err => console.log(err))
 
@@ -86,6 +93,18 @@ function Home(props){
     return amount
   }
 
+  const viewRecent = recent.map((recentExpense, i) => {
+    const {name, amount, date} = recentExpense
+
+    return (
+      <section key={i}>
+        <div>{name}</div>
+        <div>{amount}</div>
+        <div>{date}</div>
+      </section>
+    )
+  })
+
   const viewRecuring = recurring.map((recure, i) => {
     const {name, amount, date} = recure
 
@@ -130,7 +149,7 @@ function Home(props){
 
         <section className='right-section'>
           <section className='recent-expenses'>
-            expenses
+            {viewRecent}
           </section>
           <section className='quick-view'>
             <h3>Savings</h3>
