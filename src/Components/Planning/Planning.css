@@ -1,0 +1,52 @@
+.planning {
+  padding-top: 80px;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: space-around;
+  background-color: powderblue;
+}
+
+.savings {
+  height: 100%;
+  width: 47%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: salmon;
+}
+
+.overall-savings {
+  height: 150px;
+  width: 85%;
+  background-color: purple;
+}
+
+.accounts {
+  height: 30%;
+  width: 90%;
+  background-color: red;
+}
+
+.goals {
+  height: 30%;
+  width: 95%;
+  padding: 10px 0px;
+  overflow-x: auto;
+  background-color: orange;
+}
+
+.savings-goal {
+  height: 100%;
+  width: 170px;
+  display: flex;
+  margin-left: 10px;
+  background-color: blue;
+}
+
+.debt {
+  height: 100%;
+  width: 47%;
+  background-color: royalblue;
+}

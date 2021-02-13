@@ -2,9 +2,9 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import moment from 'moment'
 import Loading from '../Loading/Loading'
-import './Savings.css'
+import './Planning.css'
 
-function Savings() {
+function Planning() {
   const [savings, setSavings] = useState([])
   const [goals, setGoals] = useState([])
   const [loading, setLoading] = useState(false)
@@ -51,18 +51,21 @@ function Savings() {
           <Loading/>
         </div>
       ) : (
-        <section className='savings'>
-          <h3 className='overall-savings'> Total savings: $ {savings.overall}</h3>
-          <section className='goals'>
-            {viewGoals}
+        <section className='planning'>
+          <section className='savings'>
+            <h3 className='overall-savings'> Total savings: $ {savings.overall}</h3>
+            <section className='accounts'>
+              <div>accounts</div>
+            </section>
+            <section className='goals'>
+              {viewGoals}
+            </section>
           </section>
-          <section className='accounts'>
-            <div>accounts</div>
-          </section>
+          <section className='debt'>debt</section>
         </section>
       )}
     </section>
   )
 }
 
-export default Savings
+export default Planning
