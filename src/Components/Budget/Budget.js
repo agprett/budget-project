@@ -63,7 +63,7 @@ function Budget(props){
 
   return (
     <section>
-      {loading == true ? (
+      {loading === true ? (
         <div className='loading'>
           <Loading/>
         </div>

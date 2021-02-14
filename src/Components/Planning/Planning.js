@@ -7,6 +7,7 @@ import './Planning.css'
 function Planning() {
   const [savings, setSavings] = useState([])
   const [goals, setGoals] = useState([])
+  const [debts, setDebts] = useState([])
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -17,6 +18,12 @@ function Planning() {
     axios.get('/api/savings')
     .then(res => {
       setSavings(res.data)
+    })
+    .catch(err => console.log(err))
+
+    axios.get('/api/debts')
+    .then(res => {
+      setDebts(res.data)
     })
     .catch(err => console.log(err))
 
@@ -43,6 +50,16 @@ function Planning() {
       </section>
     )
   })
+
+  const viewDebts = debts.map((debt, i) => {
+    const {name} = debt
+
+    return (
+      <section key = {i} className='debts'>
+        <div>{name}</div>
+      </section>
+    )
+  })
   
   return (
     <section>
@@ -61,7 +78,12 @@ function Planning() {
               {viewGoals}
             </section>
           </section>
-          <section className='debt'>debt</section>
+          <section className='debt'>
+            <div className='overall-debt'>Overall Debt</div>
+            <div className='debts-display'>
+              {viewDebts}
+            </div>
+          </section>
         </section>
       )}
     </section>
