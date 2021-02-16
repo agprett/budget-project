@@ -14,11 +14,25 @@
   /* background-color: #C2C2C2; */
 }
 
-.expense-left {
-  width: 15%;
+.recurring {
+  margin: 25px;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.recure {
+  height: 200px;
+  width: 85%;
+  padding: 25px;
+  margin: 20px 30px;
+  border-radius: 10px;
+  background-color: powderblue;
+}
+
+.expense-left {
+  width: 15%;
+  display: flex;
 }
 
 .new-expense {
@@ -105,18 +119,4 @@
 
 .null {
   display: none;
-}
-
-.recurring {
-  margin: 25px;
-  display: flex;
-}
-
-.recure {
-  height: 200px;
-  width: auto;
-  padding: 25px;
-  margin: 20px 30px;
-  border-radius: 10px;
-  background-color: powderblue;
 }

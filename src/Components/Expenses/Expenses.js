@@ -78,8 +78,8 @@ function Expenses() {
         </div>
       ) : (
         <section className='expense-section'>
-          <section className='expense-left'>
-            <div className='new-expense'>
+          <section className='recurring'>
+            {/* <div className='new-expense'>
               <input
                 placeholder='Name'
                 value={newExpense.name}
@@ -105,13 +105,14 @@ function Expenses() {
                 onClick={() => {
                   addNewExpense(newExpense)
                 }}
-              >Submit</button>
-              <button
+                >Submit</button>
+                <button
                 onClick={() => {
                   setNewExpense({name: '', category: '', amount: 0})
-              }}
-              >Cancel</button>
-            </div>
+                }}
+                >Cancel</button>
+              </div> */}
+              {viewRecurring}
           </section>
           <section className='expense-right'>
             <section className='expense-filter'>
@@ -137,9 +138,6 @@ function Expenses() {
             <div className='expenses-view'>
               {expenses[0] ? viewExpenses : <div style={{textAlign: 'center'}}>No Expenses to Show</div>}
             </div>
-          </section>
-          <section className='recurring'>
-            {viewRecurring}
           </section>
         </section>
       )}
