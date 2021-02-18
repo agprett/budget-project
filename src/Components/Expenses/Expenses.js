@@ -3,12 +3,14 @@ import axios from 'axios'
 import moment from 'moment'
 import Loading from '../Loading/Loading'
 import './Expenses.css'
+import { style } from 'd3'
 
 function Expenses() {
   const [expenses, setExpenses] = useState([])
   const [newExpense, setNewExpense] = useState({name: '', category: '', amount: 0})
   const [recurring, setRecurring] = useState([])
   const [loading, setLoading] = useState(true)
+  const [filterDropdown, setFilterDropdown] = useState(false)
 
   useEffect(() => {
     setLoading(true)
@@ -115,7 +117,27 @@ function Expenses() {
               {viewRecurring}
           </section>
           <section className='expense-right'>
-            <section className='expense-filter'>
+            <section className='expense-buttons'>
+              <button>New</button>
+              <button>Edit</button>
+              <button>Delete</button>
+              <button
+                onClick={() => {
+                  if(filterDropdown){
+                    setFilterDropdown(false)
+                  } else {                    
+                    setFilterDropdown(true)
+                  }
+                }}
+              >Filter
+                <img
+                  className={filterDropdown ? 'arrow down-arrow' : 'arrow'}
+                  src='https://image.flaticon.com/icons/png/512/16/16038.png'
+                  alt='arrow'
+                />
+              </button>
+            </section>
+            <section className={filterDropdown ? 'expense-filter' : ' expense-filter null'}>
               <input
                 placeholder='Name'
               />
