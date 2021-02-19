@@ -117,7 +117,7 @@ function Expenses() {
               {viewRecurring}
           </section>
           <section className='expense-right'>
-            <section className='expense-buttons'>
+            <section className='modify-expenses'>
               <button>New</button>
               <button>Edit</button>
               <button>Delete</button>

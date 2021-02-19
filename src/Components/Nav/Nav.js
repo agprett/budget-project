@@ -4,7 +4,7 @@ import './Nav.css'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {getUser, logoutUser} from '../../ducks/reducer'
-import {profile_pic} from '../img.json'
+// import {profile_pic} from '../img.json'
 
 function Nav(props){
   const {user} = props
@@ -20,15 +20,16 @@ function Nav(props){
     <section>
       <div className='upper-nav'>
         <div className='nav-left'>
-          
+          <h2 className='main-title'>PB Budgetry</h2>
+          <h4>Financial planning done easy</h4>
         </div>
         <section className='nav-right'>
           <p className='title-three'>Welcome, {user.username}</p>
-          <img
+          {/* <img
             className='prof-pic'
             src={profile_pic}
             alt='prof-pic'
-          />
+          /> */}
           <button
             className='nav-button'
             // onClick={() => {

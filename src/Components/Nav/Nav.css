@@ -13,10 +13,14 @@
 
 .nav-left {
   height: 50px;
-  width: 50px;
+  width: auto;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+}
+
+.main-title {
+  margin-right: 20px;
 }
 
 .nav-right {
@@ -38,9 +42,10 @@
 
 .nav-button {
   padding: 5px;
+  margin-left: 15px;
 }
 
-.nav-button:focus {
+.nav-button:hover {
   background-color: #B39FCC;
   color: #564276;
   border: 2.5px solid  #564276;
