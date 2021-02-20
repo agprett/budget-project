@@ -3,11 +3,10 @@ import axios from 'axios'
 import moment from 'moment'
 import Loading from '../Loading/Loading'
 import './Expenses.css'
-import { style } from 'd3'
 
 function Expenses() {
   const [expenses, setExpenses] = useState([])
-  const [newExpense, setNewExpense] = useState({name: '', category: '', amount: 0})
+  const [newExpense, setNewExpense] = useState({display: false, name: '', category: '', amount: 0})
   const [recurring, setRecurring] = useState([])
   const [loading, setLoading] = useState(true)
   const [filterDropdown, setFilterDropdown] = useState(false)
@@ -36,7 +35,7 @@ function Expenses() {
   const addNewExpense = newExpense => {
     axios.post('api/expenses', newExpense)
     .then(() => {
-      setNewExpense({name: '', category: '', amount: 0})
+      setNewExpense({display: false, name: '', category: '', amount: 0})
     })
     .catch(err => console.log(err))
   }
@@ -81,44 +80,51 @@ function Expenses() {
       ) : (
         <section className='expense-section'>
           <section className='recurring'>
-            {/* <div className='new-expense'>
-              <input
-                placeholder='Name'
-                value={newExpense.name}
-                onChange={event => {
-                  setNewExpense({...newExpense, name: event.target.value})
-                }}
-              />
-              <input
-                placeholder='Category'
-                value={newExpense.category}
-                onChange={event => {
-                  setNewExpense({...newExpense, category: event.target.value})
-                }}
-              />
-              <input
-                placeholder='Amount'
-                value={newExpense.amount}
-                onChange={event => {
-                  setNewExpense({...newExpense, amount: +event.target.value})
-                }}
-              />
-              <button
-                onClick={() => {
-                  addNewExpense(newExpense)
-                }}
-                >Submit</button>
-                <button
-                onClick={() => {
-                  setNewExpense({name: '', category: '', amount: 0})
-                }}
-                >Cancel</button>
-              </div> */}
               {viewRecurring}
           </section>
           <section className='expense-right'>
+            {newExpense.display ? (
+              <div className='new-expense'>
+                <input
+                  placeholder='Name'
+                  value={newExpense.name}
+                  onChange={event => {
+                    setNewExpense({...newExpense, name: event.target.value})
+                  }}
+                />
+                <input
+                  placeholder='Category'
+                  value={newExpense.category}
+                  onChange={event => {
+                    setNewExpense({...newExpense, category: event.target.value})
+                  }}
+                />
+                <input
+                  placeholder='Amount'
+                  value={newExpense.amount}
+                  onChange={event => {
+                    setNewExpense({...newExpense, amount: +event.target.value})
+                  }}
+                />
+                <button
+                  onClick={() => {
+                    addNewExpense(newExpense)
+                  }}
+                  >Submit</button>
+                  <button
+                  onClick={() => {
+                    setNewExpense({display: false, name: '', category: '', amount: 0})
+                  }}
+                  >Cancel</button>
+                </div>
+              ) : null
+            }
             <section className='modify-expenses'>
-              <button>New</button>
+              <button
+                onClick={() => {
+                  setNewExpense({...newExpense, display: true})
+                }}
+              >New</button>
               <button>Edit</button>
               <button>Delete</button>
               <button
