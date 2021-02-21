@@ -24,7 +24,7 @@
 }
 
 .main-budget {
-  height: 80px;
+  height: 60px;
   width: 100%;
   margin: 5px 15px;
   display: flex;
@@ -33,23 +33,10 @@
   align-items: center;
 }
 
-.line-graph {
-  height: 200px;
-  width: 400px;
-  background-color: #eaebed;
-  color: white;
-  border-radius: 15%;
-  box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* display: none; */
-}
-
-.pie-chart {
+.donut-chart {
   height: 300px;
   width: 350px;
-  margin: 30px;
+  margin: 10px 20px 20px;
   background-color: #987DC1;
   display: flex;
   flex-direction: column;

@@ -62,18 +62,17 @@ module.exports = {
     let endMonth = moment().endOf('month').format()
 
     let [response] = await db.expenses.get_current([user_id, startMonth, endMonth])
-    current.push({category: 'Overall', amount: response.sum})
+    if(response.some === null){
+      response.sum = 0
+    }
+    current.push({category: 'Overall', amount: +response.sum})
     
     let monthly = await db.expenses.get_monthly_expense([user_id, startMonth, endMonth])
     
     for(let i = 0; i < monthly.length; i++){
-      monthly[i].amount = monthly[i].sum
+      monthly[i].amount = +monthly[i].sum
       delete monthly[i].sum
       current.push(monthly[i])
-
-      current[i].amount = +current[i].amount
-
-      
     }
 
     res.status(200).send(current)

@@ -7,18 +7,17 @@ import Loading from '../Loading/Loading'
 // import BarChart from '../BarChart/BarChart'
 // import DonutChart from '../DonutChart/DonutChart'
 import BudgetDisplay from './BudgetDisplay/BudgetDisplay'
+import DonutChart from '../DonutChart/DonutChart'
 
 function Home(props){
   const {overall} = props.user
   const [loading, setLoading] = useState(true)
   const [budget, setBudget] = useState([])
   const [current, setCurrent] = useState([])
-  const [expenses, setExpenses] = useState([])
   const [recent, setRecent] = useState([])
   const [chartData, setChartData] = useState({})
   const [recurring, setRecuring] = useState([])
   // const [savings, setSavings] = useState([])
-  const [rerender, setRerender] = useState(false)
   
   useEffect(() => {
     setLoading(true)
@@ -54,6 +53,10 @@ function Home(props){
         }
       }
       setChartData(donut)
+
+      setTimeout(() => {
+        setLoading(false)
+      }, 500)
     })
     .catch(err => console.log(err))
 
@@ -68,17 +71,7 @@ function Home(props){
     //   setSavings(res.data)
     // })
     // .catch(err => console.log(err))
-
-    axios.get('/api/expenses')
-    .then(res => {
-      setExpenses(res.data)
-      setTimeout(() => {
-        setLoading(false)
-      }, 500)
-    })
-    .catch(err => console.log(err))
-    
-  }, [rerender])
+  }, [])
 
   const spent = (category) => {
     let amount
@@ -133,19 +126,11 @@ function Home(props){
           {/* <div className='line-graph'>
             <BarChart budget={budget} current={current}/>
           </div> */}
-          <section className='pie-chart'>
-            <p className='title-one'>Title One</p>
-            <p className='title-two'>Title Two</p>
-            <p className='title-three'>Title Three</p>
-            <p className='text-one'>Text One</p>
-            <p className='text-two'>Text Two</p>
-            <p className='text-three'>Text Three</p>
-            <p className='text-four'>Text Four</p>
+          <section className='donut-chart'>
+            <DonutChart data={chartData}/>
           </section>
-          <BudgetDisplay budget={budget} current={current} setRerender={setRerender}/>
+          <BudgetDisplay budget={budget} current={current}/>
         </section>
-
-        {/* <Expenses expenses={expenses} setExpenses={setExpenses} setRerender={setRerender}/> */}
 
         <section className='right-section'>
           <section className='recent-expenses'>

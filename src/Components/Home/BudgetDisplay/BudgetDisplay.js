@@ -1,15 +1,9 @@
-import React, {useState} from 'react'
-import axios from 'axios'
+import React from 'react'
 import {connect} from 'react-redux'
 import './BudgetDisplay.css'
-import {x, dots} from '../../img.json'
 
 function BudgetDisplay(props){
-  const {budget, current, setRerender} = props
-  const [budgetView, setBudgetView] = useState('view')
-  const [displayDropdown, setDisplayDropdown] = useState(false)
-  const [updated, setUpdated] = useState({})
-  const [newBudget, setNewBudget] = useState({category: '', amount: 0})
+  const {budget, current} = props
 
   const spent = (category) => {
     let amount

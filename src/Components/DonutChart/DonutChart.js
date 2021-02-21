@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react'
 import * as d3 from 'd3'
-import './DonutChart.css'
 
 function DonutChart(props){
   useEffect(() => {
@@ -20,7 +19,7 @@ function DonutChart(props){
   // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
     var radius = Math.min(width, height) / 2 - margin
 
-    var svg = d3.select(".pie-chart")
+    var svg = d3.select(".donut-chart")
       .append("svg")
         .attr("width", width)
         .attr("height", height)
