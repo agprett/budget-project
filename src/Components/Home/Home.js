@@ -4,8 +4,6 @@ import moment from 'moment'
 import axios from 'axios'
 import './Home.css'
 import Loading from '../Loading/Loading'
-// import BarChart from '../BarChart/BarChart'
-// import DonutChart from '../DonutChart/DonutChart'
 import BudgetDisplay from './BudgetDisplay/BudgetDisplay'
 import DonutChart from '../DonutChart/DonutChart'
 
@@ -16,6 +14,7 @@ function Home(props){
   const [current, setCurrent] = useState([])
   const [recent, setRecent] = useState([])
   const [chartData, setChartData] = useState({})
+  const [chartColors, setChartColors] = useState([])
   const [recurring, setRecuring] = useState([])
   // const [savings, setSavings] = useState([])
   
@@ -41,36 +40,27 @@ function Home(props){
       setRecent(res.data)
     })
     .catch(err => console.log(err))
-
-    axios.get('/api/expenses/current')
-    .then(res => {
-      setCurrent(res.data)
-      let donut = {}
-      for(let i = 0; i < res.data.length; i++){
-        if(res.data[i].category !== 'Overall'){
-          let key = res.data[i].category
-          donut[key] = res.data[i].amount
-        }
-      }
-      setChartData(donut)
-
-      setTimeout(() => {
-        setLoading(false)
-      }, 500)
-    })
-    .catch(err => console.log(err))
-
-    // axios.get('/api/recurring')
-    // .then(res => {
-    //   setRecurring(res.data)
-    // })
-    // .catch(err => console.log(err))
-
+    
     // axios.get('/api/savings')
     // .then(res => {
     //   setSavings(res.data)
     // })
     // .catch(err => console.log(err))
+
+    axios.get('/api/user/chart')
+    .then(res => {
+      setChartData(res.data)
+    })
+    .catch(err => console.log(err))
+
+    axios.get('/api/expenses/current')
+    .then(res => {
+      setCurrent(res.data)
+      setTimeout(() => {
+        setLoading(false)
+      }, 500)
+    })
+    .catch(err => console.log(err))
   }, [])
 
   const spent = (category) => {

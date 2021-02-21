@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs')
+const moment = require('moment')
 
 module.exports = {
   getUser: async (req, res) => {
@@ -66,5 +67,32 @@ module.exports = {
   logoutUser: (req, res) => {
     req.session.destroy()
     res.sendStatus(200)
+  },
+
+  getChartData: async (req, res) => {
+    const db = req.app.get('db')
+    // const {user_id} = req.session.user
+    const user_id = 1
+    let spent = 0
+    let budget = 0
+    let response
+
+    response = await db.users.get_overall([user_id])
+    budget = +response[0].overall
+
+    let startMonth = moment().startOf('month').format()
+    let endMonth = moment().endOf('month').format()
+    
+    response = await db.expenses.get_current([user_id, startMonth, endMonth])
+    if(response === null){
+      spent = 0
+    } else {
+      spent = +response[0].sum
+      budget -= spent
+    }
+
+    let chartData = {budget: budget, spent: spent}
+    
+    res.status(200).send(chartData)
   }
 }

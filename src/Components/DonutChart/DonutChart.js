@@ -2,6 +2,8 @@ import React, {useEffect} from 'react'
 import * as d3 from 'd3'
 
 function DonutChart(props){
+  const {data} = props
+
   useEffect(() => {
     donut()
     return (() => {
@@ -14,9 +16,8 @@ function DonutChart(props){
       height = 300,
       margin = 30
 
-    const {data} = props
 
-  // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+  // The radius of the pieplot is half the width or half the height (smallest one)
     var radius = Math.min(width, height) / 2 - margin
 
     var svg = d3.select(".donut-chart")
@@ -29,7 +30,7 @@ function DonutChart(props){
   // set the color scale
     var color = d3.scaleOrdinal()
       .domain(data)
-      .range(["#e89005", "#00a5cf", "#f3e37c", "#c84c09", "#388659"])
+      .range(["#e89005", "#00a5cf", "#f3e37c", "#c84c09", "#pink"])
 
   // Compute the position of each group on the pie:
     var pie = d3.pie()
