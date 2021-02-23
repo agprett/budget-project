@@ -92,7 +92,7 @@ function Home(props){
     const {name, amount, date} = recure
 
     return (
-      <section className='view-recurring' key={i}>
+      <section className='recurring-home' key={i}>
         <div>{name}</div>
         <div>{amount}</div>
         <div>{moment(date).format('MM/DD/YY')}</div>
@@ -126,14 +126,18 @@ function Home(props){
           <section className='recent-expenses'>
             {viewRecent}
           </section>
-          <section className='quick-view'>
-            <h3>Savings</h3>
+          <section className='view-recurring'>
+            {viewRecuring}
           </section>
-          <section className='quick-view'>
-            <div>{viewRecuring}</div>
-          </section>
-          <section className='quick-view'>
-            <h3>Total Debt: $ 0</h3>
+          <section className='planning-home'>
+            <section className='planning-divs'>
+              <h3>Total Savings: $ 0</h3>
+              <div></div>
+            </section>
+            <section className='planning-divs'>
+              <h3>Total Debt: $ 0</h3>
+              <div></div>
+            </section>
           </section>
         </section>
       </div>
