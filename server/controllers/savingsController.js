@@ -48,5 +48,14 @@ module.exports = {
     const [goal] = await db.savings.update_goal([goal_id, saved_amount, name, goal_date, monthly_amount, goal_amount])
 
     res.status(200).send(goal)
+  },
+
+  getPriority: async (req, res) => {
+    const db = req.app.get('db')
+    const {id} = req.params
+
+    const [goal] = await db.savings.get_priority([+id])
+
+    res.status(200).send(goal)
   }
 }

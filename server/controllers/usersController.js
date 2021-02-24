@@ -77,8 +77,8 @@ module.exports = {
     let budget = 0
     let response
 
-    response = await db.users.get_overall([user_id])
-    budget = +response[0].overall
+    [response] = await db.users.get_overall([user_id])
+    budget = +response.overall
 
     let startMonth = moment().startOf('month').format()
     let endMonth = moment().endOf('month').format()

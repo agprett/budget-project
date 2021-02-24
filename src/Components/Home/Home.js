@@ -16,7 +16,8 @@ function Home(props){
   const [chartData, setChartData] = useState({})
   const [chartColors, setChartColors] = useState([])
   const [recurring, setRecuring] = useState([])
-  // const [savings, setSavings] = useState([])
+  const [savings, setSavings] = useState(0)
+  const [priority, setPriority] = useState({})
   
   useEffect(() => {
     setLoading(true)
@@ -41,11 +42,17 @@ function Home(props){
     })
     .catch(err => console.log(err))
     
-    // axios.get('/api/savings')
-    // .then(res => {
-    //   setSavings(res.data)
-    // })
-    // .catch(err => console.log(err))
+    axios.get('/api/savings')
+    .then(res => {
+      setSavings(res.data.overall)
+    })
+    .catch(err => console.log(err))
+
+    axios.get('/api/goals/1')
+    .then(res => {
+      setPriority(res.data)
+    })
+    .catch(err => console.log(err))
 
     axios.get('/api/user/chart')
     .then(res => {
@@ -131,8 +138,10 @@ function Home(props){
           </section>
           <section className='planning-home'>
             <section className='planning-divs'>
-              <h3>Total Savings: $ 0</h3>
-              <div></div>
+              <h3>Total Savings: $ {savings}</h3>
+              <div className='goal-home'>
+                <div>{priority.name}</div>
+              </div>
             </section>
             <section className='planning-divs'>
               <h3>Total Debt: $ 0</h3>

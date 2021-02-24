@@ -44,6 +44,7 @@ app.put('/api/savings/:overall', savingsCtrl.updateSavings)
 app.get('/api/goals', savingsCtrl.getGoals)
 app.post('/api/goals', savingsCtrl.newGoal)
 app.put('/api/goals', savingsCtrl.updateGoal)
+app.get('/api/goals/:id', savingsCtrl.getPriority)
 
 app.get('/api/debts', debtsCtrl.getDebts)
 app.post('/api/debts', debtsCtrl.newDebt)
