@@ -9,6 +9,7 @@ import DonutChart from '../DonutChart/DonutChart'
 
 function Home(props){
   const {overall} = props.user
+  const {savings, debt} = props
   const [loading, setLoading] = useState(true)
   const [budget, setBudget] = useState([])
   const [current, setCurrent] = useState([])
@@ -16,7 +17,6 @@ function Home(props){
   const [chartData, setChartData] = useState({})
   const [chartColors, setChartColors] = useState([])
   const [recurring, setRecuring] = useState([])
-  const [savings, setSavings] = useState(0)
   const [priority, setPriority] = useState({})
   
   useEffect(() => {
@@ -39,12 +39,6 @@ function Home(props){
     axios.get('/api/recent')
     .then(res => {
       setRecent(res.data)
-    })
-    .catch(err => console.log(err))
-    
-    axios.get('/api/savings')
-    .then(res => {
-      setSavings(res.data.overall)
     })
     .catch(err => console.log(err))
 
@@ -140,11 +134,12 @@ function Home(props){
             <section className='planning-divs'>
               <h3>Total Savings: $ {savings}</h3>
               <div className='goal-home'>
+                <p>Goal:</p>
                 <div>{priority.name}</div>
               </div>
             </section>
             <section className='planning-divs'>
-              <h3>Total Debt: $ 0</h3>
+              <h3>Total Debt: $ {debt}</h3>
               <div></div>
             </section>
           </section>

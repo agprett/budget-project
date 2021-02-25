@@ -3,9 +3,9 @@ module.exports = {
     const db = req.app.get('db')
     // const {user_id} = req.session.user
     const user_id = 1
-    const {total, monthly, due} = req.body
+    const {name, total, monthly, due} = req.body
 
-    await db.debts.new_debt([user_id, total, monthly, due])
+    await db.debts.new_debt([user_id, name, total, monthly, due])
 
     res.sendStatus(200)
   },
@@ -23,9 +23,25 @@ module.exports = {
   updateDebts: async (req, res) => {
     const db = req.app.get('db')
     const {id} = req.params
-    const {total, monthly, paid, due} = req.body
+    const {total, name, monthly, paid, due} = req.body
 
-    const [debt] = await db.debts.update_debts([+id, total, monthly, paid, due])
+    const [debt] = await db.debts.update_debts([+id, total, name, monthly, paid, due])
+
+    res.status(200).send(debt)
+  },
+
+  getTotal: async (req, res) => {
+    const db = req.app.get('db')
+    // const {user_id} = req.session.user
+    const user_id = 1
+    
+    let [debt] = await db.debts.get_total([user_id])
+
+    if(debt.sum === null){
+      debt.sum = 0
+    }
+
+    debt.sum = parseInt(debt.sum)
 
     res.status(200).send(debt)
   }

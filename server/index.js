@@ -49,6 +49,7 @@ app.get('/api/goals/:id', savingsCtrl.getPriority)
 app.get('/api/debts', debtsCtrl.getDebts)
 app.post('/api/debts', debtsCtrl.newDebt)
 app.put('/api/debts/:id', debtsCtrl.updateDebts)
+app.get('/api/total', debtsCtrl.getTotal)
 
 app.get('/api/recurring', recurringCtrl.getRecurring)
 app.post('/api/recurring', recurringCtrl.newRecurring)

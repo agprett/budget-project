@@ -3,7 +3,7 @@ import axios from 'axios'
 import './Nav.css'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {getUser, logoutUser} from '../../ducks/reducer'
+import {getUser, logoutUser, getSavings, getDebt} from '../../ducks/reducer'
 // import {profile_pic} from '../img.json'
 
 function Nav(props){
@@ -14,6 +14,21 @@ function Nav(props){
     .then(res => {
       props.getUser(res.data)
     })
+    .catch(err => console.log(err))
+
+    axios.get('/api/savings')
+    .then(res => {
+      props.getSavings(res.data.overall)
+    })
+    .catch(err => console.log(err))
+
+    
+    axios.get(`/api/total`)
+    .then(res => {
+      props.getDebt(res.data.sum)
+    })
+    .catch(err => console.log(err))
+    console.log(props.user.user_id)
   }, [])
   
   return (
@@ -86,6 +101,6 @@ function Nav(props){
 
 const mapStateToProps = state => state
 
-const functions = {getUser, logoutUser}
+const functions = {getUser, logoutUser, getSavings, getDebt}
 
 export default connect(mapStateToProps, functions)(withRouter(Nav))

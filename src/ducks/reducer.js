@@ -1,8 +1,8 @@
 const initialState = {
   user: {},
   // budget: {},
-  // savings: {},
-  // debts: {},
+  savings: 0,
+  debt: 0,
   // expenses: {},
   // recurring: {}
 }
@@ -11,8 +11,8 @@ const GET_USER = 'GET_USER'
 const LOGOUT_USER = 'LOGOUT_USER'
 // const GET_RECURRING = 'GET_RECURRING'
 // const GET_BUDGET = 'GET_BUDGET'
-// const GET_DEBT = "GET_DEBT"
-// const GET_SAVINGS = "GET_SAVINGS"
+const GET_SAVINGS = "GET_SAVINGS"
+const GET_DEBT = "GET_DEBT"
 // const GET_EXPENSES = "GET_EXPENSES"
 
 export function getUser(userInfo){
@@ -36,19 +36,19 @@ export function logoutUser(){
 //   }
 // }
 
-// export function getSavings(savings){
-//   return {
-//     type: GET_SAVINGS,
-//     payload: savings
-//   }
-// }
+export function getSavings(savings){
+  return {
+    type: GET_SAVINGS,
+    payload: savings
+  }
+}
 
-// export function getDebt(debt){
-//   return {
-//     type: GET_DEBT,
-//     payload: debt
-//   }
-// }
+export function getDebt(debt){
+  return {
+    type: GET_DEBT,
+    payload: debt
+  }
+}
 
 // export function getBudget(budget){
 //   return {
@@ -74,10 +74,10 @@ export default function userReducer(state = initialState, action){
     //   return {...state, recurring: action.payload}
     // case GET_BUDGET:
     //   return {...state, budget: action.payload}
-    // case GET_SAVINGS:
-    //   return {...state, savings: action.payload}
-    // case GET_DEBT:
-    //   return {...state, debt: action.payload}
+    case GET_SAVINGS:
+      return {...state, savings: action.payload}
+    case GET_DEBT:
+      return {...state, debt: action.payload}
     // case GET_EXPENSES:
     //   return {...state, expenses: action.payload}
     default:
