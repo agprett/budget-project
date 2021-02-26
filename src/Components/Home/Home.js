@@ -136,6 +136,10 @@ function Home(props){
               <div className='goal-home'>
                 <p>Goal:</p>
                 <div>{priority.name}</div>
+                <div>{moment(priority.goal_date).format('MM/DD/YY')}</div>
+                <div>$ {priority.monthly_amount}</div>
+                <div>$ {priority.goal_amount}</div>
+                <div>$ {priority.saved_amount}</div>
               </div>
             </section>
             <section className='planning-divs'>
