@@ -18,6 +18,7 @@ function Home(props){
   const [chartColors, setChartColors] = useState([])
   const [recurring, setRecuring] = useState([])
   const [priority, setPriority] = useState({})
+  const [upcoming, setUpcoming] = useState({})
   
   useEffect(() => {
     setLoading(true)
@@ -47,6 +48,12 @@ function Home(props){
       setPriority(res.data)
     })
     .catch(err => console.log(err))
+
+    // axios.get('/api/upcoming')
+    // .then(res => {
+    //   setUpcoming(res.data)
+    // })
+    // .catch(err => console.log(err))
 
     axios.get('/api/user/chart')
     .then(res => {

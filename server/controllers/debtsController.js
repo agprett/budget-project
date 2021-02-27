@@ -44,5 +44,15 @@ module.exports = {
     debt.sum = parseInt(debt.sum)
 
     res.status(200).send(debt)
+  },
+
+  getUpcoming: async (req, res) => {
+    const db = req.app.get('db')
+    // const {user_id} = req.session.user
+    const user_id = 1
+
+    const [upcoming] = await db.debts.upcoming([user_id])
+
+    res.status(200).send(upcoming)
   }
 }
