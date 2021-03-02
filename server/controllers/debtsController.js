@@ -51,7 +51,7 @@ module.exports = {
     // const {user_id} = req.session.user
     const user_id = 1
 
-    const [upcoming] = await db.debts.upcoming([user_id])
+    const [upcoming] = await db.debts.get_upcoming([user_id])
 
     res.status(200).send(upcoming)
   }
