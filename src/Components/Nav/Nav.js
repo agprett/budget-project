@@ -33,7 +33,7 @@ function Nav(props){
   
   return (
     <section>
-      <div className='upper-nav'>
+      <nav className='upper-nav'>
         <div className='nav-left'>
           <h2 className='main-title'>PB Budgetry</h2>
           <h4>Financial planning done easy</h4>
@@ -60,8 +60,8 @@ function Nav(props){
             // }}
           >Sign Out</button>
         </section>
-      </div>
-      <div className='lower-nav'>
+      </nav>
+      <nav className='lower-nav'>
         <button
           className={props.location.pathname === '/home' ? 'nav-lower-buttons stuff' : 'nav-lower-buttons'}
           onClick={() => {
@@ -94,7 +94,7 @@ function Nav(props){
             }
           }}
         >Planning</button>
-      </div>
+      </nav>
     </section>
   )
 }

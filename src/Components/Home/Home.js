@@ -84,6 +84,13 @@ function Home(props){
     return amount
   }
 
+  const payRecurring = (name, category, amount, date) => {
+    let newExpense = {name, category, amount, date}
+    
+    axios.post('/api/expenses', newExpense)
+    .then()
+  }
+
   const viewRecent = recent.map((recentExpense, i) => {
     const {name, amount, date} = recentExpense
 
@@ -97,13 +104,19 @@ function Home(props){
   })
 
   const viewRecuring = recurring.map((recure, i) => {
-    const {name, amount, date} = recure
+    const {name, amount, date, category} = recure
 
     return (
       <section className='recurring-home' key={i}>
         <div>{name}</div>
         <div>{amount}</div>
+        <div>{category}</div>
         <div>{moment(date).format('MM/DD/YY')}</div>
+        <button
+          onClick={() => {
+            payRecurring(name, category, amount, date)
+          }}
+        >Pay Now</button>
       </section>
     )
   })
@@ -116,21 +129,20 @@ function Home(props){
       </div>
     ) : (
       <div className='home-route'>
-        <section className='left-section'>
-          <div className='main-budget'>
-            <p className='title-three'>Monthly Budget:</p>
-            <p>${spent('Overall')} / ${overall}</p>
-          </div>
-          {/* <div className='line-graph'>
-            <BarChart budget={budget} current={current}/>
-          </div> */}
-          <section className='donut-chart'>
-            <DonutChart data={chartData}/>
+        <section className='home-left'>
+          <section className='home-lt'>
+            <div className='home-budget'>
+              <p className='title-three'>Monthly Budget:</p>
+              <p>${spent('Overall')} / ${overall}</p>
+            </div>
+            <section className='donut-chart'>
+              <DonutChart data={chartData}/>
+            </section>
           </section>
           <BudgetDisplay budget={budget} current={current}/>
         </section>
 
-        <section className='right-section'>
+        <section className='home-right'>
           <section className='recent-expenses'>
             {viewRecent}
           </section>

@@ -12,8 +12,8 @@ function DonutChart(props){
   }, [props.data])
 
   function donut(){
-    var width = 300,
-      height = 300,
+    var width = 275,
+      height = 275,
       margin = 30
 
 
@@ -44,7 +44,7 @@ function DonutChart(props){
       .enter()
       .append('path')
       .attr('d', d3.arc()
-        .innerRadius(55)
+        .innerRadius(50)
         .outerRadius(radius)
       )
       .attr('fill', function(d){ return(color(d.data.key)) })
