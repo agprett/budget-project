@@ -49,11 +49,11 @@ function Home(props){
     })
     .catch(err => console.log(err))
 
-    // axios.get('/api/upcoming')
-    // .then(res => {
-    //   setUpcoming(res.data)
-    // })
-    // .catch(err => console.log(err))
+    axios.get('/api/upcoming')
+    .then(res => {
+      setUpcoming(res.data)
+    })
+    .catch(err => console.log(err))
 
     axios.get('/api/user/chart')
     .then(res => {
@@ -151,7 +151,11 @@ function Home(props){
             </section>
             <section className='planning-divs'>
               <h3>Total Debt: $ {debt}</h3>
-              <div></div>
+              <p>Upcoming:</p>
+              <div>{upcoming.name}</div>
+              <div>$ {upcoming.total}</div>
+              <div>$ {upcoming.paid}</div>
+              <div>{moment(upcoming.due).format('MM/DD/YY')}</div>
             </section>
           </section>
         </section>
