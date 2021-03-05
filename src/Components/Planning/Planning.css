@@ -63,5 +63,14 @@
 .debts-display {
   height: 65%;
   width: 90%;
+  display: flex;
+  justify-content: space-evenly;
   background-color: salmon;
+}
+
+.debts {
+  height: 125px;
+  width: 125px;
+  margin: 20px;
+  background-color: pink;
 }

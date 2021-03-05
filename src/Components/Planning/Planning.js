@@ -52,11 +52,15 @@ function Planning() {
   })
 
   const viewDebts = debts.map((debt, i) => {
-    const {name} = debt
+    const {name, total, monthly, paid, due} = debt
 
     return (
       <section key = {i} className='debts'>
         <div>{name}</div>
+        <div>$ {total}</div>
+        <div>$ {monthly}</div>
+        <div>$ {paid}</div>
+        <div>{moment(due).format('MM/DD/YY')}</div>
       </section>
     )
   })
