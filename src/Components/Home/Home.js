@@ -88,17 +88,17 @@ function Home(props){
     let newExpense = {name, category, amount, date}
     
     axios.post('/api/expenses', newExpense)
-    .then()
   }
 
   const viewRecent = recent.map((recentExpense, i) => {
-    const {name, amount, date} = recentExpense
+    const {name, category, amount, date} = recentExpense
 
     return (
       <section className='recent' key={i} style={{backgroundColor: i % 2 === 1 ? '#F5F5F5' : '#987DC1'}}>
-        <div>{name}</div>
-        <div>{amount}</div>
-        <div>{moment(date).format('MM/DD/YY')}</div>
+        <div className='expense-name'>{name}</div>
+        <div className='expense-category'>{category}</div>
+        <div className='expense-date'>{moment(date).format('MM/DD/YY')}</div>
+        <div className='expense-amount'>$ {amount}</div>
       </section>
     )
   })
@@ -109,7 +109,7 @@ function Home(props){
     return (
       <section className='recurring-home' key={i}>
         <div>{name}</div>
-        <div>{amount}</div>
+        <div>$ {amount}</div>
         <div>{category}</div>
         <div>{moment(date).format('MM/DD/YY')}</div>
         <button
