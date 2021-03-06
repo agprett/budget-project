@@ -8,6 +8,7 @@ function Planning() {
   const [savings, setSavings] = useState([])
   const [goals, setGoals] = useState([])
   const [debts, setDebts] = useState([])
+  const [total, setTotal] = useState(0)
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -15,15 +16,21 @@ function Planning() {
   }, [])
 
   useEffect(() => {
-    axios.get('/api/savings')
-    .then(res => {
-      setSavings(res.data)
-    })
-    .catch(err => console.log(err))
-
     axios.get('/api/debts')
     .then(res => {
       setDebts(res.data)
+    })
+    .catch(err => console.log(err))
+
+    axios.get('/api/total')
+    .then(res => {
+      setTotal(res.data.sum)
+    })
+    .catch(err => console.log(err))
+
+    axios.get('/api/savings')
+    .then(res => {
+      setSavings(res.data)
     })
     .catch(err => console.log(err))
 
@@ -83,7 +90,7 @@ function Planning() {
             </section>
           </section>
           <section className='debt'>
-            <div className='overall-debt'>Overall Debt</div>
+            <div className='overall-debt'>Overall Debt: $ {total}</div>
             <div className='debts-display'>
               {viewDebts}
             </div>

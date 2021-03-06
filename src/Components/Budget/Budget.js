@@ -3,12 +3,14 @@ import {connect} from 'react-redux'
 import axios from 'axios'
 import Loading from '../Loading/Loading'
 import './Budget.css'
+import BreakdownChart from '../BreakdownChart/BreakdownChart'
 
 function Budget(props){
   const {overall} = props.user
   const [loading, setLoading] = useState(false)
   const [budget, setBudget] = useState([])
   const [current, setCurrent] = useState([])
+  const [data, setData] = useState([])
 
   useEffect(() => {
     setLoading(true)
@@ -74,7 +76,9 @@ function Budget(props){
             <div>Monthly Budget: {overall}</div>
             <div>Spent: {spent("Overall")}</div>
           </div>
-            <div className='budget-pie-chart'>Pie Chart</div>
+            <div className='budget-donut-chart'>
+              <BreakdownChart data={data}/>
+            </div>
           </div>
           <div className='budgets-sub'>
             {viewSubs}

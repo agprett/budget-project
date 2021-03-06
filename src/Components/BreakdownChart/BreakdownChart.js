@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import * as d3 from 'd3'
 
-function DonutChart(props){
+function BreakdownChart(props){
   const {data} = props
 
   useEffect(() => {
@@ -20,7 +20,7 @@ function DonutChart(props){
   // The radius of the pieplot is half the width or half the height (smallest one)
     var radius = Math.min(width, height) / 2 - margin
 
-    var svg = d3.select(".donut-chart")
+    var svg = d3.select(".budget-donut-chart")
       .append("svg")
         .attr("width", width)
         .attr("height", height)
@@ -30,7 +30,7 @@ function DonutChart(props){
   // set the color scale
     var color = d3.scaleOrdinal()
       .domain(data)
-      .range(["#e89005", "#00a5cf"])
+      .range(["#e89005", "#00a5cf", "#f3e37c", "#c84c09", "#pink"])
 
   // Compute the position of each group on the pie:
     var pie = d3.pie()
@@ -58,4 +58,4 @@ function DonutChart(props){
   )
 }
 
-export default DonutChart
+export default BreakdownChart
