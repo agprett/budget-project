@@ -49,11 +49,11 @@ function Planning() {
     
     return (
       <section key={i} className='savings-goal'>
-        <div>{goal_amount}</div>
-        <div>{saved_amount}</div>
         <div>{name}</div>
+        <div>$ {goal_amount}</div>
+        <div>$ {saved_amount}</div>
         <div>{moment(goal_date).format('MM/DD/YY')}</div>
-        <div>{monthly_amount}</div>
+        <div>$ {monthly_amount}</div>
       </section>
     )
   })
@@ -81,7 +81,10 @@ function Planning() {
       ) : (
         <section className='planning'>
           <section className='savings'>
-            <h3 className='overall-savings'> Total savings: $ {savings.overall}</h3>
+            <div className='planning-overall'> 
+              <h3>Total savings: </h3>
+              <h3>$ {savings.overall}</h3>
+            </div>
             <section className='accounts'>
               <div>accounts</div>
             </section>
@@ -90,7 +93,10 @@ function Planning() {
             </section>
           </section>
           <section className='debt'>
-            <div className='overall-debt'>Overall Debt: $ {total}</div>
+            <div className='planning-overall'>
+              <h3>Overall Debt: </h3>
+              <h3>$ {total}</h3>
+            </div>
             <div className='debts-display'>
               {viewDebts}
             </div>
