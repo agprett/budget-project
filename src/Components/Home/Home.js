@@ -150,7 +150,8 @@ function Home(props){
             {viewRecuring}
           </section>
           <section className='planning-home'>
-            <section className='planning-divs'>
+            Savings and Debt Tracker coming soon!
+            {/* <section className='planning-divs'>
               <h3>Total Savings: $ {savings}</h3>
               <div className='goal-home'>
                 <p>Goal:</p>
@@ -168,7 +169,7 @@ function Home(props){
               <div>$ {upcoming.total}</div>
               <div>$ {upcoming.paid}</div>
               <div>{moment(upcoming.due).format('MM/DD/YY')}</div>
-            </section>
+            </section> */}
           </section>
         </section>
       </div>

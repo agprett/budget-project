@@ -122,8 +122,13 @@
 }
 
 .planning-home {
-  padding: 10px;
-  width: 100%;
+  padding: 13% 50px;
+  font-weight: bold;
+  font-size: large;
+  background-color: orange;
+  border-radius: 25px;
+  /* padding: 10px; */
+  /* width: 100%; */
   display: flex;
   justify-content: space-evenly;
   align-items: center;
