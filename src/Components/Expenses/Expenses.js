@@ -7,9 +7,12 @@ import './Expenses.css'
 function Expenses() {
   const [expenses, setExpenses] = useState([])
   const [newExpense, setNewExpense] = useState({display: false, name: '', category: '', amount: 0})
+  const [editting, setEditting] = useState(false)
+  const [updatedExpenses, setUpdatedExpenses] = useState({})
+  const [deletedExpenses, setDeletedExpenses] = useState([])
   const [recurring, setRecurring] = useState([])
-  const [loading, setLoading] = useState(true)
   const [filterDropdown, setFilterDropdown] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     setLoading(true)
@@ -32,8 +35,8 @@ function Expenses() {
     .catch(err => console.log(err))
   }, [])
 
-  const addNewExpense = newExpense => {
-    axios.post('api/expenses', newExpense)
+  const addNewExpense = expense => {
+    axios.post('api/expenses', expense)
     .then(() => {
       setNewExpense({display: false, name: '', category: '', amount: 0})
     })
@@ -41,16 +44,90 @@ function Expenses() {
   }
   
   const viewExpenses = expenses.map((expense, i) => { 
-    const {name, category, date, amount} = expense
+    const {name, category, date, amount, expense_id} = expense
+    let view = 'normal'
+    let remove = false
 
-    return (
-      <section key={i} className='expenses' style={{backgroundColor: i % 2 === 1 ? '#F5F5F5' : '#987DC1'}}>
-        <h2 className='expense-name'>{name}</h2>
-        <p className='expense-category'>{category}</p>
-        <h4 className='expense-date'>{moment(date).format('MM/DD/YY')}</h4>
-        <h2 className='expense-amount'>$ {amount}</h2>
-      </section>
-    )
+    for( let i = 0; i < deletedExpenses.length; i++){
+      if(deletedExpenses[i] == expense_id){
+        remove = true
+      }
+    }
+
+    for(let key in updatedExpenses){
+      if(key == expense_id){
+        view = 'editting'
+      }
+    }
+
+    if(view === 'editting'){
+      return (
+        <section key={i} className='expenses' style={{backgroundColor: i % 2 === 1 ? '#F5F5F5' : '#987DC1'}}>
+          <input
+            className='expense-name'
+            placeholder={name}
+            onChange={event => {
+              setUpdatedExpenses({...updatedExpenses, [expense_id]: {...updatedExpenses[expense_id], name: event.target.value}})
+            }}
+            />
+          <input
+            className='expense-category'
+            placeholder={category}
+            onChange={event => {
+              setUpdatedExpenses({...updatedExpenses, [expense_id]: {...updatedExpenses[expense_id], category: event.target.value}})
+            }}
+            />
+          <input
+            className='expense-date'
+            placeholder={moment(date).format('MM/DD/YY')}
+            onChange={event => {
+              setUpdatedExpenses({...updatedExpenses, [expense_id]: {...updatedExpenses[expense_id], date: event.target.value}})
+            }}
+            />
+          <input
+            className='expense-amount'
+            placeholder={amount}
+            onChange={event => {
+              setUpdatedExpenses({...updatedExpenses, [expense_id]: {...updatedExpenses[expense_id], amount: event.target.value}})
+            }}
+            />
+          <input
+            type='checkbox'
+            onClick={() => {
+              remove = !remove
+              if(remove){
+                setDeletedExpenses([...deletedExpenses, expense_id])
+              } else {
+                console.log('hit')
+                for(let i = 0; i < deletedExpenses.length; i++){
+                  if(deletedExpenses[i] == expense_id){
+                    let array = deletedExpenses
+                    array.splice(i, 1)
+                    setDeletedExpenses(array)
+                  }
+                }
+              }
+            }}
+          />
+        </section>
+      )
+    } else {
+      return (
+        <section
+          key={i} className='expenses' style={{backgroundColor: i % 2 === 1 ? '#F5F5F5' : '#987DC1'}}
+          onClick={() => {
+            if(editting){
+              setUpdatedExpenses({...updatedExpenses, [expense_id]: expense})
+            }
+          }}
+        >
+          <h2 className='expense-name'>{name}</h2>
+          <p className='expense-category'>{category}</p>
+          <h4 className='expense-date'>{moment(date).format('MM/DD/YY')}</h4>
+          <h2 className='expense-amount'>$ {amount}</h2>
+        </section>
+      )
+    }
   })
 
   const viewRecurring = recurring.map((purchase, i) => {
@@ -64,7 +141,7 @@ function Expenses() {
         <h2 className='recure-amount'>$ {amount}</h2>
         <button
           onClick={() => {
-            newExpense(name, category, amount)
+            addNewExpense(purchase)
           }}
         >Pay now</button>
       </div>
@@ -125,8 +202,11 @@ function Expenses() {
                   setNewExpense({...newExpense, display: true})
                 }}
               >New</button>
-              <button>Edit</button>
-              <button>Delete</button>
+              <button
+                onClick={() => {
+                  setEditting(true)
+                }}
+              >Edit</button>
               <button
                 onClick={() => {
                   if(filterDropdown){
@@ -137,11 +217,28 @@ function Expenses() {
                 }}
               >Filter
                 <img
-                  className={filterDropdown ? 'arrow down-arrow' : 'arrow'}
+                  className={filterDropdown ? 'down-arrow' : 'arrow'}
                   src='https://image.flaticon.com/icons/png/512/16/16038.png'
                   alt='arrow'
                 />
               </button>
+              <div className={editting ? 'editting-buttons' : 'null'}>
+                <p>Click on expense to edit</p>
+                <button>Save</button>
+                <button
+                  onClick={() => {
+                    setEditting(false)
+                    setUpdatedExpenses({})
+                    setDeletedExpenses([])
+                  }}
+                >Cancel</button>
+                <button
+                  className={deletedExpenses[0] ? null : 'null'}
+                  onClick={() => {
+
+                  }}
+                >Delete</button>
+              </div>
             </section>
             <section className={filterDropdown ? 'expense-filter' : ' expense-filter null'}>
               <input

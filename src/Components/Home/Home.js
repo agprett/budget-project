@@ -9,7 +9,7 @@ import DonutChart from '../DonutChart/DonutChart'
 
 function Home(props){
   const {overall} = props.user
-  const {savings, debt} = props
+  // const {savings, debt} = props
   const [loading, setLoading] = useState(true)
   const [budget, setBudget] = useState([])
   const [current, setCurrent] = useState([])
@@ -17,8 +17,8 @@ function Home(props){
   const [chartData, setChartData] = useState({})
   const [chartColors, setChartColors] = useState([])
   const [recurring, setRecuring] = useState([])
-  const [priority, setPriority] = useState({})
-  const [upcoming, setUpcoming] = useState({})
+  // const [priority, setPriority] = useState({})
+  // const [upcoming, setUpcoming] = useState({})
   
   useEffect(() => {
     setLoading(true)
@@ -43,17 +43,17 @@ function Home(props){
     })
     .catch(err => console.log(err))
 
-    axios.get('/api/goals/1')
-    .then(res => {
-      setPriority(res.data)
-    })
-    .catch(err => console.log(err))
+    // axios.get('/api/goals/1')
+    // .then(res => {
+    //   setPriority(res.data)
+    // })
+    // .catch(err => console.log(err))
 
-    axios.get('/api/upcoming')
-    .then(res => {
-      setUpcoming(res.data)
-    })
-    .catch(err => console.log(err))
+    // axios.get('/api/upcoming')
+    // .then(res => {
+    //   setUpcoming(res.data)
+    // })
+    // .catch(err => console.log(err))
 
     axios.get('/api/user/chart')
     .then(res => {
