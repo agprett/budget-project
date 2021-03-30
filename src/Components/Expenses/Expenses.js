@@ -13,6 +13,7 @@ function Expenses() {
   const [recurring, setRecurring] = useState([])
   const [filterDropdown, setFilterDropdown] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [rerender, setRerender] = useState(false)
 
   useEffect(() => {
     setLoading(true)
@@ -33,7 +34,9 @@ function Expenses() {
       }, 500)
     })
     .catch(err => console.log(err))
-  }, [])
+
+    setRerender(false)
+  }, [rerender])
 
   const addNewExpense = expense => {
     axios.post('api/expenses', expense)
@@ -41,6 +44,15 @@ function Expenses() {
       setNewExpense({display: false, name: '', category: '', amount: 0})
     })
     .catch(err => console.log(err))
+  }
+
+  const updateExpenses = () => {
+    axios.put('api/expenses', updatedExpenses)
+    .then (() => {
+      setUpdatedExpenses({})
+      setEditting(false)
+      setRerender(true)
+    })
   }
   
   const viewExpenses = expenses.map((expense, i) => { 
@@ -119,6 +131,7 @@ function Expenses() {
             if(editting){
               setUpdatedExpenses({...updatedExpenses, [expense_id]: expense})
             }
+            console.log(typeof(expense_id))
           }}
         >
           <h2 className='expense-name'>{name}</h2>
@@ -224,7 +237,11 @@ function Expenses() {
               </button>
               <div className={editting ? 'editting-buttons' : 'null'}>
                 <p>Click on expense to edit</p>
-                <button>Save</button>
+                <button
+                  onClick={() => {
+                    updateExpenses()
+                  }}
+                >Save</button>
                 <button
                   onClick={() => {
                     setEditting(false)

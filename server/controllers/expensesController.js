@@ -25,10 +25,16 @@ module.exports = {
 
   updateExpenses: async (req, res) => {
     const db = req.app.get('db')
-    const {id} = req.params
-    const {name, date, amount} = req.body
+    const body = req.body
+    console.log(body)
+    
+    for(let key in body){
+      console.log(key)
+      const {name, date, amount, expense_id} = key
+      console.log(typeof(expense_id))
 
-    await db.expenses.update_expense([name, date, amount, +id])
+      await db.expenses.update_expense([name, date, amount, expense_id])
+    }
 
     res.sendStatus(200)
   },
