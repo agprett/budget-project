@@ -28,12 +28,10 @@ module.exports = {
     const body = req.body
     console.log(body)
     
-    for(let key in body){
-      console.log(key)
-      const {name, date, amount, expense_id} = key
-      console.log(typeof(expense_id))
+    for(let i = 0; i < body.length; i++){
+      const {name, date, amount, category, expense_id} = body[i]
 
-      await db.expenses.update_expense([name, date, amount, expense_id])
+      await db.expenses.update_expense([name, date, amount, category, expense_id])
     }
 
     res.sendStatus(200)

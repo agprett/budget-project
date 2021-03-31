@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import moment from 'moment'
 import Loading from '../Loading/Loading'
+import {x} from '../img.json'
 import './Expenses.css'
 
 function Expenses() {
@@ -47,7 +48,13 @@ function Expenses() {
   }
 
   const updateExpenses = () => {
-    axios.put('api/expenses', updatedExpenses)
+    let updatedArray = []
+
+    for(let key in updatedExpenses){
+      updatedArray.push(updatedExpenses[key])
+    }
+
+    axios.put('api/expenses', updatedArray)
     .then (() => {
       setUpdatedExpenses({})
       setEditting(false)
@@ -121,6 +128,24 @@ function Expenses() {
               }
             }}
           />
+          <img
+            className='close'
+            src={x}
+            alt='x'
+            onClick={() => {
+              let removalObject = updatedExpenses
+              delete removalObject[expense_id]
+              setUpdatedExpenses(removalObject)
+
+              for(let i = 0; i < deletedExpenses.length; i++){
+                if(deletedExpenses[i] == expense_id){
+                  let array = deletedExpenses
+                  array.splice(i, 1)
+                  setDeletedExpenses(array)
+                }
+              }
+            }}
+          />
         </section>
       )
     } else {
@@ -131,7 +156,6 @@ function Expenses() {
             if(editting){
               setUpdatedExpenses({...updatedExpenses, [expense_id]: expense})
             }
-            console.log(typeof(expense_id))
           }}
         >
           <h2 className='expense-name'>{name}</h2>
