@@ -37,6 +37,7 @@ function Expenses() {
     .catch(err => console.log(err))
 
     setRerender(false)
+    console.log('hit')
   }, [rerender])
 
   const addNewExpense = expense => {
@@ -59,6 +60,13 @@ function Expenses() {
       setUpdatedExpenses({})
       setEditting(false)
       setRerender(true)
+    })
+  }
+
+  const deleteExpenses = () => {
+    axios.post('/api/expenses/remove', deletedExpenses)
+    .then(() => {
+      setDeletedExpenses([])
     })
   }
   
@@ -117,7 +125,6 @@ function Expenses() {
               if(remove){
                 setDeletedExpenses([...deletedExpenses, expense_id])
               } else {
-                console.log('hit')
                 for(let i = 0; i < deletedExpenses.length; i++){
                   if(deletedExpenses[i] == expense_id){
                     let array = deletedExpenses
@@ -276,7 +283,7 @@ function Expenses() {
                 <button
                   className={deletedExpenses[0] ? null : 'null'}
                   onClick={() => {
-
+                    deleteExpenses()
                   }}
                 >Delete</button>
               </div>

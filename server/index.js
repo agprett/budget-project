@@ -35,7 +35,7 @@ app.get('/api/expenses', expensesCtrl.getExpenses)
 app.post('/api/expenses', expensesCtrl.newExpense)
 app.get('/api/recent', expensesCtrl.getRecent)
 app.put('/api/expenses', expensesCtrl.updateExpenses)
-app.delete('/api/expenses/:id', expensesCtrl.deleteExpense)
+app.post('/api/expenses/remove', expensesCtrl.deleteExpense)
 app.get('/api/expenses/current', expensesCtrl.getCurrent)
 app.post('/api/filter', expensesCtrl.filterExpenses)
 

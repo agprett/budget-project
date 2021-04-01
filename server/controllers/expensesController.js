@@ -25,8 +25,7 @@ module.exports = {
 
   updateExpenses: async (req, res) => {
     const db = req.app.get('db')
-    const body = req.body
-    console.log(body)
+    const {body} = req
     
     for(let i = 0; i < body.length; i++){
       const {name, date, amount, category, expense_id} = body[i]
@@ -39,9 +38,11 @@ module.exports = {
 
   deleteExpense: async (req, res) => {
     const db = req.app.get('db')
-    const {id} = req.params
-    
-    await db.expenses.delete_expense([+id])
+    const {body} = req
+
+    for(let i = 0; i < body.length; i++){
+      await db.expenses.delete_expense([body[i]])
+    }
     
     res.sendStatus(200)
   },
