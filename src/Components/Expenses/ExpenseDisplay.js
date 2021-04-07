@@ -8,36 +8,62 @@ function ExpenseDisplay(props) {
   const [displayedExpenses, setDisplayedExpenses] = useState([])
 
   useEffect(() => {
-    if(filters.filtered){
-      const filtered = displayedExpenses.filter(expense => {
-        const {name, category, start, end, max, min} = expense
-        
-        if(name){
-          return expense.name === name
-        } else if(category){
-          return expense.category === category
-        } else if(start){
-          console.log(start)
-          return moment(expense.date).format('MM/DD/YY') >= moment(start).format('MM/DD/YY')
-        } else if(end){
-          console.log(end)
-          return moment(expense.date).format('MM/DD/YY') <= moment(end).formant('MM/DD/YY')
-        } else if(max){
-          return expense.amount >= max
-        } else if(min){
-          return expense.amount <= min
-        }
+    console.log(filters)
+
+    if(filters.filtered && (filters.name || filters.category || filters.start || filters.end || filters.max || filters.min)){
+      const filteredExpenses = displayedExpenses.filter(e => {
+
+      if(filters.name){
+        return e.name.toLowerCase().includes(filters.name.toLowerCase())
+      }
+      if(filters.category){
+        return e.category.toLowerCase().includes(filters.category.toLowerCase())
+      }
+        // filters.start || 
+        // filters.end || 
+        // filters.max || 
+        // filters.min
       })
+      // const filteredExpenses = displayedExpenses.filter(expense => {
+      //   const {name, category, start, end, max, min} = expense
+        
+      //   if(filters.name){
+      //     console.log(`True, ${filters.name}`)
+      //   } else if(!filters.name){
+      //     console.log(`False, ${filters.name}`)
+        // }
+        // if(filters.name){
+        //   return name === filters.name + '*'
+        // }
+        // if(filters.category){
+        //   return category === filters.category + '*'
+        // }
+        // if(filters.start){
+        //   console.log(filters.start)
+        //   return moment(start).format('MM/DD/YY') >= moment(filters.start).format('MM/DD/YY')
+        // }
+        // if(filters.end){
+        //   console.log(filters.end)
+        //   return moment(end).format('MM/DD/YY') <= moment(filters.end).formant('MM/DD/YY')
+        // }
+        // if(filters.max){
+        //   return max >= filters.max + '*'
+        // }
+        // if(filters.min){
+        //   return min <= filters.min + '*'
+        // }
+      // })
       
-      setDisplayedExpenses(filtered)
+      // console.log(filteredExpenses)
+      setDisplayedExpenses(filteredExpenses)
 
     } else {
       setDisplayedExpenses(expenses)
     }
-  }, [filters])
+  }, [filters.filtered, filters.name, filters.category])
 
 
-  const viewExpenses = expenses.map((expense, i) => {
+  const viewExpenses = displayedExpenses.map((expense, i) => {
       const {name, category, date, amount, expense_id} = expense
       let view = 'normal'
       let remove = false

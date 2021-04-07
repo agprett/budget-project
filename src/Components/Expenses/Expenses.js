@@ -12,8 +12,8 @@ function Expenses() {
   const [updatedExpenses, setUpdatedExpenses] = useState({})
   const [deletedExpenses, setDeletedExpenses] = useState([])
   const [recurring, setRecurring] = useState([])
-  const [filterDropdown, setFilterDropdown] = useState(false)
   const [filters, setFilters] = useState({filtered : false, name: '', category: '', start: '', end: '', max: '', min: ''})
+  const [filteredExpenses, setFilteredExpenses] = useState([])
   const [loading, setLoading] = useState(true)
   const [rerender, setRerender] = useState(false)
 
@@ -38,7 +38,7 @@ function Expenses() {
     .catch(err => console.log(err))
 
     setRerender(false)
-  }, [rerender])
+  }, [rerender, filters])
 
   const addNewExpense = expense => {
     axios.post('api/expenses', expense)
