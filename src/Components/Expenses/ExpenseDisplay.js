@@ -8,22 +8,19 @@ function ExpenseDisplay(props) {
   const [displayedExpenses, setDisplayedExpenses] = useState([])
 
   useEffect(() => {
-    console.log(filters)
-
     if(filters.filtered && (filters.name || filters.category || filters.start || filters.end || filters.max || filters.min)){
-      const filteredExpenses = displayedExpenses.filter(e => {
+      const filteredArray = []
 
-      if(filters.name){
-        return e.name.toLowerCase().includes(filters.name.toLowerCase())
+      for(let i = 0; i < expenses.length; i++){
+        if((filters.name && expenses[i].name.toLowerCase().includes(filters.name.toLowerCase()))){
+          console.log('name')
+          filteredArray.push(expenses[i])
+        }if(filters.category && expenses[i].category.toLowerCase().includes(filters.category.toLowerCase())){
+          console.log('category')
+          filteredArray.push(expenses[i])
+        }
       }
-      if(filters.category){
-        return e.category.toLowerCase().includes(filters.category.toLowerCase())
-      }
-        // filters.start || 
-        // filters.end || 
-        // filters.max || 
-        // filters.min
-      })
+
       // const filteredExpenses = displayedExpenses.filter(expense => {
       //   const {name, category, start, end, max, min} = expense
         
@@ -54,13 +51,11 @@ function ExpenseDisplay(props) {
         // }
       // })
       
-      // console.log(filteredExpenses)
-      setDisplayedExpenses(filteredExpenses)
-
+      setDisplayedExpenses(filteredArray)
     } else {
       setDisplayedExpenses(expenses)
     }
-  }, [filters.filtered, filters.name, filters.category])
+  }, [filters])
 
 
   const viewExpenses = displayedExpenses.map((expense, i) => {
