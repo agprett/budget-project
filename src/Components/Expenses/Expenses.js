@@ -12,8 +12,9 @@ function Expenses() {
   const [updatedExpenses, setUpdatedExpenses] = useState({})
   const [deletedExpenses, setDeletedExpenses] = useState([])
   const [recurring, setRecurring] = useState([])
+  const [editRecuring, setEditRecurring] = useState({})
   const [filters, setFilters] = useState({filtered : false, name: '', category: '', start: '', end: '', max: '', min: ''})
-  const [filteredExpenses, setFilteredExpenses] = useState([])
+  const [displayDelete, setDisplayDelete] = useState(false)
   const [loading, setLoading] = useState(true)
   const [rerender, setRerender] = useState(false)
 
@@ -75,15 +76,42 @@ function Expenses() {
 
     return (
       <div key={i} className='recure'>
-        <h2 className='recure-name'>{name}</h2>
-        <h2 className='recure-category'>{category}</h2>
-        <h2 className='recure-date'>{moment(date).format('MM/DD/YY')}</h2>
-        <h2 className='recure-amount'>$ {amount}</h2>
-        <button
-          onClick={() => {
-            addNewExpense(purchase)
-          }}
-        >Pay now</button>
+        {purchase.recurring_id === editRecuring.recurring_id ? (
+          <section>
+            <input className='recure-name'/>
+            <input className='recure-category'/>
+            <input className='recure-date'/>
+            <input className='recure-amount'/>
+            <button>Save</button>
+            <button
+              onClick={() => {
+                setEditRecurring({})
+              }}
+            >Cancel</button>
+            <button
+              onClick={() => {
+                setDisplayDelete(true)
+              }}
+            >Delete</button>
+          </section>
+        ) : (
+          <section>
+            <h2 className='recure-name'>{name}</h2>
+            <h2 className='recure-category'>{category}</h2>
+            <h2 className='recure-date'>{moment(date).format('MM/DD/YY')}</h2>
+            <h2 className='recure-amount'>$ {amount}</h2>
+            <button
+              onClick={() => {
+                addNewExpense(purchase)
+              }}
+            >Pay now</button>
+            <button
+              onClick={() => {
+                setEditRecurring(purchase)
+              }}
+            >Edit</button>
+          </section>
+        )}
       </div>
     )
   })
@@ -231,6 +259,15 @@ function Expenses() {
             <div className='expenses-view'>
               <ExpenseDisplay data={{expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters}}/>
             </div>
+          </section>
+          <section className={displayDelete ? 'delete-message' : 'null'}>
+            <p>Are you sure you want to delete {editRecuring.name} recurring purchase?</p>
+            <button>Delete</button>
+            <button
+              onClick={() => {
+                setDisplayDelete(false)
+              }}
+            >Cancel</button>
           </section>
         </section>
       )}
