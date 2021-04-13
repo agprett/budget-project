@@ -78,10 +78,22 @@ function Expenses() {
       <div key={i} className='recure'>
         {purchase.recurring_id === editRecuring.recurring_id ? (
           <section>
-            <input className='recure-name'/>
-            <input className='recure-category'/>
-            <input className='recure-date'/>
-            <input className='recure-amount'/>
+            <input
+              className='recure-name'
+              placeholder={name}
+            />
+            <input
+              className='recure-category'
+              placeholder={category}
+            />
+            <input
+              className='recure-date'
+              placeholder={moment(date).format('MM/DD/YY')}
+            />
+            <input
+              className='recure-amount'
+              placeholder={amount}
+            />
             <button>Save</button>
             <button
               onClick={() => {
