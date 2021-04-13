@@ -9,17 +9,21 @@ function ExpenseDisplay(props) {
 
   useEffect(() => {
     if(filters.filtered && (filters.name || filters.category || filters.start || filters.end || filters.max || filters.min)){
-      const filteredArray = []
-
-      for(let i = 0; i < expenses.length; i++){
-        if((filters.name && expenses[i].name.toLowerCase().includes(filters.name.toLowerCase()))){
-          console.log('name')
-          filteredArray.push(expenses[i])
-        }if(filters.category && expenses[i].category.toLowerCase().includes(filters.category.toLowerCase())){
-          console.log('category')
-          filteredArray.push(expenses[i])
-        }
-      }
+      const filteredArray = expenses.filter(expense => {
+        return (
+          expense.name.toLowerCase().includes(filters.name)
+        ) && (
+          expense.category.toLowerCase().includes(filters.category)
+        ) && (
+          filters.start ?  moment(expense.date).isAfter(filters.start): true
+        ) && (
+          filters.end ? moment(expense.date).isBefore(filters.end) : true
+        ) && (
+          filters.max ? (filters.max > expense.amount ? true : false) : true
+        ) && (
+          filters.min ? (filters.min < expense.amount ? true : false) : true
+        )
+      })
 
       // const filteredExpenses = displayedExpenses.filter(expense => {
       //   const {name, category, start, end, max, min} = expense

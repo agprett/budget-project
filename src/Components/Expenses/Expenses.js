@@ -243,16 +243,16 @@ function Expenses() {
               />
               <input
                 placeholder='Minimum'
-                value={filters.max}
+                value={filters.min}
                 onChange={event => {
-                  setFilters({...filters, max: event.target.value})
+                  setFilters({...filters, min: event.target.value})
                 }}
               />
               <input
                 placeholder='Maximum'
-                value={filters.min}
+                value={filters.max}
                 onChange={event => {
-                  setFilters({...filters, min: event.target.value})
+                  setFilters({...filters, max: event.target.value})
                 }}
               />
             </section>
