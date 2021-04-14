@@ -35,7 +35,7 @@ CREATE TABLE recurring (
   name VARCHAR(20),
   category VARCHAR(20),
   amount INTEGER,
-  pay_date DATE
+  date DATE
 );
 
 CREATE TABLE savings (

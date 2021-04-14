@@ -24,36 +24,6 @@ function ExpenseDisplay(props) {
           filters.min ? (filters.min < expense.amount ? true : false) : true
         )
       })
-
-      // const filteredExpenses = displayedExpenses.filter(expense => {
-      //   const {name, category, start, end, max, min} = expense
-        
-      //   if(filters.name){
-      //     console.log(`True, ${filters.name}`)
-      //   } else if(!filters.name){
-      //     console.log(`False, ${filters.name}`)
-        // }
-        // if(filters.name){
-        //   return name === filters.name + '*'
-        // }
-        // if(filters.category){
-        //   return category === filters.category + '*'
-        // }
-        // if(filters.start){
-        //   console.log(filters.start)
-        //   return moment(start).format('MM/DD/YY') >= moment(filters.start).format('MM/DD/YY')
-        // }
-        // if(filters.end){
-        //   console.log(filters.end)
-        //   return moment(end).format('MM/DD/YY') <= moment(filters.end).formant('MM/DD/YY')
-        // }
-        // if(filters.max){
-        //   return max >= filters.max + '*'
-        // }
-        // if(filters.min){
-        //   return min <= filters.min + '*'
-        // }
-      // })
       
       setDisplayedExpenses(filteredArray)
     } else {

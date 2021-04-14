@@ -12,7 +12,7 @@ function Expenses() {
   const [updatedExpenses, setUpdatedExpenses] = useState({})
   const [deletedExpenses, setDeletedExpenses] = useState([])
   const [recurring, setRecurring] = useState([])
-  const [editRecuring, setEditRecurring] = useState({})
+  const [updatedRecurring, setUpdatedRecurring] = useState({recurring_id: '', name: '', category: '', date: '', amount: ''})
   const [filters, setFilters] = useState({filtered : false, name: '', category: '', start: '', end: '', max: '', min: ''})
   const [displayDelete, setDisplayDelete] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -42,7 +42,7 @@ function Expenses() {
   }, [rerender, filters])
 
   const addNewExpense = expense => {
-    axios.post('api/expenses', expense)
+    axios.post('/api/expenses', expense)
     .then(() => {
       setNewExpense({display: false, name: '', category: '', amount: 0})
     })
@@ -56,48 +56,72 @@ function Expenses() {
       updatedArray.push(updatedExpenses[key])
     }
 
-    axios.put('api/expenses', updatedArray)
+    axios.put('/api/expenses', updatedArray)
     .then (() => {
       setUpdatedExpenses({})
       setEditting(false)
       setRerender(true)
     })
   }
-
+  
   const deleteExpenses = () => {
     axios.post('/api/expenses/remove', deletedExpenses)
     .then(() => {
       setDeletedExpenses([])
     })
   }
-
+  
+  const updateRecurring = () => {
+    axios.put('/api/recurring', updatedRecurring)
+    .then(() => {
+      setUpdatedRecurring({recurring_id: '', name: '', category: '', date: '', amount: ''})
+      setRerender(true)
+    })
+  }
+  
   const viewRecurring = recurring.map((purchase, i) => {
     const {name, category, date, amount} = purchase
 
     return (
       <div key={i} className='recure'>
-        {purchase.recurring_id === editRecuring.recurring_id ? (
+        {purchase.recurring_id === updatedRecurring.recurring_id ? (
           <section>
             <input
               className='recure-name'
               placeholder={name}
+              onChange={event => {
+                setUpdatedRecurring({...updatedRecurring, name: event.target.value})
+              }}
             />
             <input
               className='recure-category'
               placeholder={category}
+              onChange={event => {
+                setUpdatedRecurring({...updatedRecurring, category: event.target.value})
+              }}
             />
             <input
               className='recure-date'
               placeholder={moment(date).format('MM/DD/YY')}
+              onChange={event => {
+                setUpdatedRecurring({...updatedRecurring, date: event.target.value})
+              }}
             />
             <input
               className='recure-amount'
               placeholder={amount}
+              onChange={event => {
+                setUpdatedRecurring({...updatedRecurring, amount: +event.target.value})
+              }}
             />
-            <button>Save</button>
             <button
               onClick={() => {
-                setEditRecurring({})
+                updateRecurring()
+              }}
+            >Save</button>
+            <button
+              onClick={() => {
+                setUpdatedRecurring({})
               }}
             >Cancel</button>
             <button
@@ -119,7 +143,7 @@ function Expenses() {
             >Pay now</button>
             <button
               onClick={() => {
-                setEditRecurring(purchase)
+                setUpdatedRecurring(purchase)
               }}
             >Edit</button>
           </section>
@@ -273,7 +297,7 @@ function Expenses() {
             </div>
           </section>
           <section className={displayDelete ? 'delete-message' : 'null'}>
-            <p>Are you sure you want to delete {editRecuring.name} recurring purchase?</p>
+            <p>Are you sure you want to delete {updatedRecurring.name} recurring purchase?</p>
             <button>Delete</button>
             <button
               onClick={() => {
