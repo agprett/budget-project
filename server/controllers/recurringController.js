@@ -27,5 +27,14 @@ module.exports = {
     await db.recurring.update_recurring([name, category, amount, date, recurring_id])
 
     res.sendStatus(200)
+  },
+
+  deleteRecurring : async (req, res) => {
+    const db = req.app.get('db')
+    const {id} = req.params
+
+    await db.recurring.delete_recurring([id])
+
+    res.sendStatus(200)
   }
 }

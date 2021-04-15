@@ -55,6 +55,7 @@ app.get('/api/upcoming', debtsCtrl.getUpcoming)
 app.get('/api/recurring', recurringCtrl.getRecurring)
 app.post('/api/recurring', recurringCtrl.newRecurring)
 app.put('/api/recurring', recurringCtrl.updateRecurring)
+app.post('/api/recurring/:id', recurringCtrl.deleteRecurring)
 
 app.use(express.static(__dirname + '/../build'))
 

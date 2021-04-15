@@ -11,9 +11,9 @@ function ExpenseDisplay(props) {
     if(filters.filtered && (filters.name || filters.category || filters.start || filters.end || filters.max || filters.min)){
       const filteredArray = expenses.filter(expense => {
         return (
-          expense.name.toLowerCase().includes(filters.name)
+          expense.name.toLowerCase().includes(filters.name.toLowerCase())
         ) && (
-          expense.category.toLowerCase().includes(filters.category)
+          expense.category.toLowerCase().includes(filters.category.toLowerCase())
         ) && (
           filters.start ?  moment(expense.date).isAfter(filters.start): true
         ) && (
