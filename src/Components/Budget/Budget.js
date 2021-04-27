@@ -59,6 +59,7 @@ function Budget(props){
           >
           </div>
         </div>
+        <button>Edit</button>
       </section>
     )
   })
@@ -75,6 +76,7 @@ function Budget(props){
             <div className='budget-overall'>
             <div>Monthly Budget: {overall}</div>
             <div>Spent: {spent("Overall")}</div>
+            <button>Edit</button>
           </div>
             <div className='budget-donut-chart'>
               <BreakdownChart data={data}/>

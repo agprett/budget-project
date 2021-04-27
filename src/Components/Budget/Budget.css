@@ -31,3 +31,15 @@
   width: 45%;
   background-color: pink;
 }
+
+.sub-budget {
+  height: 75px;
+  width: 35%;
+  padding: 5px 10px;
+  margin: 10px 5px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-content: space-between;
+  /* background-color: orange; */
+}

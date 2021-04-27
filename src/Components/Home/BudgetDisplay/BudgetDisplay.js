@@ -22,7 +22,7 @@ function BudgetDisplay(props){
     const {category, amount} = budget
     
     return (
-      <section className='sub-budget' key={i}>
+      <section className='home-sub-budget' key={i}>
         <p>{category}:</p>
         <p>${spent(category)} / ${amount}</p>
         <div className='amount-bar'>
