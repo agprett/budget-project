@@ -1,2 +1,2 @@
-SELECT category, amount FROM budget
-WHERE user_id = $1 ORDER BY display ASC;
+SELECT category, amount, budget_id FROM budget
+WHERE user_id = $1;

@@ -10,7 +10,9 @@ function Budget(props){
   const [loading, setLoading] = useState(false)
   const [budget, setBudget] = useState([])
   const [current, setCurrent] = useState([])
+  const [subEdit, setSubEdit] = useState({user_id: '', budget_id: '', amount: '', category: ''})
   const [data, setData] = useState([])
+  const [rerender, setRerender] = useState(false)
 
   useEffect(() => {
     setLoading(true)
@@ -29,9 +31,10 @@ function Budget(props){
         setTimeout(() => {
           setLoading(false)
         }, 500)
+        setRerender(false)
       })
       .catch(err => console.log(err))
-  }, [])
+  }, [rerender])
 
   const spent = (category) => {
     let amount
@@ -46,20 +49,59 @@ function Budget(props){
     return amount
   }
 
+  const handleUpdateSubBudget = () => {
+    axios.put('/api/budget', subEdit)
+    .then(() => {
+      setSubEdit({user_id: '', budget_id: '', amount: '', category: ''})
+      setRerender(true)
+    })
+  }
+
   const viewSubs = budget.map((budget, i) => {
-    const {category, amount} = budget
+    const {category, amount, budget_id} = budget
 
     return (
-      <section className='sub-budget' key={i}>
-        <p>{category}:</p>
-        <p>${spent(category)} / ${amount}</p>
-        <div className='amount-bar'>
-          <div className='spent-bar'
-            style={{width: `${spent(category)/amount*100}%`}}
-          >
-          </div>
-        </div>
-        <button>Edit</button>
+      <section key={i}>
+        {subEdit.budget_id === budget_id ? (
+          <section className='sub-budget'>
+            <p>{category}</p>
+            <input
+              placeholder={`$${amount}`}
+              onChange={event => {
+                setSubEdit({...subEdit, amount: event.target.value})
+              }}
+            ></input>
+            <section className='sub-budget-buttons'>
+              <button
+                onClick={() => {
+                  handleUpdateSubBudget()
+                }}
+              >Save</button>
+              {/* <button>Delete</button> */}
+              <button
+                onClick={() => {
+                  setSubEdit({user_id: '', budget_id: '', amount: '', category: ''})
+                }}
+              >Cancel</button>
+            </section>
+          </section>
+        ) : (
+          <section className='sub-budget'>
+            <p>{category}:</p>
+            <p>${spent(category)} / ${amount}</p>
+            <div className='amount-bar'>
+              <div className='spent-bar'
+                style={{width: `${spent(category)/amount*100}%`}}
+              >
+              </div>
+            </div>
+            <button
+              onClick={() => {
+                setSubEdit(budget)
+              }}
+            >Edit</button>
+          </section>
+        )}
       </section>
     )
   })
