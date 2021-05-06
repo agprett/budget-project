@@ -57,6 +57,14 @@ function Budget(props){
     })
   }
 
+  const handleDeleteSubBudget = id => {
+    axios.post(`/api/budget/${id}`)
+    .then(() => {
+      setRerender(true)
+    })
+    // console.log(id)
+  }
+
   const viewSubs = budget.map((budget, i) => {
     const {category, amount, budget_id} = budget
 
@@ -77,7 +85,11 @@ function Budget(props){
                   handleUpdateSubBudget()
                 }}
               >Save</button>
-              {/* <button>Delete</button> */}
+              <button
+                onClick={() => {
+                  handleDeleteSubBudget(budget_id)
+                }}
+              >Delete</button>
               <button
                 onClick={() => {
                   setSubEdit({user_id: '', budget_id: '', amount: '', category: ''})

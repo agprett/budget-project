@@ -42,5 +42,14 @@ module.exports = {
     await db.budget.new_budget([user_id, category, amount])
 
     res.sendStatus(200)
+  },
+
+  deleteBudget: async (req, res) => {
+    const db = req.app.get('db')
+    const {id} = req.params
+
+    await db.budget.delete_budget([id])
+
+    res.sendStatus(200)
   }
 }

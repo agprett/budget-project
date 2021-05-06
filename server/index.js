@@ -30,6 +30,7 @@ app.get('/api/user/chart', usersCtrl.getChartData)
 app.get('/api/budget', budgetCtrl.getBudget)
 app.post('/api/budget', budgetCtrl.newBudget)
 app.put('/api/budget', budgetCtrl.updateBudget)
+app.post('/api/budget/:id', budgetCtrl.deleteBudget)
 
 app.get('/api/expenses', expensesCtrl.getExpenses)
 app.post('/api/expenses', expensesCtrl.newExpense)
