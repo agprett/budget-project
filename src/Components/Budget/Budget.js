@@ -11,6 +11,8 @@ function Budget(props){
   const [budget, setBudget] = useState([])
   const [current, setCurrent] = useState([])
   const [subEdit, setSubEdit] = useState({user_id: '', budget_id: '', amount: '', category: ''})
+  const [addingSub, setAddingSub] = useState(false)
+  const [newSub, setNewSub] = useState({amount: '', category: ''})
   const [data, setData] = useState([])
   const [rerender, setRerender] = useState(false)
 
@@ -63,6 +65,19 @@ function Budget(props){
       setRerender(true)
     })
     // console.log(id)
+  }
+
+  const handleNewSubBudget = () => {
+    if(newSub.category && newSub.amount){
+      axios.post('/api/budget', newSub)
+      .then(() => {
+        setNewSub({category: '', amount: ''})
+        setAddingSub(false)
+        setRerender(true)
+      })
+    } else {
+      alert("Please add a category and an amount")
+    }
   }
 
   const viewSubs = budget.map((budget, i) => {
@@ -137,6 +152,38 @@ function Budget(props){
             </div>
           </div>
           <div className='budgets-sub'>
+            {addingSub ? (
+              <section className='sub-budget'>
+                <input
+                  placeholder={'Category'}
+                  onChange={event => {
+                    setNewSub({...newSub, category: event.target.value})
+                  }}
+                ></input>
+                <input
+                  placeholder={'Amount'}
+                  onChange={event => {
+                    setNewSub({...newSub, amount: event.target.value})
+                  }}
+                ></input>
+                <button
+                  onClick={() => {
+                    handleNewSubBudget()
+                  }}
+                >Add</button>
+                <button
+                  onClick={() => {
+                    setAddingSub(false)
+                  }}
+                >Cancel</button>
+              </section>
+            ) : (
+              <button
+                onClick={() => {
+                  setAddingSub(true)
+                }}
+              >New</button>
+            )}
             {viewSubs}
           </div>
         </section>
