@@ -94,5 +94,16 @@ module.exports = {
     let chartData = {budget: budget, spent: spent}
     
     res.status(200).send(chartData)
+  },
+
+  updateOverall: async (req, res) => {
+    const db = req.app.get('db')
+    // const {user_id} = req.session.user
+    const user_id = 1
+    let {overall} = req.params
+
+    await db.users.update_overall([user_id, overall])
+
+    res.sendStatus(200)
   }
 }

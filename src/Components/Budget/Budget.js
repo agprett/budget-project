@@ -10,8 +10,9 @@ function Budget(props){
   const [loading, setLoading] = useState(false)
   const [budget, setBudget] = useState([])
   const [current, setCurrent] = useState([])
-  const [subEdit, setSubEdit] = useState({user_id: '', budget_id: '', amount: '', category: ''})
-  const [addingSub, setAddingSub] = useState(false)
+  const [updatedSub, setUpdatedSub] = useState({user_id: '', budget_id: '', amount: '', category: ''})
+  const [updatedMain, setUpdatedMain] = useState(0)
+  const [editting, setEditting] = useState({main: false, sub: false})
   const [newSub, setNewSub] = useState({amount: '', category: ''})
   const [data, setData] = useState([])
   const [rerender, setRerender] = useState(false)
@@ -52,9 +53,9 @@ function Budget(props){
   }
 
   const handleUpdateSubBudget = () => {
-    axios.put('/api/budget', subEdit)
+    axios.put('/api/budget', updatedSub)
     .then(() => {
-      setSubEdit({user_id: '', budget_id: '', amount: '', category: ''})
+      setUpdatedSub({user_id: '', budget_id: '', amount: '', category: ''})
       setRerender(true)
     })
   }
@@ -72,7 +73,7 @@ function Budget(props){
       axios.post('/api/budget', newSub)
       .then(() => {
         setNewSub({category: '', amount: ''})
-        setAddingSub(false)
+        setEditting({...editting, sub: false})
         setRerender(true)
       })
     } else {
@@ -80,18 +81,27 @@ function Budget(props){
     }
   }
 
+  const handleUpdateMain = () => {
+    axios.post(`/api/user/${updatedMain}`)
+    .then(() => {
+      setEditting({...editting, main: false})
+      setUpdatedMain(0)
+      setRerender(true)
+    })
+  }
+
   const viewSubs = budget.map((budget, i) => {
     const {category, amount, budget_id} = budget
 
     return (
       <section key={i}>
-        {subEdit.budget_id === budget_id ? (
+        {updatedSub.budget_id === budget_id ? (
           <section className='sub-budget'>
             <p>{category}</p>
             <input
               placeholder={`$${amount}`}
               onChange={event => {
-                setSubEdit({...subEdit, amount: event.target.value})
+                setUpdatedSub({...updatedSub, amount: event.target.value})
               }}
             ></input>
             <section className='sub-budget-buttons'>
@@ -107,7 +117,7 @@ function Budget(props){
               >Delete</button>
               <button
                 onClick={() => {
-                  setSubEdit({user_id: '', budget_id: '', amount: '', category: ''})
+                  setUpdatedSub({user_id: '', budget_id: '', amount: '', category: ''})
                 }}
               >Cancel</button>
             </section>
@@ -124,7 +134,7 @@ function Budget(props){
             </div>
             <button
               onClick={() => {
-                setSubEdit(budget)
+                setUpdatedSub(budget)
               }}
             >Edit</button>
           </section>
@@ -142,17 +152,47 @@ function Budget(props){
       ) : (
         <section className='budget-page'>
           <div className='budget-left'>
+          {editting.main ? (
             <div className='budget-overall'>
-            <div>Monthly Budget: {overall}</div>
-            <div>Spent: {spent("Overall")}</div>
-            <button>Edit</button>
-          </div>
+              <div>
+                Monthly Budget: 
+                <input 
+                  placeholder={overall} 
+                  onChange={event => {
+                    setUpdatedMain(event.target.value)
+                  }}
+                  />
+              </div>
+              <div>Spent: {spent("Overall")}</div>
+              <button
+                onClick={() => {
+                  handleUpdateMain()
+                }}
+              >Save</button>
+              <button
+                onClick={() => {
+                  setEditting({...editting, main: false})
+                  setUpdatedMain(0)
+                }}
+              >Cancel</button>
+            </div>
+          ) : (
+            <div className='budget-overall'>
+              <div>Monthly Budget: {overall}</div>
+              <div>Spent: {spent("Overall")}</div>
+              <button
+                onClick={() => {
+                  setEditting({...editting, main: true})
+                }}
+              >Edit</button>
+            </div>
+          )}
             <div className='budget-donut-chart'>
               <BreakdownChart data={data}/>
             </div>
           </div>
           <div className='budgets-sub'>
-            {addingSub ? (
+            {editting ? (
               <section className='sub-budget'>
                 <input
                   placeholder={'Category'}
@@ -173,14 +213,14 @@ function Budget(props){
                 >Add</button>
                 <button
                   onClick={() => {
-                    setAddingSub(false)
+                    setEditting({...editting, sub: false})
                   }}
                 >Cancel</button>
               </section>
             ) : (
               <button
                 onClick={() => {
-                  setAddingSub(true)
+                  setEditting({...editting, sub: true})
                 }}
               >New</button>
             )}
