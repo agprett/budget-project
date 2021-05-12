@@ -58,6 +58,7 @@ app.get('/api/recurring', recurringCtrl.getRecurring)
 app.post('/api/recurring', recurringCtrl.newRecurring)
 app.put('/api/recurring', recurringCtrl.updateRecurring)
 app.post('/api/recurring/:id', recurringCtrl.deleteRecurring)
+app.put('/api/recurring/date', recurringCtrl.updateRecurringDate)
 
 app.use(express.static(__dirname + '/../build'))
 

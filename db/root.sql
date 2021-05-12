@@ -28,7 +28,7 @@ CREATE TABLE expenses (
   name VARCHAR(20),
   category VARCHAR(20),
   amount INTEGER,
-  date TIMESTAMP
+  date DATE
 );
 
 CREATE TABLE recurring (

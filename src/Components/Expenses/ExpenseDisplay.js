@@ -44,7 +44,6 @@ function ExpenseDisplay(props) {
       }
   
       for(let key in updatedExpenses){
-        console.log(updatedExpenses[key])
         if(+key === expense_id){
           view = 'editting'
         }

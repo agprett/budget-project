@@ -28,7 +28,6 @@ function Nav(props){
       props.getDebt(res.data.sum)
     })
     .catch(err => console.log(err))
-    console.log(props.user.user_id)
   }, [])
   
   return (

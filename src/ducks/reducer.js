@@ -8,6 +8,7 @@ const initialState = {
 }
 
 const GET_USER = 'GET_USER'
+const UPDATE_OVERALL = 'UPDATE_OVERALL'
 const LOGOUT_USER = 'LOGOUT_USER'
 // const GET_RECURRING = 'GET_RECURRING'
 // const GET_BUDGET = 'GET_BUDGET'
@@ -19,6 +20,13 @@ export function getUser(userInfo){
   return {
     type: GET_USER,
     payload: userInfo
+  }
+}
+
+export function updateOverall(overall){
+  return {
+    type: UPDATE_OVERALL,
+    payload: overall
   }
 }
 
@@ -68,6 +76,8 @@ export default function userReducer(state = initialState, action){
   switch(action.type){
     case GET_USER:
       return {...state, user: action.payload}
+    case UPDATE_OVERALL:
+      return {...state, user: {...state.user, overall: action.payload}}
     case LOGOUT_USER:
       return {...state, ...action.payload}
     // case GET_RECURRING:

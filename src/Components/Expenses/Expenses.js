@@ -4,7 +4,6 @@ import moment from 'moment'
 import Loading from '../Loading/Loading'
 import './Expenses.css'
 import ExpenseDisplay from './ExpenseDisplay'
-import { findAllByDisplayValue } from '@testing-library/dom'
 
 function Expenses() {
   const [expenses, setExpenses] = useState([])
@@ -81,6 +80,20 @@ function Expenses() {
     })
   }
 
+  const handleRecurringPay = (name, category, date, amount, recurring_id) => {
+    let newExpense = {name, category, amount, date}
+    let updated = {recurring_id, date}
+    
+    axios.post('/api/expenses', newExpense)
+    .then(()=> {
+      axios.put('/api/recurring/date', updated)
+      .then(() => {
+        setRerender(true)
+      })
+    })
+    .catch(err => console.log(err))
+  }
+
   const handleNewRecurring = () => {
     axios.post('/api/recurring', newRecurring)
     .then(() => {
@@ -97,12 +110,12 @@ function Expenses() {
     })
   }
   
-  const viewRecurring = recurring.map((purchase, i) => {
-    const {name, category, date, amount} = purchase
+  const viewRecurring = recurring.map((recurring, i) => {
+    const {name, category, date, amount, recurring_id} = recurring
 
     return (
       <div key={i} className='recure'>
-        {purchase.recurring_id === updatedRecurring.recurring_id ? (
+        {recurring.recurring_id === updatedRecurring.recurring_id ? (
           <section>
             <input
               className='recure-name'
@@ -144,7 +157,7 @@ function Expenses() {
             >Cancel</button>
             <button
               onClick={() => {
-                setDisplayDelete({display: true, id: purchase.recurring_id})
+                setDisplayDelete({display: true, id: recurring.recurring_id})
               }}
             >Delete</button>
           </section>
@@ -156,12 +169,12 @@ function Expenses() {
             <h2 className='recure-amount'>$ {amount}</h2>
             <button
               onClick={() => {
-                addNewExpense(purchase)
+                handleRecurringPay(name, category, date, amount, recurring_id)
               }}
             >Pay now</button>
             <button
               onClick={() => {
-                setUpdatedRecurring(purchase)
+                setUpdatedRecurring(recurring)
               }}
             >Edit</button>
           </section>

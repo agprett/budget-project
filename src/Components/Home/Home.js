@@ -19,6 +19,7 @@ function Home(props){
   const [recurring, setRecuring] = useState([])
   // const [priority, setPriority] = useState({})
   // const [upcoming, setUpcoming] = useState({})
+  const [rerender, setRerender] = useState(false)
   
   useEffect(() => {
     setLoading(true)
@@ -66,10 +67,11 @@ function Home(props){
       setCurrent(res.data)
       setTimeout(() => {
         setLoading(false)
+        setRerender(false)
       }, 500)
     })
     .catch(err => console.log(err))
-  }, [])
+  }, [rerender])
 
   const spent = (category) => {
     let amount
@@ -84,10 +86,17 @@ function Home(props){
     return amount
   }
 
-  const payRecurring = (name, category, amount, date) => {
+  const handleRecurringPay = (name, category, amount, date, recurring_id) => {
     let newExpense = {name, category, amount, date}
+    let updated = {recurring_id, date}
     
     axios.post('/api/expenses', newExpense)
+    .then(()=> {
+      axios.put('/api/recurring/date', updated)
+      .then(() => {
+        setRerender(true)
+      })
+    })
   }
 
   const viewRecent = recent.map((recentExpense, i) => {
@@ -104,7 +113,7 @@ function Home(props){
   })
 
   const viewRecuring = recurring.map((recure, i) => {
-    const {name, amount, date, category} = recure
+    const {name, amount, date, category, recurring_id} = recure
 
     return (
       <section className='recurring-home' key={i}>
@@ -114,7 +123,7 @@ function Home(props){
         <div>{moment(date).format('MM/DD/YY')}</div>
         <button
           onClick={() => {
-            payRecurring(name, category, amount, date)
+            handleRecurringPay(name, category, amount, date, recurring_id)
           }}
         >Pay Now</button>
       </section>

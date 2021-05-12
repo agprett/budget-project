@@ -1,3 +1,5 @@
+const moment = require('moment')
+
 module.exports = {
   getRecurring: async (req, res) => {
     const db = req.app.get('db')
@@ -29,11 +31,22 @@ module.exports = {
     res.sendStatus(200)
   },
 
-  deleteRecurring : async (req, res) => {
+  deleteRecurring: async (req, res) => {
     const db = req.app.get('db')
     const {id} = req.params
 
     await db.recurring.delete_recurring([id])
+
+    res.sendStatus(200)
+  },
+
+  updateRecurringDate: async (req, res) => {
+    const db = req.app.get('db')
+    const {recurring_id, date} = req.body
+
+    let updatedDate = moment(date).add(1, 'M')
+
+    await db.recurring.update_date(recurring_id, updatedDate)
 
     res.sendStatus(200)
   }

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
+import {updateOverall} from '../../ducks/reducer'
 import axios from 'axios'
 import Loading from '../Loading/Loading'
 import './Budget.css'
@@ -65,7 +66,6 @@ function Budget(props){
     .then(() => {
       setRerender(true)
     })
-    // console.log(id)
   }
 
   const handleNewSubBudget = () => {
@@ -86,6 +86,7 @@ function Budget(props){
     .then(() => {
       setEditting({...editting, main: false})
       setUpdatedMain(0)
+      props.updateOverall(updatedMain)
       setRerender(true)
     })
   }
@@ -192,7 +193,7 @@ function Budget(props){
             </div>
           </div>
           <div className='budgets-sub'>
-            {editting ? (
+            {editting.sub ? (
               <section className='sub-budget'>
                 <input
                   placeholder={'Category'}
@@ -234,4 +235,4 @@ function Budget(props){
 
 const mapStateToProps = state => state
 
-export default connect(mapStateToProps, {})(Budget)
+export default connect(mapStateToProps, {updateOverall})(Budget)
