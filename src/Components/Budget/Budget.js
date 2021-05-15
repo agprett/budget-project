@@ -15,7 +15,7 @@ function Budget(props){
   const [updatedMain, setUpdatedMain] = useState(0)
   const [editting, setEditting] = useState({main: false, sub: false})
   const [newSub, setNewSub] = useState({amount: '', category: ''})
-  const [data, setData] = useState([])
+  const [data, setData] = useState({})
   const [rerender, setRerender] = useState(false)
 
   useEffect(() => {
@@ -28,10 +28,16 @@ function Budget(props){
         setCurrent(res.data)
       })
       .catch(err => console.log(err))
-
-    axios.get('api/budget')
+    
+    axios.get('/api/user/breakdown')
       .then(res => {
-        setBudget(res.data)
+        setData(res.data)
+      })
+      .catch(err => console.log(err))
+      
+    axios.get('api/budget')
+      .then(response => {
+        setBudget(response.data)
         setTimeout(() => {
           setLoading(false)
         }, 500)
@@ -188,7 +194,7 @@ function Budget(props){
               >Edit</button>
             </div>
           )}
-            <div className='budget-donut-chart'>
+            <div className='breakdown-chart'>
               <BreakdownChart data={data}/>
             </div>
           </div>

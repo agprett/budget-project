@@ -96,6 +96,28 @@ module.exports = {
     res.status(200).send(chartData)
   },
 
+  getBreakdownChartData: async (req, res) => {
+    const db = req.app.get('db')
+    // const {user_id} = req.session.user
+    const user_id = 1
+    let budgets = {}
+
+    let [main] = await db.users.get_overall([user_id])
+    budgets = {Overall: main.overall}
+
+    let subBudgets = await db.budget.get_budget([user_id])
+
+    for(let i = 0; i < subBudgets.length; i++){
+      let {category, amount} = subBudgets[i]
+
+      budgets.Overall -= amount
+
+      budgets = {...budgets, [category]: amount}
+    }
+
+    res.status(200).send(budgets)
+  },
+
   updateOverall: async (req, res) => {
     const db = req.app.get('db')
     // const {user_id} = req.session.user

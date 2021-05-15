@@ -26,6 +26,7 @@ app.post('/api/user/new', usersCtrl.newUser)
 app.post('/api/user/login', usersCtrl.loginUser)
 app.post('/api/user/logout', usersCtrl.logoutUser)
 app.get('/api/user/chart', usersCtrl.getChartData)
+app.get('/api/user/breakdown', usersCtrl.getBreakdownChartData)
 app.post('/api/user/:overall', usersCtrl.updateOverall)
 
 app.get('/api/budget', budgetCtrl.getBudget)
