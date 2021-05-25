@@ -17,7 +17,6 @@ CREATE TABLE users (
 CREATE TABLE budget (
   user_id INTEGER REFERENCES users(user_id),
   budget_id SERIAL PRIMARY KEY,
-  order INTEGER,
   category VARCHAR(15),
   amount INTEGER
 );

@@ -48,7 +48,9 @@ module.exports = {
     const db = req.app.get('db')
     const {id} = req.params
 
-    await db.budget.delete_budget([id])
+    console.log(id)
+
+    // await db.budget.delete_budget([id])
 
     res.sendStatus(200)
   }

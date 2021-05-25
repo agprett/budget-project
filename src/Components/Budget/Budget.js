@@ -68,6 +68,7 @@ function Budget(props){
   }
 
   const handleDeleteSubBudget = id => {
+    console.log(id)
     axios.post(`/api/budget/${id}`)
     .then(() => {
       setRerender(true)
@@ -119,6 +120,7 @@ function Budget(props){
               >Save</button>
               <button
                 onClick={() => {
+                  console.log(budget_id)
                   handleDeleteSubBudget(budget_id)
                 }}
               >Delete</button>
