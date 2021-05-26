@@ -34,7 +34,7 @@ app.post('/api/budget', budgetCtrl.newBudget)
 app.put('/api/budget', budgetCtrl.updateBudget)
 app.post('/api/budget/:id', budgetCtrl.deleteBudget)
 
-app.get('/api/expenses', expensesCtrl.getExpenses)
+app.get('/api/expenses/:limit', expensesCtrl.getExpenses)
 app.post('/api/expenses', expensesCtrl.newExpense)
 app.get('/api/recent', expensesCtrl.getRecent)
 app.put('/api/expenses', expensesCtrl.updateExpenses)

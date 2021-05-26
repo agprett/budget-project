@@ -7,6 +7,7 @@ import ExpenseDisplay from './ExpenseDisplay'
 
 function Expenses() {
   const [expenses, setExpenses] = useState([])
+  const [expenseLimit, setExpenseLimit] = useState(15)
   const [newExpense, setNewExpense] = useState({display: false, name: '', category: '', amount: 0})
   const [editting, setEditting] = useState(false)
   const [updatedExpenses, setUpdatedExpenses] = useState({})
@@ -30,9 +31,10 @@ function Expenses() {
     })
     .catch(err => console.log(err))
 
-    axios.get('/api/expenses')
+    axios.get(`/api/expenses/${expenseLimit}`)
     .then(res => {
-      setExpenses(res.data)
+      setExpenses(res.data.expenses)
+      setExpenseLimit(res.data.limit)
       setTimeout(() => {
         setLoading(false)
       }, 500)
@@ -40,12 +42,13 @@ function Expenses() {
     .catch(err => console.log(err))
 
     setRerender(false)
-  }, [rerender, filters])
+  }, [rerender])
 
   const addNewExpense = expense => {
     axios.post('/api/expenses', expense)
     .then(() => {
       setNewExpense({display: false, name: '', category: '', amount: 0})
+      setRerender(true)
     })
     .catch(err => console.log(err))
   }
@@ -107,6 +110,22 @@ function Expenses() {
     .then(() => {
       setRerender(true)
       setDisplayDelete({display: false, id: ''})
+    })
+  }
+
+  const handleLoadMoreExpenses = () => {
+    axios.get(`/api/expenses/${expenseLimit + 15}`)
+    .then(res =>  {
+      setExpenses(res.data.expenses)
+      setExpenseLimit(res.data.limit)
+    })
+  }
+
+  const handleLoadLessExpenses = () => {
+    axios.get(`/api/expenses/${expenseLimit - 15}`)
+    .then(res =>  {
+      setExpenses(res.data.expenses)
+      setExpenseLimit(res.data.limit)
     })
   }
   
@@ -374,6 +393,18 @@ function Expenses() {
             </section>
             <div className='expenses-view'>
               <ExpenseDisplay data={{expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters}}/>
+              <button
+                className='load-more-button'
+                onClick={() => {
+                  handleLoadMoreExpenses()
+                }}
+              >Load more</button>
+              <button
+                className={expenseLimit > 15 ? 'load-more-button' : 'null'}
+                onClick={() => {
+                  handleLoadLessExpenses()
+                }}
+              >Load less</button>
             </div>
           </section>
           <section className={displayDelete.display ? 'delete-message' : 'null'}>

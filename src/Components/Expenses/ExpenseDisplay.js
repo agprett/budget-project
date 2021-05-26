@@ -29,7 +29,10 @@ function ExpenseDisplay(props) {
     } else {
       setDisplayedExpenses(expenses)
     }
-  }, [filters])
+
+    // console.log('hit expense display')
+    
+  }, [filters, expenses])
 
 
   const viewExpenses = displayedExpenses.map((expense, i) => {

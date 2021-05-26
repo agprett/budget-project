@@ -5,10 +5,11 @@ module.exports = {
     const db = req.app.get('db')
     // const {user_id} = req.session.user
     const user_id = 1
+    const limit = +req.params.limit
 
-    const expenses = await db.expenses.get_expenses([user_id])
+    const expenses = await db.expenses.get_expenses([user_id, limit])
 
-    res.status(200).send(expenses)
+    res.status(200).send({expenses, limit})
   },
   
   newExpense: async (req, res) => {
