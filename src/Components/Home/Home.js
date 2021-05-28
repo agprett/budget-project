@@ -62,7 +62,7 @@ function Home(props){
     })
     .catch(err => console.log(err))
 
-    axios.get('/api/expenses/current')
+    axios.get('/api/current')
     .then(res => {
       setCurrent(res.data)
       setTimeout(() => {

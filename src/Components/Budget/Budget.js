@@ -23,7 +23,7 @@ function Budget(props){
   }, [])
 
   useEffect(() => {
-    axios.get('api/expenses/current')
+    axios.get('api/current')
       .then(res => {
         setCurrent(res.data)
       })

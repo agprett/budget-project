@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import moment from 'moment'
 import Loading from '../Loading/Loading'
+import Dropdown from '../Dropdown/Dropdown'
 import './Expenses.css'
 import ExpenseDisplay from './ExpenseDisplay'
 
@@ -15,7 +16,7 @@ function Expenses() {
   const [recurring, setRecurring] = useState([])
   const [newRecurring, setNewRecurring] = useState({display: false, name: '', category:'', amount: '', date: ''})
   const [updatedRecurring, setUpdatedRecurring] = useState({recurring_id: '', name: '', category: '', date: '', amount: ''})
-  const [filters, setFilters] = useState({filtered : false, name: '', category: '', start: '', end: '', max: '', min: ''})
+  const [filters, setFilters] = useState({filtered : true, name: '', category: '', start: '', end: '', max: '', min: ''})
   const [displayDelete, setDisplayDelete] = useState({display: false, id: ''})
   const [loading, setLoading] = useState(true)
   const [rerender, setRerender] = useState(false)
@@ -355,13 +356,14 @@ function Expenses() {
                   setFilters({...filters, name: event.target.value})
                 }}
               />
-              <input 
+              {/* <input 
                 placeholder='Category'
                 value={filters.category}
                 onChange={event => {
                   setFilters({...filters, category: event.target.value})
                 }}
-              />
+              /> */}
+              <Dropdown />
               <input
                 placeholder='Start Date'
                 value={filters.start}

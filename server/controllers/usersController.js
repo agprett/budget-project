@@ -127,5 +127,20 @@ module.exports = {
     await db.users.update_overall([user_id, overall])
 
     res.sendStatus(200)
+  },
+
+  getCategories: async (req, res) => {
+    const db = req.app.get('db')
+    // const {user_id} = req.session.user
+    const user_id = 1
+    let categories = []
+    
+    const response = await db.users.get_categories([user_id])
+
+    for(let i = 0; i < response.length; i++){
+      categories.push(response[i].category)
+    }
+
+    res.status(200).send(categories)
   }
 }
