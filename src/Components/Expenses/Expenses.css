@@ -58,10 +58,17 @@
 }
 
 .expense-filter {
+  height: 30px;
+  padding: 5px;
   width: 100%;
   background-color: powderblue;
   display: flex;
   justify-content: space-evenly;
+  overflow: visible;
+}
+
+.expense-category-dropdown{
+  z-index: 4;
 }
 
 .expenses-view {

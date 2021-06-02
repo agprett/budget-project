@@ -1,0 +1,14 @@
+.dropdown-menu{
+  padding: 0px;
+  height: 100px;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-selections{
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+}

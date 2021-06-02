@@ -10,13 +10,14 @@ function Expenses() {
   const [expenses, setExpenses] = useState([])
   const [expenseLimit, setExpenseLimit] = useState(15)
   const [newExpense, setNewExpense] = useState({display: false, name: '', category: '', amount: 0})
+  const [viewDropdown, setViewDropdown] = useState(false)
   const [editting, setEditting] = useState(false)
   const [updatedExpenses, setUpdatedExpenses] = useState({})
   const [deletedExpenses, setDeletedExpenses] = useState([])
   const [recurring, setRecurring] = useState([])
   const [newRecurring, setNewRecurring] = useState({display: false, name: '', category:'', amount: '', date: ''})
   const [updatedRecurring, setUpdatedRecurring] = useState({recurring_id: '', name: '', category: '', date: '', amount: ''})
-  const [filters, setFilters] = useState({filtered : true, name: '', category: '', start: '', end: '', max: '', min: ''})
+  const [filters, setFilters] = useState({filtered : false, name: '', category: '', start: '', end: '', max: '', min: ''})
   const [displayDelete, setDisplayDelete] = useState({display: false, id: ''})
   const [loading, setLoading] = useState(true)
   const [rerender, setRerender] = useState(false)
@@ -273,13 +274,29 @@ function Expenses() {
                     setNewExpense({...newExpense, name: event.target.value})
                   }}
                 />
-                <input
+                {/* <input
                   placeholder='Category'
                   value={newExpense.category}
                   onChange={event => {
                     setNewExpense({...newExpense, category: event.target.value})
                   }}
-                />
+                /> */}
+                <section className='expense-category-dropdown'>
+                  <button
+                    onClick={() => {
+                      viewDropdown ? setViewDropdown(false) : setViewDropdown(true)
+                    }}
+                  >{newExpense.category ? newExpense.category : 'Select Category'}
+                    <img
+                      className={viewDropdown ? 'down-arrow' : 'arrow'}
+                      src='https://image.flaticon.com/icons/png/512/16/16038.png'
+                      alt='arrow'
+                    />
+                  </button>
+                  <section className={viewDropdown ? null : 'null'}>
+                    <Dropdown rerender data={newExpense} setDropdownCategory={setNewExpense} view={viewDropdown} setView={setViewDropdown}/>
+                  </section>
+                </section>
                 <input
                   placeholder='Amount'
                   value={newExpense.amount}
@@ -356,14 +373,22 @@ function Expenses() {
                   setFilters({...filters, name: event.target.value})
                 }}
               />
-              {/* <input 
-                placeholder='Category'
-                value={filters.category}
-                onChange={event => {
-                  setFilters({...filters, category: event.target.value})
-                }}
-              /> */}
-              <Dropdown />
+              <section className='expense-category-dropdown'>
+                <button
+                  onClick={() => {
+                    viewDropdown ? setViewDropdown(false) : setViewDropdown(true)
+                  }}
+                >{filters.category ? filters.category : 'Select Category'}
+                  <img
+                    className={viewDropdown ? 'down-arrow' : 'arrow'}
+                    src='https://image.flaticon.com/icons/png/512/16/16038.png'
+                    alt='arrow'
+                  />
+                </button>
+                <section className={viewDropdown ? null : 'null'}>
+                  <Dropdown rerender={rerender} data={filters} setDropdownCategory={setFilters} view={viewDropdown} setView={setViewDropdown}/>
+                </section>
+              </section>
               <input
                 placeholder='Start Date'
                 value={filters.start}
