@@ -2,9 +2,10 @@ import React, {useEffect, useState} from 'react'
 import moment from 'moment'
 import './Expenses.css'
 import {x} from '../img.json'
+import Expenses from './Expenses'
 
 function ExpenseDisplay(props) {
-  const {expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters} = props.data
+  const {expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters, rerenderDisplay, setRerenderDisplay} = props.data
   const [displayedExpenses, setDisplayedExpenses] = useState([])
 
   useEffect(() => {
@@ -30,9 +31,10 @@ function ExpenseDisplay(props) {
       setDisplayedExpenses(expenses)
     }
 
-    // console.log('hit expense display')
+    setRerenderDisplay(false)
+    console.log('hit expense display')
     
-  }, [filters, expenses])
+  }, [filters, rerenderDisplay, expenses])
 
 
   const viewExpenses = displayedExpenses.map((expense, i) => {
@@ -40,7 +42,7 @@ function ExpenseDisplay(props) {
       let view = 'normal'
       let remove = false
   
-      for( let i = 0; i < deletedExpenses.length; i++){
+      for(let i = 0; i < deletedExpenses.length; i++){
         if(deletedExpenses[i] === expense_id){
           remove = true
         }
@@ -54,7 +56,7 @@ function ExpenseDisplay(props) {
   
       if(view === 'editting'){
         return (
-          <section key={i} className='expenses' style={{backgroundColor: i % 2 === 1 ? '#F5F5F5' : '#987DC1'}}>
+          <section key={expense_id} className='expenses' style={{backgroundColor: i % 2 === 1 ? '#F5F5F5' : '#987DC1'}}>
             <input
               className='expense-name'
               placeholder={name}
@@ -89,12 +91,14 @@ function ExpenseDisplay(props) {
                 remove = !remove
                 if(remove){
                   setDeletedExpenses([...deletedExpenses, expense_id])
+                  setRerenderDisplay(true)
                 } else {
                   for(let i = 0; i < deletedExpenses.length; i++){
                     if(deletedExpenses[i] === expense_id){
                       let array = deletedExpenses
                       array.splice(i, 1)
                       setDeletedExpenses(array)
+                      setRerenderDisplay(true)
                     }
                   }
                 }
@@ -108,6 +112,7 @@ function ExpenseDisplay(props) {
                 let removalObject = updatedExpenses
                 delete removalObject[expense_id]
                 setUpdatedExpenses(removalObject)
+                setRerenderDisplay(true)
   
                 for(let i = 0; i < deletedExpenses.length; i++){
                   if(deletedExpenses[i] === expense_id){

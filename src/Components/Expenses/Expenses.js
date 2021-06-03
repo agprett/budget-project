@@ -11,6 +11,7 @@ function Expenses() {
   const [expenseLimit, setExpenseLimit] = useState(15)
   const [newExpense, setNewExpense] = useState({display: false, name: '', category: '', amount: 0})
   const [viewDropdown, setViewDropdown] = useState(false)
+  const [rerenderDisplay, setRerenderDisplay] = useState(false)
   const [editting, setEditting] = useState(false)
   const [updatedExpenses, setUpdatedExpenses] = useState({})
   const [deletedExpenses, setDeletedExpenses] = useState([])
@@ -74,6 +75,11 @@ function Expenses() {
     axios.post('/api/expenses/remove', deletedExpenses)
     .then(() => {
       setDeletedExpenses([])
+      axios.get(`/api/expenses/${expenseLimit}`)
+        .then(res => {
+          setExpenses(res.data.expenses)
+          setExpenseLimit(res.data.limit)
+        })
     })
   }
   
@@ -318,108 +324,115 @@ function Expenses() {
               ) : null
             }
             <section className='modify-expenses'>
-              <button
-                onClick={() => {
-                  setNewExpense({...newExpense, display: true})
-                }}
-              >New</button>
-              <button
-                onClick={() => {
-                  setEditting(true)
-                }}
-              >Edit</button>
-              <button
-                onClick={() => {
-                  if(filters.filtered){
-                    setFilters({filtered: false, name: '', category: '', start: '', end: '', max: '', min: ''})
-                  } else {                    
-                    setFilters({...filters, filtered: true})
-                  }
-                }}
-              >Filter
-                <img
-                  className={filters.filtered ? 'down-arrow' : 'arrow'}
-                  src='https://image.flaticon.com/icons/png/512/16/16038.png'
-                  alt='arrow'
-                />
-              </button>
-              <div className={editting ? 'editting-buttons' : 'null'}>
-                <p>Click on expense to edit, then click the checkbox to delete</p>
-                <button
-                  onClick={() => {
-                    updateExpenses()
-                  }}
-                >Save</button>
-                <button
-                  onClick={() => {
-                    setEditting(false)
-                    setUpdatedExpenses({})
-                    setDeletedExpenses([])
-                  }}
-                >Cancel</button>
-                <button
-                  className={deletedExpenses[0] ? null : 'null'}
-                  onClick={() => {
-                    deleteExpenses()
-                  }}
-                >Delete</button>
-              </div>
-            </section>
-            <section className={filters.filtered ? 'expense-filter' : ' expense-filter null'}>
-              <input
-                placeholder='Name'
-                value={filters.name}
-                onChange={event => {
-                  setFilters({...filters, name: event.target.value})
-                }}
-              />
-              <section className='expense-category-dropdown'>
-                <button
-                  onClick={() => {
-                    viewDropdown ? setViewDropdown(false) : setViewDropdown(true)
-                  }}
-                >{filters.category ? filters.category : 'Select Category'}
-                  <img
-                    className={viewDropdown ? 'down-arrow' : 'arrow'}
-                    src='https://image.flaticon.com/icons/png/512/16/16038.png'
-                    alt='arrow'
-                  />
-                </button>
-                <section className={viewDropdown ? null : 'null'}>
-                  <Dropdown rerender={rerender} data={filters} setDropdownCategory={setFilters} view={viewDropdown} setView={setViewDropdown}/>
+              {editting ? (
+                <div className={editting ? 'editting-buttons' : 'null'}>
+                  <p>Click on expense to edit, then click the checkbox to delete</p>
+                  <button
+                    onClick={() => {
+                      updateExpenses()
+                    }}
+                  >Save</button>
+                  <button
+                    onClick={() => {
+                      setEditting(false)
+                      setUpdatedExpenses({})
+                      setDeletedExpenses([])
+                    }}
+                  >Cancel</button>
+                  <button
+                    className={deletedExpenses[0] ? null : 'null'}
+                    onClick={() => {
+                      deleteExpenses()
+                    }}
+                  >Delete</button>
+                </div>
+              ) : (
+                <section>
+                  <button
+                    onClick={() => {
+                      setNewExpense({...newExpense, display: true})
+                    }}
+                  >New</button>
+                  <button
+                    onClick={() => {
+                      setEditting(true)
+                    }}
+                  >Edit</button>
+                  <button
+                    onClick={() => {
+                      if(filters.filtered){
+                        setFilters({filtered: false, name: '', category: '', start: '', end: '', max: '', min: ''})
+                      } else {                    
+                        setFilters({...filters, filtered: true})
+                      }
+                    }}
+                  >Filter
+                    <img
+                      className={filters.filtered ? 'down-arrow' : 'arrow'}
+                      src='https://image.flaticon.com/icons/png/512/16/16038.png'
+                      alt='arrow'
+                    />
+                  </button>
+                  <section className={filters.filtered ? 'expense-filter' : 'expense-filter null'}>
+                    <input
+                      placeholder='Name'
+                      value={filters.name}
+                      onChange={event => {
+                        setFilters({...filters, name: event.target.value})
+                      }}
+                    />
+                    <section className='expense-category-dropdown'>
+                      <button
+                        onClick={() => {
+                          viewDropdown ? setViewDropdown(false) : setViewDropdown(true)
+                        }}
+                      >{filters.category ? filters.category : 'Select Category'}
+                        <img
+                          className={viewDropdown ? 'down-arrow' : 'arrow'}
+                          src='https://image.flaticon.com/icons/png/512/16/16038.png'
+                          alt='arrow'
+                        />
+                      </button>
+                      <section className={viewDropdown ? null : 'null'}>
+                        <Dropdown rerender={rerender} data={filters} setDropdownCategory={setFilters} view={viewDropdown} setView={setViewDropdown}/>
+                      </section>
+                    </section>
+                    <input
+                      placeholder='Start Date'
+                      value={filters.start}
+                      onChange={event => {
+                        setFilters({...filters, start: event.target.value})
+                      }}
+                    />
+                    <input
+                      placeholder='End Date'
+                      value={filters.end}
+                      onChange={event => {
+                        setFilters({...filters, end: event.target.value})
+                      }}
+                    />
+                    <input
+                      placeholder='Minimum'
+                      value={filters.min}
+                      onChange={event => {
+                        setFilters({...filters, min: event.target.value})
+                      }}
+                    />
+                    <input
+                      placeholder='Maximum'
+                      value={filters.max}
+                      onChange={event => {
+                        setFilters({...filters, max: event.target.value})
+                      }}
+                    />
+                  </section>
                 </section>
-              </section>
-              <input
-                placeholder='Start Date'
-                value={filters.start}
-                onChange={event => {
-                  setFilters({...filters, start: event.target.value})
-                }}
-              />
-              <input
-                placeholder='End Date'
-                value={filters.end}
-                onChange={event => {
-                  setFilters({...filters, end: event.target.value})
-                }}
-              />
-              <input
-                placeholder='Minimum'
-                value={filters.min}
-                onChange={event => {
-                  setFilters({...filters, min: event.target.value})
-                }}
-              />
-              <input
-                placeholder='Maximum'
-                value={filters.max}
-                onChange={event => {
-                  setFilters({...filters, max: event.target.value})
-                }}
-              />
+              )}
             </section>
             <div className='expenses-view'>
-              <ExpenseDisplay data={{expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters}}/>
+              <ExpenseDisplay
+                data={{expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters, setRerenderDisplay, rerenderDisplay}}
+              />
               <button
                 className='load-more-button'
                 onClick={() => {

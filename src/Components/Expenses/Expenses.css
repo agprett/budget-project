@@ -2,7 +2,7 @@
   /* height: 425px; */
   width: 100%;
   position: relative;
-  margin-top: 100px;
+  margin-top: 90px;
   padding: 10px;
   display: flex;
   justify-content: space-around;
@@ -54,7 +54,7 @@
   border-radius: 10px;
   color: white;
   padding: 5px 7.5px;
-  margin: 10px 10px 20px;
+  margin: 5px 10px 20px;
 }
 
 .expense-filter {

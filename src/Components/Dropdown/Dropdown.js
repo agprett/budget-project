@@ -14,8 +14,6 @@ function Dropdown(props){
       .then(res => {
         setCategories(res.data)
       })
-    
-    console.log('hit dropdown')
   }, [rerender])
 
   const viewCategories = categories.map((category, i) => {
