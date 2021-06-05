@@ -10,6 +10,7 @@
 }
 
 .recurring {
+  margin: 15px 5px;
   width: 10%;
   display: flex;
   flex-direction: column;
@@ -20,7 +21,7 @@
   height: 200px;
   width: 100%;
   padding: 15px;
-  margin: 20px 30px;
+  margin: 10px 30px;
   border-radius: 10px;
   background-color: powderblue;
 }

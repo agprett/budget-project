@@ -56,7 +56,7 @@ function Expenses() {
     .catch(err => console.log(err))
   }
 
-  const updateExpenses = () => {
+  const handleUpdateExpenses = () => {
     let updatedArray = []
 
     for(let key in updatedExpenses){
@@ -151,13 +151,29 @@ function Expenses() {
                 setUpdatedRecurring({...updatedRecurring, name: event.target.value})
               }}
             />
-            <input
+            {/* <input
               className='recure-category'
               placeholder={category}
               onChange={event => {
                 setUpdatedRecurring({...updatedRecurring, category: event.target.value})
               }}
-            />
+            /> */}
+            <section className='expense-category-dropdown'>
+                  <button
+                    onClick={() => {
+                      viewDropdown ? setViewDropdown(false) : setViewDropdown(true)
+                    }}
+                  >{updatedRecurring.category ? updatedRecurring.category : 'Select Category'}
+                    <img
+                      className={viewDropdown ? 'down-arrow' : 'arrow'}
+                      src='https://image.flaticon.com/icons/png/512/16/16038.png'
+                      alt='arrow'
+                    />
+                  </button>
+                  <section className={viewDropdown ? null : 'null'}>
+                    <Dropdown rerender data={updatedRecurring} setDropdownCategory={setUpdatedRecurring} view={viewDropdown} setView={setViewDropdown}/>
+                  </section>
+                </section>
             <input
               className='recure-date'
               placeholder={moment(date).format('MM/DD/YY')}
@@ -180,6 +196,7 @@ function Expenses() {
             <button
               onClick={() => {
                 setUpdatedRecurring({})
+                setViewDropdown(false)
               }}
             >Cancel</button>
             <button
@@ -233,14 +250,30 @@ function Expenses() {
                   setNewRecurring({...newRecurring, name: event.target.value})
                 }}
               />
-              <input
+              {/* <input
                 className='recure-category'
                 placeholder='Category'
                 value={newRecurring.category}
                 onChange={event => {
                   setNewRecurring({...newRecurring, category: event.target.value})
                 }}
-              />
+              /> */}
+              <section className='expense-category-dropdown'>
+                  <button
+                    onClick={() => {
+                      viewDropdown ? setViewDropdown(false) : setViewDropdown(true)
+                    }}
+                  >{newRecurring.category ? newRecurring.category : 'Select Category'}
+                    <img
+                      className={viewDropdown ? 'down-arrow' : 'arrow'}
+                      src='https://image.flaticon.com/icons/png/512/16/16038.png'
+                      alt='arrow'
+                    />
+                  </button>
+                  <section className={viewDropdown ? null : 'null'}>
+                    <Dropdown rerender data={newRecurring} setDropdownCategory={setNewRecurring} view={viewDropdown} setView={setViewDropdown}/>
+                  </section>
+                </section>
               <input
                 className='recure-amount'
                 placeholder='Amount'
@@ -265,6 +298,7 @@ function Expenses() {
               <button
                 onClick={() => {
                   setNewRecurring({display: false, name: '', category:'', amount: '', date: ''})
+                  setViewDropdown(false)
                 }}
               >Cancel</button>
             </section>
@@ -280,13 +314,6 @@ function Expenses() {
                     setNewExpense({...newExpense, name: event.target.value})
                   }}
                 />
-                {/* <input
-                  placeholder='Category'
-                  value={newExpense.category}
-                  onChange={event => {
-                    setNewExpense({...newExpense, category: event.target.value})
-                  }}
-                /> */}
                 <section className='expense-category-dropdown'>
                   <button
                     onClick={() => {
@@ -318,6 +345,7 @@ function Expenses() {
                   <button
                   onClick={() => {
                     setNewExpense({display: false, name: '', category: '', amount: 0})
+                    setViewDropdown(false)
                   }}
                   >Cancel</button>
                 </div>
@@ -329,7 +357,7 @@ function Expenses() {
                   <p>Click on expense to edit, then click the checkbox to delete</p>
                   <button
                     onClick={() => {
-                      updateExpenses()
+                      handleUpdateExpenses()
                     }}
                   >Save</button>
                   <button
@@ -337,6 +365,7 @@ function Expenses() {
                       setEditting(false)
                       setUpdatedExpenses({})
                       setDeletedExpenses([])
+                      setViewDropdown(false)
                     }}
                   >Cancel</button>
                   <button
@@ -431,7 +460,7 @@ function Expenses() {
             </section>
             <div className='expenses-view'>
               <ExpenseDisplay
-                data={{expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters, setRerenderDisplay, rerenderDisplay}}
+                data={{expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters, setRerenderDisplay, rerenderDisplay, viewDropdown, setViewDropdown}}
               />
               <button
                 className='load-more-button'

@@ -2,10 +2,9 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import {x} from '../img.json'
 import './Dropdown.css'
-import { geoNaturalEarth1Raw } from 'd3-geo'
 
 function Dropdown(props){
-  const {data, setDropdownCategory, view, setView, rerender} = props
+  const {data, setDropdownCategory, view, setView, rerender, dropdownId} = props
   const [categories, setCategories] = useState([])
   const [newCategory, setNewCategory] = useState(false)
 
@@ -16,12 +15,16 @@ function Dropdown(props){
       })
   }, [rerender])
 
-  const viewCategories = categories.map((category, i) => {
+  const viewCategories = categories.map((category) => {
     return (
       <button
-        key={i}
+        key={category}
         onClick={() => {
-          setDropdownCategory({...data, category: category})
+          if(dropdownId){
+            setDropdownCategory({...data, [dropdownId]: {...data[dropdownId], category: category}})
+          } else {
+            setDropdownCategory({...data, category: category})
+          }
           if(setView){
             view ? setView(false) : setView(true)
           }
@@ -40,7 +43,11 @@ function Dropdown(props){
             placeholder='Category'
             value={data.category}
             onChange={event => {
-              setDropdownCategory({...data, category: event.target.value})
+              if(dropdownId){
+                setDropdownCategory({...data, [dropdownId]: {...data[dropdownId], category: event.target.value}})
+              } else {
+                setDropdownCategory({...data, category: event.target.value})
+              }
             }}
           />
           <img
@@ -58,7 +65,11 @@ function Dropdown(props){
           <button
             className={data.category ? null : 'null'}
             onClick={() => {
-              setDropdownCategory({...data, category: ''})
+              if(dropdownId){
+                setDropdownCategory({...data, [dropdownId]: {...data[dropdownId], category: ''}})
+              } else {
+                setDropdownCategory({...data, category: ''})
+              }
               if(setView){
                 view ? setView(false) : setView(true)
               }

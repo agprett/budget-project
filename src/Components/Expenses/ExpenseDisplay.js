@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react'
 import moment from 'moment'
 import './Expenses.css'
 import {x} from '../img.json'
-import Expenses from './Expenses'
+import Dropdown from '../Dropdown/Dropdown'
 
 function ExpenseDisplay(props) {
-  const {expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters, rerenderDisplay, setRerenderDisplay} = props.data
+  const {expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters, rerenderDisplay, setRerenderDisplay, viewDropdown, setViewDropdown} = props.data
   const [displayedExpenses, setDisplayedExpenses] = useState([])
 
   useEffect(() => {
@@ -32,8 +32,6 @@ function ExpenseDisplay(props) {
     }
 
     setRerenderDisplay(false)
-    console.log('hit expense display')
-    
   }, [filters, rerenderDisplay, expenses])
 
 
@@ -64,13 +62,29 @@ function ExpenseDisplay(props) {
                 setUpdatedExpenses({...updatedExpenses, [expense_id]: {...updatedExpenses[expense_id], name: event.target.value}})
               }}
               />
-            <input
+            {/* <input
               className='expense-category'
               placeholder={category}
               onChange={event => {
                 setUpdatedExpenses({...updatedExpenses, [expense_id]: {...updatedExpenses[expense_id], category: event.target.value}})
               }}
-              />
+            /> */}
+            <section className='expense-category-dropdown'>
+                  <button
+                    onClick={() => {
+                      viewDropdown ? setViewDropdown(false) : setViewDropdown(true)
+                    }}
+                  >{updatedExpenses[expense_id].category ? updatedExpenses[expense_id].category : 'Select Category'}
+                    <img
+                      className={viewDropdown ? 'down-arrow' : 'arrow'}
+                      src='https://image.flaticon.com/icons/png/512/16/16038.png'
+                      alt='arrow'
+                    />
+                  </button>
+                  <section className={viewDropdown ? null : 'null'}>
+                    <Dropdown rerender data={updatedExpenses} setDropdownCategory={setUpdatedExpenses} view={viewDropdown} setView={setViewDropdown} dropdownId={expense_id}/>
+                  </section>
+            </section>
             <input
               className='expense-date'
               placeholder={moment(date).format('MM/DD/YY')}
@@ -128,10 +142,10 @@ function ExpenseDisplay(props) {
       } else {
         return (
           <section
-            key={i} className='expenses' style={{backgroundColor: i % 2 === 1 ? '#F5F5F5' : '#987DC1'}}
+            key={expense_id} className='expenses' style={{backgroundColor: i % 2 === 1 ? '#F5F5F5' : '#987DC1'}}
             onClick={() => {
               if(editting){
-                setUpdatedExpenses({...updatedExpenses, [expense_id]: expenses})
+                setUpdatedExpenses({...updatedExpenses, [expense_id]: expense})
               }
             }}
           >
