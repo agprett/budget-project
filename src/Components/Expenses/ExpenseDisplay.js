@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import './Expenses.css'
 import {x} from '../img.json'
 import Dropdown from '../Dropdown/Dropdown'
@@ -16,9 +16,9 @@ function ExpenseDisplay(props) {
         ) && (
           expense.category.toLowerCase().includes(filters.category.toLowerCase())
         ) && (
-          filters.start ?  moment(expense.date).isAfter(filters.start): true
+          filters.start ?  dayjs(expense.date).isAfter(filters.start): true
         ) && (
-          filters.end ? moment(expense.date).isBefore(filters.end) : true
+          filters.end ? dayjs(expense.date).isBefore(filters.end) : true
         ) && (
           filters.max ? (filters.max > expense.amount ? true : false) : true
         ) && (
@@ -87,7 +87,7 @@ function ExpenseDisplay(props) {
             </section>
             <input
               className='expense-date'
-              placeholder={moment(date).format('MM/DD/YY')}
+              placeholder={dayjs(date).format('MM/DD/YY')}
               onChange={event => {
                 setUpdatedExpenses({...updatedExpenses, [expense_id]: {...updatedExpenses[expense_id], date: event.target.value}})
               }}
@@ -151,7 +151,7 @@ function ExpenseDisplay(props) {
           >
             <h2 className='expense-name'>{name}</h2>
             <p className='expense-category'>{category}</p>
-            <h4 className='expense-date'>{moment(date).format('MM/DD/YY')}</h4>
+            <h4 className='expense-date'>{dayjs(date).format('MM/DD/YY')}</h4>
             <h2 className='expense-amount'>$ {amount}</h2>
           </section>
         )

@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-const moment = require('moment')
+const dayjs = require('dayjs')
 
 module.exports = {
   getUser: async (req, res) => {
@@ -80,8 +80,8 @@ module.exports = {
     [response] = await db.users.get_overall([user_id])
     budget = +response.overall
 
-    let startMonth = moment().startOf('month').format()
-    let endMonth = moment().endOf('month').format()
+    let startMonth = dayjs().startOf('month').format()
+    let endMonth = dayjs().endOf('month').format()
     
     response = await db.expenses.get_current([user_id, startMonth, endMonth])
     if(response === null){

@@ -1,4 +1,4 @@
-const moment = require('moment')
+const dayjs = require('dayjs')
 
 module.exports = {
   getRecurring: async (req, res) => {
@@ -44,7 +44,7 @@ module.exports = {
     const db = req.app.get('db')
     const {recurring_id, date} = req.body
 
-    let updatedDate = moment(date).add(1, 'M')
+    let updatedDate = dayjs(date).add(1, 'M')
 
     await db.recurring.update_date(recurring_id, updatedDate)
 

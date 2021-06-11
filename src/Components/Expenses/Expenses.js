@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import Loading from '../Loading/Loading'
 import Dropdown from '../Dropdown/Dropdown'
 import './Expenses.css'
@@ -176,7 +176,7 @@ function Expenses() {
                 </section>
             <input
               className='recure-date'
-              placeholder={moment(date).format('MM/DD/YY')}
+              placeholder={dayjs(date).format('MM/DD/YY')}
               onChange={event => {
                 setUpdatedRecurring({...updatedRecurring, date: event.target.value})
               }}
@@ -209,7 +209,7 @@ function Expenses() {
           <section>
             <h2 className='recure-name'>{name}</h2>
             <h2 className='recure-category'>{category}</h2>
-            <h2 className='recure-date'>{moment(date).format('MM/DD/YY')}</h2>
+            <h2 className='recure-date'>{dayjs(date).format('MM/DD/YY')}</h2>
             <h2 className='recure-amount'>$ {amount}</h2>
             <button
               onClick={() => {

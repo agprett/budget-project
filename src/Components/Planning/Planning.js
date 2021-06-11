@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import Loading from '../Loading/Loading'
 import './Planning.css'
 
@@ -52,7 +52,7 @@ function Planning() {
         <div>{name}</div>
         <div>$ {goal_amount}</div>
         <div>$ {saved_amount}</div>
-        <div>{moment(goal_date).format('MM/DD/YY')}</div>
+        <div>{dayjs(goal_date).format('MM/DD/YY')}</div>
         <div>$ {monthly_amount}</div>
       </section>
     )
@@ -67,7 +67,7 @@ function Planning() {
         <div>$ {total}</div>
         <div>$ {monthly}</div>
         <div>$ {paid}</div>
-        <div>{moment(due).format('MM/DD/YY')}</div>
+        <div>{dayjs(due).format('MM/DD/YY')}</div>
       </section>
     )
   })

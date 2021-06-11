@@ -1,4 +1,4 @@
-const moment = require('moment')
+const dayjs = require('dayjs')
 
 module.exports = {
   getExpenses: async (req, res) => {
@@ -17,7 +17,7 @@ module.exports = {
     const {name, category, amount} = req.body
     // const {user_id} = req.session.user
     const user_id = 1
-    const date = moment().format()
+    const date = dayjs().format()
 
     await db.expenses.new_expense([user_id, name, category, amount, date])
   
@@ -64,8 +64,8 @@ module.exports = {
     const user_id = 1
     let current = []
   
-    let startMonth = moment().startOf('month').format()
-    let endMonth = moment().endOf('month').format()
+    let startMonth = dayjs().startOf('month').format()
+    let endMonth = dayjs().endOf('month').format()
 
     let [response] = await db.expenses.get_current([user_id, startMonth, endMonth])
     if(response.some === null){
@@ -100,10 +100,10 @@ module.exports = {
         return expense.category == category
       } else if(start){
         console.log(start)
-        return moment(expense.date).format('MM/DD/YY') >= moment(start).format('MM/DD/YY')
+        return dayjs(expense.date).format('MM/DD/YY') >= dayjs(start).format('MM/DD/YY')
       } else if(end){
         console.log(end)
-        return moment(expense.date).format('MM/DD/YY') <= moment(end).formant('MM/DD/YY')
+        return dayjs(expense.date).format('MM/DD/YY') <= dayjs(end).formant('MM/DD/YY')
       } else if(low){
         return expense.amount >= low
       } else if(high){

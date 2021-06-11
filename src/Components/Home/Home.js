@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import axios from 'axios'
 import './Home.css'
 import Loading from '../Loading/Loading'
 import BudgetDisplay from './BudgetDisplay/BudgetDisplay'
 import DonutChart from '../DonutChart/DonutChart'
+import Calendar from '../Calendar/Calendar'
 
 function Home(props){
   const {overall} = props.user
@@ -106,7 +107,7 @@ function Home(props){
       <section className='recent' key={i} style={{backgroundColor: i % 2 === 1 ? '#F5F5F5' : '#987DC1'}}>
         <div className='expense-name'>{name}</div>
         <div className='expense-category'>{category}</div>
-        <div className='expense-date'>{moment(date).format('MM/DD/YY')}</div>
+        <div className='expense-date'>{dayjs(date).format('MM/DD/YY')}</div>
         <div className='expense-amount'>$ {amount}</div>
       </section>
     )
@@ -120,7 +121,7 @@ function Home(props){
         <div>{name}</div>
         <div>$ {amount}</div>
         <div>{category}</div>
-        <div>{moment(date).format('MM/DD/YY')}</div>
+        <div>{dayjs(date).format('MM/DD/YY')}</div>
         <button
           onClick={() => {
             handleRecurringPay(name, category, amount, date, recurring_id)
@@ -145,7 +146,8 @@ function Home(props){
               <p>${spent('Overall')} / ${overall}</p>
             </div>
             <section className='donut-chart'>
-              <DonutChart data={chartData}/>
+              <Calendar />
+              {/* <DonutChart data={chartData}/> */}
             </section>
           </section>
           <BudgetDisplay budget={budget} current={current}/>
@@ -165,7 +167,7 @@ function Home(props){
               <div className='goal-home'>
                 <p>Goal:</p>
                 <div>{priority.name}</div>
-                <div>{moment(priority.goal_date).format('MM/DD/YY')}</div>
+                <div>{dayjs(priority.goal_date).format('MM/DD/YY')}</div>
                 <div>$ {priority.monthly_amount}</div>
                 <div>$ {priority.goal_amount}</div>
                 <div>$ {priority.saved_amount}</div>
@@ -177,7 +179,7 @@ function Home(props){
               <div>{upcoming.name}</div>
               <div>$ {upcoming.total}</div>
               <div>$ {upcoming.paid}</div>
-              <div>{moment(upcoming.due).format('MM/DD/YY')}</div>
+              <div>{dayjs(upcoming.due).format('MM/DD/YY')}</div>
             </section> */}
           </section>
         </section>
