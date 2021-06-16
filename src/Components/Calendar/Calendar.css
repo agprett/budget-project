@@ -1,0 +1,25 @@
+.calendar {
+  width: 200px;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.calendar-month {
+  width: 175px;
+  min-height: 100px;
+  max-height: 150px;
+  background-color: green;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.calendar-days {
+  height: 25px;
+  width: 25px;
+  background-color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
