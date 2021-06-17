@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import dayjs from 'dayjs'
 import './Calendar.css'
+import {x} from '../img.json'
 
-function Calendar(){
+function Calendar(props){
+  const {setView, view, selectedDate, setSelectedDate, value} = props
   const [currentDate, setCurrentDate] = useState('')
   const [startDisplayMonth, setStartDisplayMonth] = useState('')
-  const [selectedDate, setSelectedDate] = useState('')
+  // const [selectedDate, setSelectedDate] = useState('')
   const [datesArray, setDatesArray] = useState([])
 
   useEffect(() => {
@@ -14,9 +16,11 @@ function Calendar(){
   }, [])
   
   useEffect(() => {
+    let month = dayjs(startDisplayMonth).month()
+    let year = dayjs(startDisplayMonth).year()
     setDatesArray([])
     for(let i = 1; i <= +dayjs(dayjs(startDisplayMonth)).endOf('month').format('DD'); i++){
-      setDatesArray(datesArray => [...datesArray, i])
+      setDatesArray(datesArray => [...datesArray, dayjs().date(i).month(month).year(year).format('MM/DD/YY')])
     }
   }, [startDisplayMonth])
 
@@ -34,20 +38,21 @@ function Calendar(){
 
   const designCalendar = datesArray.map((date, i) => {
     let space = 0
-    if(date === 1){
+    if(+dayjs(date).format('D') === 1){
       space = dayjs(startDisplayMonth).get('d')
     }
     
     return (
       <div
-        className='calendar-days' 
+        className={date === selectedDate[value] ? 'calendar-days selected' : date === currentDate ? 'calendar-days today' : 'calendar-days'}
         key={i}
         style={{marginLeft: `${space * 25}px`}}
         onClick={() => {
-          console.log()
+          setSelectedDate({...selectedDate, [value]: date})
+          setView(false)
         }}
       >
-        {date}
+        {dayjs(date).format('D')}
       </div>
     )
   })
@@ -70,6 +75,14 @@ function Calendar(){
           setStartDisplayMonth(dayjs().startOf('month').format('MM/DD/YY'))
         }}
       >Today</button>
+      <img
+        className='close'
+        src={x}
+        alt='x'
+        onClick={() => {
+          setView(false)
+        }}
+      />
       <section className='calendar-month'>
         {designCalendar}
       </section>

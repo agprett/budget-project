@@ -5,12 +5,16 @@ import Loading from '../Loading/Loading'
 import Dropdown from '../Dropdown/Dropdown'
 import './Expenses.css'
 import ExpenseDisplay from './ExpenseDisplay'
+import Calendar from '../Calendar/Calendar'
+
+//use one display hook in Expense with {newExpense: '', newRecurring: '', etc.} and another in display with {id: '', etc}
 
 function Expenses() {
   const [expenses, setExpenses] = useState([])
   const [expenseLimit, setExpenseLimit] = useState(15)
   const [newExpense, setNewExpense] = useState({display: false, name: '', category: '', amount: 0})
   const [viewDropdown, setViewDropdown] = useState(false)
+  const [viewCalendar, setViewCalendar] = useState(false)
   const [rerenderDisplay, setRerenderDisplay] = useState(false)
   const [editting, setEditting] = useState(false)
   const [updatedExpenses, setUpdatedExpenses] = useState({})
@@ -151,29 +155,22 @@ function Expenses() {
                 setUpdatedRecurring({...updatedRecurring, name: event.target.value})
               }}
             />
-            {/* <input
-              className='recure-category'
-              placeholder={category}
-              onChange={event => {
-                setUpdatedRecurring({...updatedRecurring, category: event.target.value})
-              }}
-            /> */}
             <section className='expense-category-dropdown'>
-                  <button
-                    onClick={() => {
-                      viewDropdown ? setViewDropdown(false) : setViewDropdown(true)
-                    }}
-                  >{updatedRecurring.category ? updatedRecurring.category : 'Select Category'}
-                    <img
-                      className={viewDropdown ? 'down-arrow' : 'arrow'}
-                      src='https://image.flaticon.com/icons/png/512/16/16038.png'
-                      alt='arrow'
-                    />
-                  </button>
-                  <section className={viewDropdown ? null : 'null'}>
-                    <Dropdown rerender data={updatedRecurring} setDropdownCategory={setUpdatedRecurring} view={viewDropdown} setView={setViewDropdown}/>
-                  </section>
-                </section>
+              <button
+                onClick={() => {
+                  viewDropdown ? setViewDropdown(false) : setViewDropdown(true)
+                }}
+              >{updatedRecurring.category ? updatedRecurring.category : 'Select Category'}
+                <img
+                  className={viewDropdown ? 'down-arrow' : 'arrow'}
+                  src='https://image.flaticon.com/icons/png/512/16/16038.png'
+                  alt='arrow'
+                />
+              </button>
+              <section className={viewDropdown ? null : 'null'}>
+                <Dropdown rerender data={updatedRecurring} setDropdownCategory={setUpdatedRecurring} view={viewDropdown} setView={setViewDropdown}/>
+              </section>
+            </section>
             <input
               className='recure-date'
               placeholder={dayjs(date).format('MM/DD/YY')}
@@ -181,6 +178,7 @@ function Expenses() {
                 setUpdatedRecurring({...updatedRecurring, date: event.target.value})
               }}
             />
+            {/* <Calendar setSelectedDate={setUpdatedRecurring} selectedDate={updatedRecurring} view={viewCalendar} setView={setViewCalendar}/> */}
             <input
               className='recure-amount'
               placeholder={amount}
@@ -337,6 +335,25 @@ function Expenses() {
                     setNewExpense({...newExpense, amount: +event.target.value})
                   }}
                 />
+                <section style={{zIndex: 4}}>
+                  {viewCalendar ? (
+                    <Calendar setSelectedDate={setNewExpense} selectedDate={newExpense} view={viewCalendar} setView={setViewCalendar} value={'date'}/>
+                  ) : (
+                    <div>
+                      <button
+                        onClick={() => {
+                          setViewCalendar(true)
+                        }}
+                      >{newExpense.date === dayjs(newExpense.date).format('MM/DD/YY') ? newExpense.date : 'Select Date'}</button>
+                      <button
+                        className={newExpense.date === dayjs(newExpense.date).format('MM/DD/YY') ? null : 'null'}
+                        onClick={() => {
+                          setNewExpense({...newExpense, date: dayjs().format('MM/DD/YY')})
+                        }}
+                      >Today</button>
+                    </div>
+                  )}
+                </section>
                 <button
                   onClick={() => {
                     addNewExpense(newExpense)
@@ -426,20 +443,58 @@ function Expenses() {
                         <Dropdown rerender={rerender} data={filters} setDropdownCategory={setFilters} view={viewDropdown} setView={setViewDropdown}/>
                       </section>
                     </section>
-                    <input
+                    {/* <input
                       placeholder='Start Date'
                       value={filters.start}
                       onChange={event => {
                         setFilters({...filters, start: event.target.value})
                       }}
-                    />
-                    <input
+                    /> */}
+                    <section style={{zIndex: 4}}>
+                      {viewCalendar ? (
+                        <Calendar setSelectedDate={setFilters} selectedDate={filters} view={viewCalendar} setView={setViewCalendar} value={'start'}/>
+                      ) : (
+                        <div>
+                          <button
+                            onClick={() => {
+                              setViewCalendar(true)
+                            }}
+                          >{filters.start ? filters.start : 'Select Start Date'}</button>
+                          <button
+                            className={filters.start ? null : 'null'}
+                            onClick={() => {
+                              setFilters({...filters, start: ''})
+                            }}
+                          >Clear</button>
+                        </div>
+                      )}
+                    </section>
+                    {/* <input
                       placeholder='End Date'
                       value={filters.end}
                       onChange={event => {
                         setFilters({...filters, end: event.target.value})
                       }}
-                    />
+                    /> */}
+                    <section style={{zIndex: 4}}>
+                      {viewCalendar ? (
+                        <Calendar setSelectedDate={setFilters} selectedDate={filters} view={viewCalendar} setView={setViewCalendar} value={'end'}/>
+                      ) : (
+                        <div>
+                          <button
+                            onClick={() => {
+                              setViewCalendar(true)
+                            }}
+                          >{filters.end ? filters.end : 'Select End Date'}</button>
+                          <button
+                            className={filters.end ? null : 'null'}
+                            onClick={() => {
+                              setFilters({...filters, end: ''})
+                            }}
+                          >Clear</button>
+                        </div>
+                      )}
+                    </section>
                     <input
                       placeholder='Minimum'
                       value={filters.min}

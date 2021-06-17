@@ -14,10 +14,9 @@ module.exports = {
   
   newExpense: async (req, res) => {
     const db = req.app.get('db')
-    const {name, category, amount} = req.body
+    const {name, category, amount, date} = req.body
     // const {user_id} = req.session.user
     const user_id = 1
-    const date = dayjs().format()
 
     await db.expenses.new_expense([user_id, name, category, amount, date])
   

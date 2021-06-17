@@ -4,13 +4,16 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  color: black;
 }
 
 .calendar-month {
-  width: 175px;
-  min-height: 100px;
-  max-height: 150px;
-  background-color: green;
+  width: 177px;
+  min-height: 102px;
+  max-height: 152px;
+  background-color: white;
+  /* border: 1px solid grey; */
+  border-radius: 5px;
   display: flex;
   flex-wrap: wrap;
 }
@@ -18,8 +21,19 @@
 .calendar-days {
   height: 25px;
   width: 25px;
-  background-color: red;
+  /* border: 1px solid black; */
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+}
+
+.selected {
+  font-weight: 700;
+  color: blue;
+}
+
+.today {
+  font-weight: 700;
+  color: grey;
 }
