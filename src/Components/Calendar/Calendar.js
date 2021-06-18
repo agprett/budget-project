@@ -4,7 +4,7 @@ import './Calendar.css'
 import {x} from '../img.json'
 
 function Calendar(props){
-  const {setView, view, selectedDate, setSelectedDate, value} = props
+  const {setView, view, selectedDate, setSelectedDate, data} = props
   const [currentDate, setCurrentDate] = useState('')
   const [startDisplayMonth, setStartDisplayMonth] = useState('')
   // const [selectedDate, setSelectedDate] = useState('')
@@ -44,12 +44,12 @@ function Calendar(props){
     
     return (
       <div
-        className={date === selectedDate[value] ? 'calendar-days selected' : date === currentDate ? 'calendar-days today' : 'calendar-days'}
+        className={date === selectedDate[data.setValue] ? 'calendar-days selected' : date === currentDate ? 'calendar-days today' : 'calendar-days'}
         key={i}
         style={{marginLeft: `${space * 25}px`}}
         onClick={() => {
-          setSelectedDate({...selectedDate, [value]: date})
-          setView(false)
+          setSelectedDate({...selectedDate, [data.setValue]: date})
+          setView({...view, [data.displayValue]: false})
         }}
       >
         {dayjs(date).format('D')}
@@ -80,7 +80,7 @@ function Calendar(props){
         src={x}
         alt='x'
         onClick={() => {
-          setView(false)
+          setView({...view, [data.displayValue]: false})
         }}
       />
       <section className='calendar-month'>

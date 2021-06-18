@@ -14,7 +14,7 @@ function Expenses() {
   const [expenseLimit, setExpenseLimit] = useState(15)
   const [newExpense, setNewExpense] = useState({display: false, name: '', category: '', amount: 0})
   const [viewDropdown, setViewDropdown] = useState(false)
-  const [viewCalendar, setViewCalendar] = useState(false)
+  const [viewCalendar, setViewCalendar] = useState({newExpense: false, start: false, end: false, updatedRecurring: false})
   const [rerenderDisplay, setRerenderDisplay] = useState(false)
   const [editting, setEditting] = useState(false)
   const [updatedExpenses, setUpdatedExpenses] = useState({})
@@ -171,14 +171,32 @@ function Expenses() {
                 <Dropdown rerender data={updatedRecurring} setDropdownCategory={setUpdatedRecurring} view={viewDropdown} setView={setViewDropdown}/>
               </section>
             </section>
-            <input
+            {/* <input
               className='recure-date'
               placeholder={dayjs(date).format('MM/DD/YY')}
               onChange={event => {
                 setUpdatedRecurring({...updatedRecurring, date: event.target.value})
               }}
-            />
-            {/* <Calendar setSelectedDate={setUpdatedRecurring} selectedDate={updatedRecurring} view={viewCalendar} setView={setViewCalendar}/> */}
+            /> */}
+            <section style={{zIndex: 4}}>
+              {viewCalendar.updatedRecurring ? (
+                <Calendar setSelectedDate={setUpdatedRecurring} selectedDate={updatedRecurring} view={viewCalendar} setView={setViewCalendar} data={{setValue: 'date', displayValue: 'updatedRecurring'}}/>
+              ) : (
+                <div>
+                  <button
+                    onClick={() => {
+                      setViewCalendar({...viewCalendar, updatedRecurring: true})
+                    }}
+                  >{updatedRecurring.date ? dayjs(updatedRecurring.date).format('MM/DD/YY') : dayjs(date).format('MM/DD/YY')}</button>
+                  <button
+                    className={date ? null : 'null'}
+                    onClick={() => {
+                      setUpdatedRecurring({...updatedRecurring, date: ''})
+                    }}
+                  >Clear</button>
+                </div>
+              )}
+            </section>
             <input
               className='recure-amount'
               placeholder={amount}
@@ -336,15 +354,15 @@ function Expenses() {
                   }}
                 />
                 <section style={{zIndex: 4}}>
-                  {viewCalendar ? (
-                    <Calendar setSelectedDate={setNewExpense} selectedDate={newExpense} view={viewCalendar} setView={setViewCalendar} value={'date'}/>
+                  {viewCalendar.newExpense ? (
+                    <Calendar setSelectedDate={setNewExpense} selectedDate={newExpense} view={viewCalendar} setView={setViewCalendar} data={{setValue: 'date', displayValue: 'newExpense'}}/>
                   ) : (
                     <div>
                       <button
                         onClick={() => {
-                          setViewCalendar(true)
+                          setViewCalendar({...viewCalendar, newExpense: true})
                         }}
-                      >{newExpense.date === dayjs(newExpense.date).format('MM/DD/YY') ? newExpense.date : 'Select Date'}</button>
+                      >{newExpense.date ? newExpense.date : 'Select Date'}</button>
                       <button
                         className={newExpense.date === dayjs(newExpense.date).format('MM/DD/YY') ? null : 'null'}
                         onClick={() => {
@@ -363,6 +381,7 @@ function Expenses() {
                   onClick={() => {
                     setNewExpense({display: false, name: '', category: '', amount: 0})
                     setViewDropdown(false)
+                    setViewCalendar({...viewCalendar, newExpense: false})
                   }}
                   >Cancel</button>
                 </div>
@@ -451,13 +470,13 @@ function Expenses() {
                       }}
                     /> */}
                     <section style={{zIndex: 4}}>
-                      {viewCalendar ? (
-                        <Calendar setSelectedDate={setFilters} selectedDate={filters} view={viewCalendar} setView={setViewCalendar} value={'start'}/>
+                      {viewCalendar.start ? (
+                        <Calendar setSelectedDate={setFilters} selectedDate={filters} view={viewCalendar} setView={setViewCalendar} data={{setValue: 'start', displayValue: 'start'}}/>
                       ) : (
                         <div>
                           <button
                             onClick={() => {
-                              setViewCalendar(true)
+                              setViewCalendar({...viewCalendar, start: true})
                             }}
                           >{filters.start ? filters.start : 'Select Start Date'}</button>
                           <button
@@ -477,13 +496,13 @@ function Expenses() {
                       }}
                     /> */}
                     <section style={{zIndex: 4}}>
-                      {viewCalendar ? (
-                        <Calendar setSelectedDate={setFilters} selectedDate={filters} view={viewCalendar} setView={setViewCalendar} value={'end'}/>
+                      {viewCalendar.end ? (
+                        <Calendar setSelectedDate={setFilters} selectedDate={filters} view={viewCalendar} setView={setViewCalendar} data={{setValue: 'end', displayValue: 'end'}}/>
                       ) : (
                         <div>
                           <button
                             onClick={() => {
-                              setViewCalendar(true)
+                              setViewCalendar({...viewCalendar, end: true})
                             }}
                           >{filters.end ? filters.end : 'Select End Date'}</button>
                           <button
