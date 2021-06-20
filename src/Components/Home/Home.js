@@ -146,8 +146,7 @@ function Home(props){
               <p>${spent('Overall')} / ${overall}</p>
             </div>
             <section className='donut-chart'>
-              <Calendar />
-              {/* <DonutChart data={chartData}/> */}
+              <DonutChart data={chartData}/>
             </section>
           </section>
           <BudgetDisplay budget={budget} current={current}/>

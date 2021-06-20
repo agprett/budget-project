@@ -7,7 +7,6 @@ function Calendar(props){
   const {setView, view, selectedDate, setSelectedDate, data} = props
   const [currentDate, setCurrentDate] = useState('')
   const [startDisplayMonth, setStartDisplayMonth] = useState('')
-  // const [selectedDate, setSelectedDate] = useState('')
   const [datesArray, setDatesArray] = useState([])
 
   useEffect(() => {
@@ -44,11 +43,21 @@ function Calendar(props){
     
     return (
       <div
-        className={date === selectedDate[data.setValue] ? 'calendar-days selected' : date === currentDate ? 'calendar-days today' : 'calendar-days'}
+        className={(
+          typeof(data.displayValue) === 'number' ? (
+            date === dayjs(selectedDate[data.displayValue].date).format('MM/DD/YY') ? 'calendar-days selected' : date === currentDate ? 'calendar-days today' : 'calendar-days'
+          ) : (
+            date === selectedDate[data.setValue] ? 'calendar-days selected' : date === currentDate ? 'calendar-days today' : 'calendar-days'
+          )
+        )}
         key={i}
         style={{marginLeft: `${space * 25}px`}}
         onClick={() => {
-          setSelectedDate({...selectedDate, [data.setValue]: date})
+          if(typeof(data.displayValue) === 'number'){
+            setSelectedDate({...selectedDate, [data.displayValue]: {...selectedDate[data.displayValue], date: date}})
+          } else {
+            setSelectedDate({...selectedDate, [data.setValue]: date})
+          }
           setView({...view, [data.displayValue]: false})
         }}
       >

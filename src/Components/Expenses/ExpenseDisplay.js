@@ -3,10 +3,13 @@ import dayjs from 'dayjs'
 import './Expenses.css'
 import {x} from '../img.json'
 import Dropdown from '../Dropdown/Dropdown'
+import Calendar from '../Calendar/Calendar'
 
 function ExpenseDisplay(props) {
-  const {expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters, rerenderDisplay, setRerenderDisplay, viewDropdown, setViewDropdown} = props.data
+  const {expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters, rerenderDisplay, setRerenderDisplay} = props.data
   const [displayedExpenses, setDisplayedExpenses] = useState([])
+  const [viewDropdown, setViewDropdown] = useState(false)
+  const [viewCalendar, setViewCalendar] = useState({})
 
   useEffect(() => {
     if(filters.filtered && (filters.name || filters.category || filters.start || filters.end || filters.max || filters.min)){
@@ -70,35 +73,54 @@ function ExpenseDisplay(props) {
               }}
             /> */}
             <section className='expense-category-dropdown'>
-                  <button
-                    onClick={() => {
-                      viewDropdown ? setViewDropdown(false) : setViewDropdown(true)
-                    }}
-                  >{updatedExpenses[expense_id].category ? updatedExpenses[expense_id].category : 'Select Category'}
-                    <img
-                      className={viewDropdown ? 'down-arrow' : 'arrow'}
-                      src='https://image.flaticon.com/icons/png/512/16/16038.png'
-                      alt='arrow'
-                    />
-                  </button>
-                  <section className={viewDropdown ? null : 'null'}>
-                    <Dropdown rerender data={updatedExpenses} setDropdownCategory={setUpdatedExpenses} view={viewDropdown} setView={setViewDropdown} dropdownId={expense_id}/>
-                  </section>
+              <button
+                onClick={() => {
+                  viewDropdown ? setViewDropdown(false) : setViewDropdown(true)
+                }}
+              >{updatedExpenses[expense_id].category ? updatedExpenses[expense_id].category : 'Select Category'}
+                <img
+                  className={viewDropdown ? 'down-arrow' : 'arrow'}
+                  src='https://image.flaticon.com/icons/png/512/16/16038.png'
+                  alt='arrow'
+                />
+              </button>
+              <section className={viewDropdown ? null : 'null'}>
+                <Dropdown rerender data={updatedExpenses} setDropdownCategory={setUpdatedExpenses} view={viewDropdown} setView={setViewDropdown} dropdownId={expense_id}/>
+              </section>
             </section>
-            <input
+            {/* <input
               className='expense-date'
               placeholder={dayjs(date).format('MM/DD/YY')}
               onChange={event => {
                 setUpdatedExpenses({...updatedExpenses, [expense_id]: {...updatedExpenses[expense_id], date: event.target.value}})
               }}
-              />
+            /> */}
+            <section style={{zIndex: 4}}>
+              {viewCalendar[expense_id] ? (
+                <Calendar setSelectedDate={setUpdatedExpenses} selectedDate={updatedExpenses} view={viewCalendar} setView={setViewCalendar} data={{setValue: 'date', displayValue: expense_id}}/>
+              ) : (
+                <div>
+                  <button
+                    onClick={() => {
+                      setViewCalendar({...viewCalendar, [expense_id]: true})
+                    }}
+                  >{updatedExpenses[expense_id].date ? dayjs(updatedExpenses[expense_id].date).format('MM/DD/YY') : dayjs(date).format('MM/DD/YY')}</button>
+                  <button
+                    className={date ? null : 'null'}
+                    onClick={() => {
+                      setUpdatedExpenses({...updatedExpenses, [expense_id]: {...updatedExpenses[expense_id], date: ''}})
+                    }}
+                  >Clear</button>
+                </div>
+              )}
+            </section>
             <input
               className='expense-amount'
               placeholder={amount}
               onChange={event => {
                 setUpdatedExpenses({...updatedExpenses, [expense_id]: {...updatedExpenses[expense_id], amount: event.target.value}})
               }}
-              />
+            />
             <input
               type='checkbox'
               onClick={() => {
@@ -146,6 +168,7 @@ function ExpenseDisplay(props) {
             onClick={() => {
               if(editting){
                 setUpdatedExpenses({...updatedExpenses, [expense_id]: expense})
+                setViewCalendar({...viewCalendar, [expense_id]: false})
               }
             }}
           >
