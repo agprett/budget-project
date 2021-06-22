@@ -9,7 +9,7 @@ function ExpenseDisplay(props) {
   const {expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters, rerenderDisplay, setRerenderDisplay} = props.data
   const [displayedExpenses, setDisplayedExpenses] = useState([])
   const [viewDropdown, setViewDropdown] = useState(false)
-  const [viewCalendar, setViewCalendar] = useState({})
+  const [viewCalendar, setViewCalendar] = useState('')
 
   useEffect(() => {
     if(filters.filtered && (filters.name || filters.category || filters.start || filters.end || filters.max || filters.min)){
@@ -34,6 +34,7 @@ function ExpenseDisplay(props) {
       setDisplayedExpenses(expenses)
     }
 
+    setViewCalendar('')
     setRerenderDisplay(false)
   }, [filters, rerenderDisplay, expenses])
 
@@ -96,13 +97,13 @@ function ExpenseDisplay(props) {
               }}
             /> */}
             <section style={{zIndex: 4}}>
-              {viewCalendar[expense_id] ? (
+              {viewCalendar === expense_id ? (
                 <Calendar setSelectedDate={setUpdatedExpenses} selectedDate={updatedExpenses} view={viewCalendar} setView={setViewCalendar} data={{setValue: 'date', displayValue: expense_id}}/>
               ) : (
                 <div>
                   <button
                     onClick={() => {
-                      setViewCalendar({...viewCalendar, [expense_id]: true})
+                      setViewCalendar(expense_id)
                     }}
                   >{updatedExpenses[expense_id].date ? dayjs(updatedExpenses[expense_id].date).format('MM/DD/YY') : dayjs(date).format('MM/DD/YY')}</button>
                   <button
@@ -168,7 +169,7 @@ function ExpenseDisplay(props) {
             onClick={() => {
               if(editting){
                 setUpdatedExpenses({...updatedExpenses, [expense_id]: expense})
-                setViewCalendar({...viewCalendar, [expense_id]: false})
+                // setViewCalendar({...viewCalendar, [expense_id]: false})
               }
             }}
           >

@@ -58,7 +58,11 @@ function Calendar(props){
           } else {
             setSelectedDate({...selectedDate, [data.setValue]: date})
           }
-          setView({...view, [data.displayValue]: false})
+          if(typeof(data.displayValue) === 'number'){
+            setView('')
+          } else {
+            setView({...view, [data.displayValue]: false})
+          }
         }}
       >
         {dayjs(date).format('D')}
@@ -89,7 +93,11 @@ function Calendar(props){
         src={x}
         alt='x'
         onClick={() => {
-          setView({...view, [data.displayValue]: false})
+          if(typeof(data.displayValue) === 'number'){
+            setView('')
+          } else {
+            setView({...view, [data.displayValue]: false})
+          }
         }}
       />
       <section className='calendar-month'>
