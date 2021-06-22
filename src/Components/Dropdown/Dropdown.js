@@ -4,7 +4,7 @@ import {x} from '../img.json'
 import './Dropdown.css'
 
 function Dropdown(props){
-  const {data, setDropdownCategory, view, setView, rerender, dropdownId} = props
+  const {data, setDropdownCategory, view, setView, rerender, dropdownId, dropdownSelection} = props
   const [categories, setCategories] = useState([])
   const [newCategory, setNewCategory] = useState(false)
 
@@ -13,6 +13,7 @@ function Dropdown(props){
       .then(res => {
         setCategories(res.data)
       })
+
   }, [rerender])
 
   const viewCategories = categories.map((category) => {
@@ -26,7 +27,11 @@ function Dropdown(props){
             setDropdownCategory({...data, category: category})
           }
           if(setView){
-            view ? setView(false) : setView(true)
+            if(dropdownId){
+              view === dropdownId ? setView('') : setView(dropdownId)
+            } else {
+              view[dropdownSelection] ? setView({...view, [dropdownSelection]: false}) : setView({...view, [dropdownSelection]: true})
+            }
           }
         }}
       > 
@@ -71,7 +76,11 @@ function Dropdown(props){
                 setDropdownCategory({...data, category: ''})
               }
               if(setView){
-                view ? setView(false) : setView(true)
+                if(dropdownId){
+                  view === dropdownId ? setView('') : setView(dropdownId)
+                } else {
+                  view[dropdownSelection] ? setView({...view, [dropdownSelection]: false}) : setView({...view, [dropdownSelection]: true})
+                }
               }
             }}
           >Clear</button>

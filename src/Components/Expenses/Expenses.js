@@ -11,7 +11,7 @@ function Expenses() {
   const [expenses, setExpenses] = useState([])
   const [expenseLimit, setExpenseLimit] = useState(15)
   const [newExpense, setNewExpense] = useState({display: false, name: '', category: '', amount: 0})
-  const [viewDropdown, setViewDropdown] = useState(false)
+  const [viewDropdown, setViewDropdown] = useState({newExpense: false, filter: false, updatedRecurring: false, newRecurring: false})
   const [viewCalendar, setViewCalendar] = useState({newExpense: false, start: false, end: false, updatedRecurring: false, newRecurring: false})
   const [rerenderDisplay, setRerenderDisplay] = useState(false)
   const [editting, setEditting] = useState(false)
@@ -156,17 +156,21 @@ function Expenses() {
             <section className='expense-category-dropdown'>
               <button
                 onClick={() => {
-                  viewDropdown ? setViewDropdown(false) : setViewDropdown(true)
+                  viewDropdown.updatedRecurring ? (
+                    setViewDropdown({...viewDropdown, updatedRecurring: false}) 
+                  ) : (
+                    setViewDropdown({...viewDropdown, updatedRecurring: true})
+                  )
                 }}
               >{updatedRecurring.category ? updatedRecurring.category : 'Select Category'}
                 <img
-                  className={viewDropdown ? 'down-arrow' : 'arrow'}
+                  className={viewDropdown.updatedRecurring ? 'down-arrow' : 'arrow'}
                   src='https://image.flaticon.com/icons/png/512/16/16038.png'
                   alt='arrow'
                 />
               </button>
-              <section className={viewDropdown ? null : 'null'}>
-                <Dropdown rerender data={updatedRecurring} setDropdownCategory={setUpdatedRecurring} view={viewDropdown} setView={setViewDropdown}/>
+              <section className={viewDropdown.updatedRecurring ? null : 'null'}>
+                <Dropdown rerender data={updatedRecurring} setDropdownCategory={setUpdatedRecurring} view={viewDropdown} setView={setViewDropdown} dropdownSelection='updatedRecurring'/>
               </section>
             </section>
             {/* <input
@@ -210,7 +214,7 @@ function Expenses() {
             <button
               onClick={() => {
                 setUpdatedRecurring({})
-                setViewDropdown(false)
+                setViewDropdown({newExpense: false, filter: false, updatedRecurring: false, newRecurring: false})
               }}
             >Cancel</button>
             <button
@@ -275,17 +279,21 @@ function Expenses() {
               <section className='expense-category-dropdown'>
                 <button
                   onClick={() => {
-                    viewDropdown ? setViewDropdown(false) : setViewDropdown(true)
+                    viewDropdown.newRecurring ? (
+                      setViewDropdown({...viewDropdown, newRecurring: false})
+                    ) : (
+                      setViewDropdown({...viewDropdown, newRecurring: true})
+                    )
                   }}
                 >{newRecurring.category ? newRecurring.category : 'Select Category'}
                   <img
-                    className={viewDropdown ? 'down-arrow' : 'arrow'}
+                    className={viewDropdown.newRecurring ? 'down-arrow' : 'arrow'}
                     src='https://image.flaticon.com/icons/png/512/16/16038.png'
                     alt='arrow'
                   />
                 </button>
-                <section className={viewDropdown ? null : 'null'}>
-                  <Dropdown rerender data={newRecurring} setDropdownCategory={setNewRecurring} view={viewDropdown} setView={setViewDropdown}/>
+                <section className={viewDropdown.newRecurring ? null : 'null'}>
+                  <Dropdown rerender data={newRecurring} setDropdownCategory={setNewRecurring} view={viewDropdown} setView={setViewDropdown} dropdownSelection='newRecurring'/>
                 </section>
               </section>
               {/* <input
@@ -331,7 +339,7 @@ function Expenses() {
               <button
                 onClick={() => {
                   setNewRecurring({display: false, name: '', category:'', amount: '', date: ''})
-                  setViewDropdown(false)
+                  setViewDropdown({...viewDropdown , newRecurring: false})
                 }}
               >Cancel</button>
             </section>
@@ -350,17 +358,21 @@ function Expenses() {
                 <section className='expense-category-dropdown'>
                   <button
                     onClick={() => {
-                      viewDropdown ? setViewDropdown(false) : setViewDropdown(true)
+                      viewDropdown.newExpense ? (
+                        setViewDropdown({...viewDropdown, newExpense: false})
+                      ) : (
+                        setViewDropdown({...viewDropdown, newExpense: true})
+                      )
                     }}
                   >{newExpense.category ? newExpense.category : 'Select Category'}
                     <img
-                      className={viewDropdown ? 'down-arrow' : 'arrow'}
+                      className={viewDropdown.newExpense ? 'down-arrow' : 'arrow'}
                       src='https://image.flaticon.com/icons/png/512/16/16038.png'
                       alt='arrow'
                     />
                   </button>
-                  <section className={viewDropdown ? null : 'null'}>
-                    <Dropdown rerender data={newExpense} setDropdownCategory={setNewExpense} view={viewDropdown} setView={setViewDropdown}/>
+                  <section className={viewDropdown.newExpense ? null : 'null'}>
+                    <Dropdown rerender data={newExpense} setDropdownCategory={setNewExpense} view={viewDropdown} setView={setViewDropdown} dropdownSelection='newExpense'/>
                   </section>
                 </section>
                 <input
@@ -397,7 +409,7 @@ function Expenses() {
                   <button
                   onClick={() => {
                     setNewExpense({display: false, name: '', category: '', amount: 0})
-                    setViewDropdown(false)
+                    setViewDropdown({...viewDropdown, newExpense: false})
                     setViewCalendar({...viewCalendar, newExpense: false})
                   }}
                   >Cancel</button>
@@ -418,7 +430,7 @@ function Expenses() {
                       setEditting(false)
                       setUpdatedExpenses({})
                       setDeletedExpenses([])
-                      setViewDropdown(false)
+                      setViewDropdown({...viewDropdown, filter: false})
                     }}
                   >Cancel</button>
                   <button
@@ -466,17 +478,21 @@ function Expenses() {
                     <section className='expense-category-dropdown'>
                       <button
                         onClick={() => {
-                          viewDropdown ? setViewDropdown(false) : setViewDropdown(true)
+                          viewDropdown.filter ? (
+                            setViewDropdown({...viewDropdown, filter: false})
+                          ) : (
+                            setViewDropdown({...viewDropdown, filter: true})
+                          )
                         }}
                       >{filters.category ? filters.category : 'Select Category'}
                         <img
-                          className={viewDropdown ? 'down-arrow' : 'arrow'}
+                          className={viewDropdown.filter ? 'down-arrow' : 'arrow'}
                           src='https://image.flaticon.com/icons/png/512/16/16038.png'
                           alt='arrow'
                         />
                       </button>
-                      <section className={viewDropdown ? null : 'null'}>
-                        <Dropdown rerender={rerender} data={filters} setDropdownCategory={setFilters} view={viewDropdown} setView={setViewDropdown}/>
+                      <section className={viewDropdown.filter ? null : 'null'}>
+                        <Dropdown rerender={rerender} data={filters} setDropdownCategory={setFilters} view={viewDropdown} setView={setViewDropdown} dropdownSelection='filter'/>
                       </section>
                     </section>
                     {/* <input

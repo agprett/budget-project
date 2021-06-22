@@ -34,6 +34,7 @@ function ExpenseDisplay(props) {
       setDisplayedExpenses(expenses)
     }
 
+    setViewDropdown('')
     setViewCalendar('')
     setRerenderDisplay(false)
   }, [filters, rerenderDisplay, expenses])
@@ -76,7 +77,7 @@ function ExpenseDisplay(props) {
             <section className='expense-category-dropdown'>
               <button
                 onClick={() => {
-                  viewDropdown ? setViewDropdown(false) : setViewDropdown(true)
+                  viewDropdown === expense_id ? setViewDropdown('') : setViewDropdown(expense_id)
                 }}
               >{updatedExpenses[expense_id].category ? updatedExpenses[expense_id].category : 'Select Category'}
                 <img
@@ -85,7 +86,7 @@ function ExpenseDisplay(props) {
                   alt='arrow'
                 />
               </button>
-              <section className={viewDropdown ? null : 'null'}>
+              <section className={viewDropdown === expense_id ? null : 'null'}>
                 <Dropdown rerender data={updatedExpenses} setDropdownCategory={setUpdatedExpenses} view={viewDropdown} setView={setViewDropdown} dropdownId={expense_id}/>
               </section>
             </section>
