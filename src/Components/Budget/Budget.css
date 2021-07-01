@@ -2,7 +2,8 @@
   display: flex;
   height: 100vh;
   padding-top: 80px;
-  background-color: #BF91F3;
+  background-color: #EAEBED;
+  /* background-color: #BF91F3; */
 }
 
 .budget-left{
@@ -22,7 +23,7 @@
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  background-color: #EAEBED;
+  background-color: #BF91F3;
   border-radius: 25px;
 }
 
@@ -44,7 +45,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #EAEBED;
+  background-color: #BF91F3;
   border-radius: 25px;
 }
 
@@ -65,5 +66,5 @@
   align-content: space-evenly;
   flex-wrap: wrap;
   border-radius: 15px;
-  background-color: #EAEBED;
+  background-color: #BF91F3;
 }

@@ -105,7 +105,7 @@ function Budget(props){
       <section key={i}>
         {updatedSub.budget_id === budget_id ? (
           <section className='sub-budget'>
-            <p>{category}</p>
+            <p>{category}:</p>
             <input
               placeholder={`$${amount}`}
               onChange={event => {
