@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import * as d3 from 'd3'
 
 function BreakdownChart(props){
-  const {data} = props
+  const {data, size} = props
 
   useEffect(() => {
     donut()
@@ -12,9 +12,9 @@ function BreakdownChart(props){
   }, [props.data])
 
   function donut(){
-    var width = 600,
-      height = 450,
-      margin = 25
+    var width = size.width,
+      height = size.height,
+      margin = size.margin
 
 
   // The radius of the pieplot is half the width or half the height (smallest one)

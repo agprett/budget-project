@@ -15,7 +15,7 @@ function Budget(props){
   const [updatedMain, setUpdatedMain] = useState(0)
   const [editting, setEditting] = useState({main: false, sub: false})
   const [newSub, setNewSub] = useState({amount: '', category: ''})
-  const [data, setData] = useState({})
+  const [chartData, setChartData] = useState({})
   const [rerender, setRerender] = useState(false)
 
   useEffect(() => {
@@ -31,7 +31,7 @@ function Budget(props){
     
     axios.get('/api/user/breakdown')
       .then(res => {
-        setData(res.data)
+        setChartData(res.data)
       })
       .catch(err => console.log(err))
       
@@ -163,32 +163,34 @@ function Budget(props){
           <div className='budget-left'>
           {editting.main ? (
             <div className='budget-overall'>
-              <div>
+              <div className='monthly-budget'>
                 Monthly Budget: 
                 <input 
                   placeholder={overall} 
                   onChange={event => {
                     setUpdatedMain(event.target.value)
                   }}
-                  />
+                />
               </div>
-              <div>Spent: {spent("Overall")}</div>
-              <button
-                onClick={() => {
-                  handleUpdateMain()
-                }}
-              >Save</button>
-              <button
-                onClick={() => {
-                  setEditting({...editting, main: false})
-                  setUpdatedMain(0)
-                }}
-              >Cancel</button>
+              <div className='monthly-budget'>Spent: {spent("Overall")}</div>
+              <div className='budget-overall-edit-buttons'>
+                <button
+                  onClick={() => {
+                    handleUpdateMain()
+                  }}
+                >Save</button>
+                <button
+                  onClick={() => {
+                    setEditting({...editting, main: false})
+                    setUpdatedMain(0)
+                  }}
+                >Cancel</button>
+              </div>
             </div>
           ) : (
             <div className='budget-overall'>
-              <div>Monthly Budget: {overall}</div>
-              <div>Spent: {spent("Overall")}</div>
+              <div className='monthly-budget'>Monthly Budget: {overall}</div>
+              <div className='monthly-budget'>Spent: {spent("Overall")}</div>
               <button
                 onClick={() => {
                   setEditting({...editting, main: true})
@@ -197,10 +199,11 @@ function Budget(props){
             </div>
           )}
             <div className='breakdown-chart'>
-              <BreakdownChart data={data}/>
+              <BreakdownChart data={chartData} size={{width: 600, height: 450, margin: 25}}/>
+              {/* <BreakdownChart data={chartData} size={{width: 300, height: 225, margin: 25}}/> */}
             </div>
           </div>
-          <div className='budgets-sub'>
+          <section className='sub-budgets-section'>
             {editting.sub ? (
               <section className='sub-budget'>
                 <input
@@ -234,7 +237,7 @@ function Budget(props){
               >New</button>
             )}
             {viewSubs}
-          </div>
+          </section>
         </section>
       )}
     </section>

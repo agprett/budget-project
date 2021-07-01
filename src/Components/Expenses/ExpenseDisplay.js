@@ -40,7 +40,7 @@ function ExpenseDisplay(props) {
   }, [filters, rerenderDisplay, expenses])
 
 
-  const viewExpenses = displayedExpenses.map((expense, i) => {
+  const viewExpenses = (data) => data.map((expense, i) => {
       const {name, category, date, amount, expense_id} = expense
       let view = 'normal'
       let remove = false
@@ -183,9 +183,11 @@ function ExpenseDisplay(props) {
       }
   })
 
+  // const dateSpacer = (data) => data.map(expenses)
+
   return (
     <section>
-      {displayedExpenses[0] ? viewExpenses : <div style={{textAlign: 'center'}}>No Expenses to Show</div>}
+      {displayedExpenses[0] ? viewExpenses(displayedExpenses) : <div style={{textAlign: 'center'}}>No Expenses to Show</div>}
     </section>
   )
 }
