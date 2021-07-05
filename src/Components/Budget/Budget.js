@@ -204,8 +204,14 @@ function Budget(props){
             </div>
           </div>
           <section className='sub-budgets-section'>
-            {editting.sub ? (
-              <section className='sub-budget'>
+            <button
+            className={editting.sub ? 'null' : null}
+              onClick={() => {
+                setEditting({...editting, sub: true})
+              }}
+            >New</button>
+            <div className='sub-budget-display'>
+              <section className={editting.sub ? 'sub-budget' : 'null'}>
                 <input
                   placeholder={'Category'}
                   onChange={event => {
@@ -229,14 +235,8 @@ function Budget(props){
                   }}
                 >Cancel</button>
               </section>
-            ) : (
-              <button
-                onClick={() => {
-                  setEditting({...editting, sub: true})
-                }}
-              >New</button>
-            )}
-            {viewSubs}
+              {viewSubs}
+            </div>
           </section>
         </section>
       )}
