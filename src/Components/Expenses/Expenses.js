@@ -253,12 +253,13 @@ function Expenses() {
         </div>
       ) : (
         <section className='expense-section'>
+          <section className='expense-left'>  
+          <button
+            onClick={() => {
+              setNewRecurring({display: true, name: '', category:'', amount: '', date: ''})
+            }}
+          >Add New Recurring</button>
           <section className='recurring'>
-            <button
-              onClick={() => {
-                setNewRecurring({display: true, name: '', category:'', amount: '', date: ''})
-              }}
-            >Add New Recurring</button>
             <section className={newRecurring.display ? 'recure' : 'null'}>
               <input
                 // className='recure-name'
@@ -344,6 +345,7 @@ function Expenses() {
               >Cancel</button>
             </section>
             {viewRecurring}
+          </section>
           </section>
           <section className='expense-right'>
             {newExpense.display ? (
@@ -583,7 +585,7 @@ function Expenses() {
               >Load less</button>
             </div>
           </section>
-          <section className={displayDelete.display ? 'delete-message' : 'null'}>
+          {/* <section className={displayDelete.display ? 'delete-message' : 'null'}>
             <p>Are you sure you want to delete {updatedRecurring.name} recurring purchase?</p>
             <button
               onClick={() => {
@@ -595,7 +597,7 @@ function Expenses() {
                 setDisplayDelete({display: false, id: ''})
               }}
             >Cancel</button>
-          </section>
+          </section> */}
         </section>
       )}
     </section>
