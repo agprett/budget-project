@@ -100,22 +100,78 @@ module.exports = {
     const db = req.app.get('db')
     // const {user_id} = req.session.user
     const user_id = 1
-    let budgets = {}
+    let budgets = []
+    let current = []
+    let chartData = {budgets : [], spent: []}
 
-    let [main] = await db.users.get_overall([user_id])
-    budgets = {Overall: main.overall}
+    // let [main] = await db.users.get_overall([user_id])
+    // budgets = {Overall: main.overall}
 
-    let subBudgets = await db.budget.get_budget([user_id])
+    // budgets = await db.budget.get_budget([user_id])
 
-    for(let i = 0; i < subBudgets.length; i++){
-      let {category, amount} = subBudgets[i]
+    // for(let i = 0; i < subBudgets.length; i++){
+    //   let {category, amount} = subBudgets[i]
 
-      budgets.Overall -= amount
+    //   budgets.Overall -= amount
 
-      budgets = {...budgets, [category]: amount}
+    //   budgets = {...budgets, [category]: amount}
+    // }
+
+    budgets = await db.budget.get_budget([user_id])
+    
+    let startMonth = dayjs().startOf('month').format()
+    let endMonth = dayjs().endOf('month').format()
+
+    let [response] = await db.expenses.get_current([user_id, startMonth, endMonth])
+    if(response.some === null){
+      response.sum = 0
+    }
+    current.push({category: 'Overall', amount: +response.sum})
+    
+    let monthly = await db.expenses.get_monthly_expense([user_id, startMonth, endMonth])
+    
+    for(let i = 0; i < monthly.length; i++){
+      monthly[i].amount = +monthly[i].sum
+      delete monthly[i].sum
+      current.push(monthly[i])
     }
 
-    res.status(200).send(budgets)
+    let tempSpent = []
+    let tempBudget = budgets
+
+    const getSpent = (category) => {
+      let amount
+      
+      for(let i = 0; i < current.length; i++){
+        if(current[i].category === category){
+          return amount = (current[i].amount ? current[i].amount : 0)
+        }
+        amount = 0
+      }
+      
+      return amount
+    }
+
+    for(let i = 0; i < budgets.length; i++){
+      tempSpent.push({
+        category: budgets[i].category,
+        amount: getSpent(budgets[i].category)
+      })
+    }
+
+    for(let i = 0; i < tempSpent.length; i++){
+      for(let k = 0; k < tempBudget.length; k++){
+        if(tempSpent[i].category === tempBudget[k].category){
+          tempSpent[i].color = tempSpent[i].amount > tempBudget[k].amount ? 'red' : (
+            tempSpent[i].amount / tempBudget[k].amount >= .8 ? 'yellow' : 'green'
+          )
+        }
+      }
+    }
+
+    chartData = {budget: tempBudget, spent: tempSpent}
+
+    res.status(200).send(chartData)
   },
 
   updateOverall: async (req, res) => {

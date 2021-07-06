@@ -56,6 +56,15 @@
   /* background-color: pink; */
 }
 
+.new-sub-budget-section{
+  height: auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: orange; */
+}
+
 .sub-budget-display{
   height: 95%;
   width: auto;
@@ -63,7 +72,7 @@
   flex-wrap: wrap;
   align-content: flex-start;
   justify-content: space-evenly;
-  background-color: red;
+  /* background-color: red; */
 }
 
 .sub-budget {

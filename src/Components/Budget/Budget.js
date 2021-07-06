@@ -5,6 +5,7 @@ import axios from 'axios'
 import Loading from '../Loading/Loading'
 import './Budget.css'
 import BreakdownChart from '../BreakdownChart/BreakdownChart'
+import BarChart from '../BarChart/BarChart'
 
 function Budget(props){
   const {overall} = props.user
@@ -15,7 +16,7 @@ function Budget(props){
   const [updatedMain, setUpdatedMain] = useState(0)
   const [editting, setEditting] = useState({main: false, sub: false})
   const [newSub, setNewSub] = useState({amount: '', category: ''})
-  const [chartData, setChartData] = useState({})
+  const [chartData, setChartData] = useState({budget: [], spent: []})
   const [rerender, setRerender] = useState(false)
 
   useEffect(() => {
@@ -28,16 +29,16 @@ function Budget(props){
         setCurrent(res.data)
       })
       .catch(err => console.log(err))
-    
-    axios.get('/api/user/breakdown')
+
+    axios.get('api/user/breakdown')
       .then(res => {
         setChartData(res.data)
       })
       .catch(err => console.log(err))
       
     axios.get('api/budget')
-      .then(response => {
-        setBudget(response.data)
+      .then(res => {
+        setBudget(res.data)
         setTimeout(() => {
           setLoading(false)
         }, 500)
@@ -199,42 +200,48 @@ function Budget(props){
             </div>
           )}
             <div className='breakdown-chart'>
-              <BreakdownChart data={chartData} size={{width: 600, height: 450, margin: 25}}/>
+              {/* <BreakdownChart data={chartData} size={{width: 600, height: 450, margin: 25}}/> */}
               {/* <BreakdownChart data={chartData} size={{width: 300, height: 225, margin: 25}}/> */}
+              <BarChart budget={chartData.budget} current={chartData.spent} />
             </div>
           </div>
           <section className='sub-budgets-section'>
-            <button
-            className={editting.sub ? 'null' : null}
-              onClick={() => {
-                setEditting({...editting, sub: true})
-              }}
-            >New</button>
+            <div className='new-sub-budget-section'>
+              {editting.sub ? (
+                <section className={editting.sub ? 'sub-budget' : 'null'}>
+                  <input
+                    placeholder={'Category'}
+                    onChange={event => {
+                      setNewSub({...newSub, category: event.target.value})
+                    }}
+                  ></input>
+                  <input
+                    placeholder={'Amount'}
+                    onChange={event => {
+                      setNewSub({...newSub, amount: event.target.value})
+                    }}
+                  ></input>
+                  <button
+                    onClick={() => {
+                      handleNewSubBudget()
+                    }}
+                  >Add</button>
+                  <button
+                    onClick={() => {
+                      setEditting({...editting, sub: false})
+                    }}
+                  >Cancel</button>
+                </section>
+              ) : (
+                <button
+                  className={editting.sub ? 'null' : null}
+                  onClick={() => {
+                    setEditting({...editting, sub: true})
+                  }}
+                >New</button>
+              )}
+            </div>
             <div className='sub-budget-display'>
-              <section className={editting.sub ? 'sub-budget' : 'null'}>
-                <input
-                  placeholder={'Category'}
-                  onChange={event => {
-                    setNewSub({...newSub, category: event.target.value})
-                  }}
-                ></input>
-                <input
-                  placeholder={'Amount'}
-                  onChange={event => {
-                    setNewSub({...newSub, amount: event.target.value})
-                  }}
-                ></input>
-                <button
-                  onClick={() => {
-                    handleNewSubBudget()
-                  }}
-                >Add</button>
-                <button
-                  onClick={() => {
-                    setEditting({...editting, sub: false})
-                  }}
-                >Cancel</button>
-              </section>
               {viewSubs}
             </div>
           </section>
