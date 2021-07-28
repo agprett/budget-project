@@ -1,7 +1,7 @@
 .reg-back {
   height: 100vh;
   width: 100vw;
-  background-image: -webkit-linear-gradient(351deg,#00120b,#67597a 40%,#35605a 73%,#01a7c2);
+  background-image: linear-gradient(351deg,#00120b,#67597a 40%,#35605a 73%,#01a7c2);
   display: flex;
   justify-content: center;
   align-items: center;
