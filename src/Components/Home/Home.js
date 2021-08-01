@@ -6,7 +6,6 @@ import './Home.css'
 import Loading from '../Loading/Loading'
 import BudgetDisplay from './BudgetDisplay/BudgetDisplay'
 import DonutChart from '../DonutChart/DonutChart'
-import Calendar from '../Calendar/Calendar'
 
 function Home(props){
   const {overall} = props.user
@@ -33,7 +32,7 @@ function Home(props){
     })
     .catch(err => console.log(err))
 
-    axios.get('/api/recurring')
+    axios.get('/api/recurring/3')
     .then(res => {
       setRecuring(res.data)
     })

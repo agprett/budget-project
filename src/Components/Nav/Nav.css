@@ -1,3 +1,8 @@
+.nav-bar {
+  color: white;
+  /* display: none; */
+}
+
 .upper-nav {
   height: 50px;
   width: 100%;
@@ -8,7 +13,7 @@
   align-items: center;
   justify-content: space-between;
   z-index: 10;
-  background-color: #6F49AB;
+  background-color: #3C096C;
 }
 
 .nav-left {
@@ -57,7 +62,7 @@
   position: fixed;
   top: 50px;
   display: flex;
-  background-color: #6F49AB;
+  background-color: #5A189A;
   z-index: 10;
 }
 
@@ -72,9 +77,9 @@
   border: none;
   color: black;
   background-image: none;
-  background-color: tomato;
+  background-color: #00a5cf;
 }
 
 .stuff {
-  background-color: teal;
+  background-color: #e89005;
 }

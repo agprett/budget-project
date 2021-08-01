@@ -56,7 +56,7 @@ app.put('/api/debts/:id', debtsCtrl.updateDebts)
 app.get('/api/total', debtsCtrl.getTotal)
 app.get('/api/upcoming', debtsCtrl.getUpcoming)
 
-app.get('/api/recurring', recurringCtrl.getRecurring)
+app.get('/api/recurring/:limit', recurringCtrl.getRecurring)
 app.post('/api/recurring', recurringCtrl.newRecurring)
 app.put('/api/recurring', recurringCtrl.updateRecurring)
 app.post('/api/recurring/:id', recurringCtrl.deleteRecurring)

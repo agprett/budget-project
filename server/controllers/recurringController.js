@@ -3,10 +3,15 @@ const dayjs = require('dayjs')
 module.exports = {
   getRecurring: async (req, res) => {
     const db = req.app.get('db')
+    let limit = +req.params.limit
     // const {user_id} = req.session.user
     const user_id = 1
-
+    
     const recurring = await db.recurring.get_recurring([user_id])
+    
+    if(limit === 3){
+      recurring.splice(3, recurring.length - 3)
+    }
 
     res.status(200).send(recurring)
   },

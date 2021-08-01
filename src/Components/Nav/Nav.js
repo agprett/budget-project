@@ -31,10 +31,10 @@ function Nav(props){
   }, [])
   
   return (
-    <section>
+    <section className='nav-bar'>
       <nav className='upper-nav'>
         <div className='nav-left'>
-          <h2 className='main-title'>PB Budgetry</h2>
+          <h2 className='main-title'>PB Budgetting</h2>
           <h4>Financial planning done easy</h4>
         </div>
         <section className='nav-right'>

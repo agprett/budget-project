@@ -1,12 +1,12 @@
 .expense-section {
-  /* height: 425px; */
+  height: 100vh;
   width: 100%;
   position: relative;
-  margin-top: 90px;
   padding: 10px;
+  padding-top: 110px;
   display: flex;
   justify-content: space-around;
-  /* background-color: #C2C2C2; */
+  background-color: #EBDCF9;
 }
 
 .expense-left {

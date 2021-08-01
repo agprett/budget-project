@@ -1,6 +1,6 @@
 .budget-section {
   height: 45%;
-  width: 80%;
+  width: 550px;
   padding: 10px 10px;
   background-color: #987DC1;
   text-align: center;
@@ -13,25 +13,28 @@
 }
 
 .sub-budgets {
-  min-height: 60%;
-  width: 400px;
+  height: 90%;
+  width: 500px;
+  padding: 5px 15px;
+  font-size: large;
   display: flex;
-  justify-content: flex-start;
-  align-content: center;
+  justify-content: space-between;
+  align-content: space-evenly;
   flex-wrap: wrap;
-  overflow-x: auto;
+  overflow-y: auto;
   /* background-color: red; */
 }
 
 .home-sub-budget {
-  height: 50px;
-  width: 30%;
-  padding: 5px 10px;
-  margin: 10px 5px;
+  height: 65px;
+  width: 25%;
+  /* padding: 5px 10px; */
+  margin: 15px 5px;
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-content: space-between;
+  flex-wrap: wrap;
+  justify-content: space-between;
   /* background-color: orange; */
 }
 

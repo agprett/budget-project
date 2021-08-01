@@ -30,7 +30,7 @@ function Expenses() {
   }, [])
 
   useEffect(() => {
-    axios.get('/api/recurring')
+    axios.get('/api/recurring/0')
     .then(res => {
       setRecurring(res.data)
     })
