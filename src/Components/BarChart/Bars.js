@@ -26,7 +26,7 @@ export default class Bars extends Component {
           y={yScale(budget.amount)}
           height={height - margins.bottom - scales.yScale(budget.amount)}
           width={xScale.bandwidth()}
-          fill={'blue'}
+          fill={'#23277A'}
         />,
       )
     ) : (

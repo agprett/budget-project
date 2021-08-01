@@ -26,11 +26,14 @@
 .home-lt {
   height: 45%;
   width: 100%;
+  font-size: x-large;
+  font-weight: 700;
   display: flex;
   align-items: center;
+  justify-content: space-around;
   background-color: #987DC1;
   box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26);
-  border-radius: 45px;
+  border-radius: 30px;
 }
 
 .home-budget {
@@ -66,16 +69,6 @@
   align-items: center;
 }
 
-.title-two {
-  font-size: x-large;
-  font-weight: 800;
-}
-
-.title-three {
-  font-size: larger;
-  font-weight: 700;
-}
-
 .recent-expenses {
   height: 200px;
   width: 95%;
@@ -103,7 +96,7 @@
   height: 150px;
   margin: 20px;
   width: 75%;
-  border-radius: 25px;
+  border-radius: 20px;
   padding: 10px;
   display: flex;
   justify-content: space-evenly;
@@ -119,7 +112,7 @@
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  border-radius:25px;
+  border-radius: 20px;
   background-color: #987DC1;
 }
 
@@ -127,8 +120,8 @@
   padding: 11% 50px;
   font-weight: bold;
   font-size: large;
-  background-color: #987DC1;
-  border-radius: 25px;
+  background-color: #eaebed;
+  border-radius: 20px;
   /* padding: 10px; */
   /* width: 100%; */
   display: flex;

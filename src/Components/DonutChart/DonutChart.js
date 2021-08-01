@@ -30,7 +30,7 @@ function DonutChart(props){
   // set the color scale
     var color = d3.scaleOrdinal()
       .domain(data)
-      .range(["#e89005", "#00a5cf"])
+      .range(["#4AD3B8", "#5074E2"])
 
   // Compute the position of each group on the pie:
     var pie = d3.pie()

@@ -168,6 +168,7 @@ module.exports = {
         }
       }
     }
+    
 
     chartData = {budget: tempBudget, spent: tempSpent}
 
