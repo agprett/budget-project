@@ -35,7 +35,7 @@ function Nav(props){
       <nav className='upper-nav'>
         <div className='nav-left'>
           <h2 className='main-title'>PB Budgetting</h2>
-          <h4>Financial planning done easy</h4>
+          <h4>Easy Financial Planning</h4>
         </div>
         <section className='nav-right'>
           <p className='title-three'>Welcome, {user.username}</p>

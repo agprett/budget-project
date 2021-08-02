@@ -37,7 +37,7 @@
 }
 
 .home-budget {
-  height: 60px;
+  height: 125px;
   width: 100%;
   margin: 5px 15px;
   display: flex;
@@ -86,7 +86,7 @@
   padding: 5px 15px 5px 15px;
   position: relative;
   margin: auto;
-  padding: 0px px;
+  padding: 0px;
   display: flex;
   /* justify-content: space-between; */
   /* align-items: center; */

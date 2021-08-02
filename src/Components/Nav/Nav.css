@@ -13,7 +13,7 @@
   align-items: center;
   justify-content: space-between;
   z-index: 10;
-  background-color: #3C096C;
+  background-color: #523073;
 }
 
 .nav-left {
@@ -62,7 +62,7 @@
   position: fixed;
   top: 50px;
   display: flex;
-  background-color: #5A189A;
+  background-color: #663399;
   z-index: 10;
 }
 
