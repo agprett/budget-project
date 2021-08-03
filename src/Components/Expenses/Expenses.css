@@ -3,7 +3,7 @@
   width: 100%;
   position: relative;
   padding: 10px;
-  padding-top: 110px;
+  padding-top: 100px;
   display: flex;
   justify-content: space-around;
   background-color: #EBDCF9;
@@ -12,6 +12,7 @@
 .expense-left {
   height: 100%;
   width: 30%;
+  padding-top: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,13 +34,13 @@
   padding: 15px;
   margin: 10px 15px;
   border-radius: 10px;
-  background-color: powderblue;
+  background-color: #987DC1;
 }
 
 .new-expense {
   height: 300px;
   width: 200px;
-  background-color: #924EF9;
+  background-color: #987DC1;
   color: white;
   padding: 0 20px;
   position: absolute;
@@ -60,7 +61,7 @@
 }
 
 .modify-expenses {
-  background-color: #7B2CBF;
+  background-color: #663399;
   border: none;
   border-radius: 10px;
   color: white;
@@ -73,7 +74,7 @@
   height: 30px;
   padding: 5px;
   width: 100%;
-  background-color: powderblue;
+  /* background-color: powderblue; */
   display: flex;
   justify-content: space-evenly;
   overflow: visible;
@@ -89,7 +90,7 @@
   padding: 0px 15px;
   margin-top: 20px;
   border-radius: 10px;
-  background-color: #67597A;
+  background-color: #663399;
   /* box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26); */
   overflow: auto;
 }
