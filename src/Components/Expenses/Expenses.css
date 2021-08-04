@@ -3,7 +3,7 @@
   width: 100%;
   position: relative;
   padding: 10px;
-  padding-top: 100px;
+  padding-top: 95px;
   display: flex;
   justify-content: space-around;
   background-color: #EBDCF9;
@@ -12,7 +12,7 @@
 .expense-left {
   height: 100%;
   width: 30%;
-  padding-top: 10px;
+  padding-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,13 +28,31 @@
   flex-wrap: wrap;
 }
 
-.recure {
+.recurring-displays {
   height: 200px;
   width: 160px;
   padding: 15px;
   margin: 10px 15px;
   border-radius: 10px;
   background-color: #987DC1;
+}
+
+.recure {
+  font: medium;
+  font-weight: 400;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.recure-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .new-expense {
@@ -56,8 +74,11 @@
 }
 
 .expense-right {
-  height: 100%;
+  height: 95%;
   width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .modify-expenses {
@@ -66,16 +87,23 @@
   border-radius: 10px;
   color: white;
   padding: 5px 7.5px;
-  margin: 5px 10px 20px;
+  margin: 0px 10px 10px;
   z-index: 4;
 }
 
+.modify-expense-buttons {
+  width: 200px;
+  display: flex;
+  justify-content: space-around;
+}
+
 .expense-filter {
-  height: 30px;
-  padding: 5px;
+  height: 35px;
+  padding: 5px 0px;
   width: 100%;
   /* background-color: powderblue; */
   display: flex;
+  align-content: center;
   justify-content: space-evenly;
   overflow: visible;
 }
@@ -87,10 +115,10 @@
 .expenses-view {
   height: 475px;
   width: 100%;
-  padding: 0px 15px;
-  margin-top: 20px;
+  padding: 15px;
+  margin-top: 10px;
   border-radius: 10px;
-  background-color: #663399;
+  background-color: #5074E2;
   /* box-shadow: 0 14px 28px 0 rgba(0,0,0,.25), 0 10px 10px 0 rgba(0,0,0,.26); */
   overflow: auto;
 }

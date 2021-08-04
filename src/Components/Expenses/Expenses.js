@@ -143,9 +143,9 @@ function Expenses() {
     const {name, category, date, amount, recurring_id} = recurring
 
     return (
-      <div key={i} className='recure'>
+      <div key={i} className='recurring-displays'>
         {recurring.recurring_id === updatedRecurring.recurring_id ? (
-          <section>
+          <section className='recure'>
             <input
               className='recure-name'
               placeholder={name}
@@ -224,21 +224,23 @@ function Expenses() {
             >Delete</button>
           </section>
         ) : (
-          <section>
+          <section className='recure'>
             <h2 className='recure-name'>{name}</h2>
             <h2 className='recure-category'>{category}</h2>
             <h2 className='recure-date'>{dayjs(date).format('MM/DD/YY')}</h2>
             <h2 className='recure-amount'>$ {amount}</h2>
-            <button
-              onClick={() => {
-                handleRecurringPay(name, category, date, amount, recurring_id)
-              }}
-            >Pay now</button>
-            <button
-              onClick={() => {
-                setUpdatedRecurring(recurring)
-              }}
-            >Edit</button>
+            <div>              
+              <button
+                onClick={() => {
+                  handleRecurringPay(name, category, date, amount, recurring_id)
+                }}
+              >Pay now</button>
+              <button
+                onClick={() => {
+                  setUpdatedRecurring(recurring)
+                }}
+              >Edit</button>
+            </div>
           </section>
         )}
       </div>
@@ -444,31 +446,33 @@ function Expenses() {
                 </div>
               ) : (
                 <section>
-                  <button
-                    onClick={() => {
-                      setNewExpense({...newExpense, display: true})
-                    }}
-                  >New</button>
-                  <button
-                    onClick={() => {
-                      setEditting(true)
-                    }}
-                  >Edit</button>
-                  <button
-                    onClick={() => {
-                      if(filters.filtered){
-                        setFilters({filtered: false, name: '', category: '', start: '', end: '', max: '', min: ''})
-                      } else {                    
-                        setFilters({...filters, filtered: true})
-                      }
-                    }}
-                  >Filter
-                    <img
-                      className={filters.filtered ? 'down-arrow' : 'arrow'}
-                      src='https://image.flaticon.com/icons/png/512/16/16038.png'
-                      alt='arrow'
-                    />
-                  </button>
+                  <div className='modify-expense-buttons'>
+                    <button
+                      onClick={() => {
+                        setNewExpense({...newExpense, display: true})
+                      }}
+                    >New</button>
+                    <button
+                      onClick={() => {
+                        setEditting(true)
+                      }}
+                    >Edit</button>
+                    <button
+                      onClick={() => {
+                        if(filters.filtered){
+                          setFilters({filtered: false, name: '', category: '', start: '', end: '', max: '', min: ''})
+                        } else {                    
+                          setFilters({...filters, filtered: true})
+                        }
+                      }}
+                    >Filter
+                      <img
+                        className={filters.filtered ? 'down-arrow' : 'arrow'}
+                        src='https://image.flaticon.com/icons/png/512/16/16038.png'
+                        alt='arrow'
+                      />
+                    </button>
+                  </div>
                   <section className={filters.filtered ? 'expense-filter' : 'expense-filter null'}>
                     <input
                       placeholder='Name'
