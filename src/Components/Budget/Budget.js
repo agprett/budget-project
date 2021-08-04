@@ -166,7 +166,8 @@ function Budget(props){
             <div className='budget-overall'>
               <div className='monthly-budget'>
                 Monthly Budget: 
-                <input 
+                <input
+                  className='monthly-budget-input'
                   placeholder={overall} 
                   onChange={event => {
                     setUpdatedMain(event.target.value)
@@ -176,11 +177,13 @@ function Budget(props){
               <div className='monthly-budget'>Spent: {spent("Overall")}</div>
               <div className='budget-overall-edit-buttons'>
                 <button
+                  className='budget-overall-edit-button'
                   onClick={() => {
                     handleUpdateMain()
                   }}
                 >Save</button>
                 <button
+                  className='budget-overall-edit-button'
                   onClick={() => {
                     setEditting({...editting, main: false})
                     setUpdatedMain(0)
@@ -208,7 +211,7 @@ function Budget(props){
           <section className='sub-budgets-section'>
             <div className='new-sub-budget-section'>
               {editting.sub ? (
-                <section className={editting.sub ? 'sub-budget' : 'null'}>
+                <section className={editting.sub ? 'sub-budget new-sub-budget' : 'null'}>
                   <input
                     placeholder={'Category'}
                     onChange={event => {
@@ -221,16 +224,18 @@ function Budget(props){
                       setNewSub({...newSub, amount: event.target.value})
                     }}
                   ></input>
-                  <button
-                    onClick={() => {
-                      handleNewSubBudget()
-                    }}
-                  >Add</button>
-                  <button
-                    onClick={() => {
-                      setEditting({...editting, sub: false})
-                    }}
-                  >Cancel</button>
+                  <div className='new-sub-budget-buttons'>
+                    <button
+                      onClick={() => {
+                        handleNewSubBudget()
+                      }}
+                    >Add</button>
+                    <button
+                      onClick={() => {
+                        setEditting({...editting, sub: false})
+                      }}
+                    >Cancel</button>
+                  </div>
                 </section>
               ) : (
                 <button

@@ -26,16 +26,27 @@
   border-radius: 25px;
 }
 
-.budget-overall-edit-buttons{
-  display: flex;
-}
-
 .monthly-budget{
   font-size: x-large;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.monthly-budget-input {
+  border: 2px solid black;
+  border-radius: 4px;
+  margin: 3px 7px;
+  height: 25px;
+}
+
+.budget-overall-edit-buttons {
+  display: flex;
+}
+
+.budget-overall-edit-button {
+  margin: 0px 5px;
 }
 
 .breakdown-chart{
@@ -64,6 +75,17 @@
   /* background-color: orange; */
 }
 
+.new-sub-budget {
+  display: flex;
+  flex-direction: column;
+}
+
+.new-sub-budget-buttons {
+  display: flex;
+  width: 75%;
+  justify-content: space-around;
+}
+
 .sub-budget-display{
   height: 97%;
   width: auto;
@@ -82,9 +104,15 @@
   font-size: large;
   font-weight: 500;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-content: space-evenly;
   flex-wrap: wrap;
   border-radius: 15px;
   background-color: #987DC1;
+}
+
+.sub-budget-buttons {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
 }

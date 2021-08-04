@@ -15,7 +15,7 @@
 .sub-budgets {
   height: 100%;
   width: 500px;
-  padding: 5px 15px;
+  padding: 5px;
   font-size: large;
   display: flex;
   justify-content: space-between;
@@ -27,12 +27,12 @@
 
 .home-sub-budget {
   height: 95px;
-  width: 30%;
+  width: 31%;
   padding: 10px;
   margin: 5px 5px;
   display: flex;
   flex-direction: column;
-  align-content: space-between;
+  align-content: center;
   justify-content: space-between;
   flex-wrap: wrap;
   background-color: #987DC1;
@@ -42,7 +42,7 @@
 
 .amount-bar {
   height: 10px;
-  width: 100%;
+  width: 90%;
   background-color: #e0e0de;
   border-radius: 10px;
 }
