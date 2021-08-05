@@ -12,14 +12,39 @@
 .expense-left {
   height: 95%;
   width: 30%;
-  padding-top: 20px;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
+  overflow: auto;
+}
+
+.new-recure {
+  height: 175px;
+  width: 250px;
+  padding: 5px 10px;
+  /* margin: 5px 15px; */
+  border-radius: 10px;
+  background-color: #987DC1;
+  /* font: medium;
+  font-weight: 400; */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.new-recurring-button-div {
+  width: 65%;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .recurring {
-  margin: 15px 5px;
+  margin: 10px 5px;
+  height: 65%;
   /* width: 25%; */
   display: flex;
   /* flex-direction: column; */
@@ -49,6 +74,12 @@
   align-items: center;
 }
 
+.recurring-button-div {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .recure-buttons {
   width: 100%;
   display: flex;
@@ -74,7 +105,7 @@
 }
 
 .expense-right {
-  height: 95%;
+  height: 97%;
   width: 70%;
   margin: 0px 5px;
   display: flex;
@@ -111,7 +142,7 @@
 }
 
 .expense-category-dropdown{
-  z-index: 4;
+  z-index: 6;
 }
 
 .expenses-view {

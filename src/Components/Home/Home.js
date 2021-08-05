@@ -125,7 +125,7 @@ function Home(props){
           onClick={() => {
             handleRecurringPay(name, category, amount, date, recurring_id)
           }}
-        >Pay Now</button>
+        >Pay</button>
       </section>
     )
   })
