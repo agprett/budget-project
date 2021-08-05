@@ -255,99 +255,102 @@ function Expenses() {
         </div>
       ) : (
         <section className='expense-section'>
-          <section className='expense-left'>  
-          <button
-            onClick={() => {
-              setNewRecurring({display: true, name: '', category:'', amount: '', date: ''})
-            }}
-          >Add New Recurring</button>
-          <section className='recurring'>
-            <section className={newRecurring.display ? 'recure' : 'null'}>
-              <input
-                // className='recure-name'
-                placeholder='Name'
-                value={newRecurring.name}
-                onChange={event => {
-                  setNewRecurring({...newRecurring, name: event.target.value})
-                }}
-              />
-              {/* <input
-                className='recure-category'
-                placeholder='Category'
-                value={newRecurring.category}
-                onChange={event => {
-                  setNewRecurring({...newRecurring, category: event.target.value})
-                }}
-              /> */}
-              <section className='expense-category-dropdown'>
+          <section className='expense-left'>
+            {newRecurring.display ? (
+              <section className='recurring-displays'>
+                <input
+                  // className='recure-name'/
+                  placeholder='Name'
+                  value={newRecurring.name}
+                  onChange={event => {
+                    setNewRecurring({...newRecurring, name: event.target.value})
+                  }}
+                />
+                {/* <input
+                  className='recure-category'
+                  placeholder='Category'
+                  value={newRecurring.category}
+                  onChange={event => {
+                    setNewRecurring({...newRecurring, category: event.target.value})
+                  }}
+                /> */}
+                <section className='expense-category-dropdown'>
+                  <button
+                    onClick={() => {
+                      viewDropdown.newRecurring ? (
+                        setViewDropdown({...viewDropdown, newRecurring: false})
+                      ) : (
+                        setViewDropdown({...viewDropdown, newRecurring: true})
+                      )
+                    }}
+                  >{newRecurring.category ? newRecurring.category : 'Select Category'}
+                    <img
+                      className={viewDropdown.newRecurring ? 'down-arrow' : 'arrow'}
+                      src='https://image.flaticon.com/icons/png/512/16/16038.png'
+                      alt='arrow'
+                    />
+                  </button>
+                  <section className={viewDropdown.newRecurring ? null : 'null'}>
+                    <Dropdown rerender data={newRecurring} setDropdownCategory={setNewRecurring} view={viewDropdown} setView={setViewDropdown} dropdownSelection='newRecurring'/>
+                  </section>
+                </section>
+                {/* <input
+                  className='recure-date'
+                  placeholder='Date'
+                  value={newRecurring.date}
+                  onChange={event => {
+                    setNewRecurring({...newRecurring, date: event.target.value})
+                  }}
+                /> */}
+                <section style={{zIndex: 4}}>
+                  {viewCalendar.newRecurring ? (
+                    <Calendar setSelectedDate={setNewRecurring} selectedDate={newRecurring} view={viewCalendar} setView={setViewCalendar} data={{setValue: 'date', displayValue: 'newRecurring'}}/>
+                  ) : (
+                    <div>
+                      <button
+                        onClick={() => {
+                          setViewCalendar({...viewCalendar, newRecurring: true})
+                        }}
+                      >{newRecurring.date ? dayjs(newRecurring.date).format('MM/DD/YY') : 'Select Date'}</button>
+                      <button
+                        className={newRecurring.date ? null : 'null'}
+                        onClick={() => {
+                          setUpdatedRecurring({...newRecurring, date: ''})
+                        }}
+                      >Clear</button>
+                    </div>
+                  )}
+                </section>
+                <input
+                  className='recure-amount'
+                  placeholder='Amount'
+                  value={newRecurring.amount}
+                  onChange={event => {
+                    setNewRecurring({...newRecurring, amount: event.target.value})
+                  }}
+                />
                 <button
                   onClick={() => {
-                    viewDropdown.newRecurring ? (
-                      setViewDropdown({...viewDropdown, newRecurring: false})
-                    ) : (
-                      setViewDropdown({...viewDropdown, newRecurring: true})
-                    )
+                    handleNewRecurring()
                   }}
-                >{newRecurring.category ? newRecurring.category : 'Select Category'}
-                  <img
-                    className={viewDropdown.newRecurring ? 'down-arrow' : 'arrow'}
-                    src='https://image.flaticon.com/icons/png/512/16/16038.png'
-                    alt='arrow'
-                  />
-                </button>
-                <section className={viewDropdown.newRecurring ? null : 'null'}>
-                  <Dropdown rerender data={newRecurring} setDropdownCategory={setNewRecurring} view={viewDropdown} setView={setViewDropdown} dropdownSelection='newRecurring'/>
-                </section>
+                >Save</button>
+                <button
+                  onClick={() => {
+                    setNewRecurring({display: false, name: '', category:'', amount: '', date: ''})
+                    setViewDropdown({...viewDropdown , newRecurring: false})
+                  }}
+                >Cancel</button>
               </section>
-              {/* <input
-                className='recure-date'
-                placeholder='Date'
-                value={newRecurring.date}
-                onChange={event => {
-                  setNewRecurring({...newRecurring, date: event.target.value})
-                }}
-              /> */}
-              <section style={{zIndex: 4}}>
-                {viewCalendar.newRecurring ? (
-                  <Calendar setSelectedDate={setNewRecurring} selectedDate={newRecurring} view={viewCalendar} setView={setViewCalendar} data={{setValue: 'date', displayValue: 'newRecurring'}}/>
-                ) : (
-                  <div>
-                    <button
-                      onClick={() => {
-                        setViewCalendar({...viewCalendar, newRecurring: true})
-                      }}
-                    >{newRecurring.date ? dayjs(newRecurring.date).format('MM/DD/YY') : 'Select Date'}</button>
-                    <button
-                      className={newRecurring.date ? null : 'null'}
-                      onClick={() => {
-                        setUpdatedRecurring({...newRecurring, date: ''})
-                      }}
-                    >Clear</button>
-                  </div>
-                )}
-            </section>
-              <input
-                className='recure-amount'
-                placeholder='Amount'
-                value={newRecurring.amount}
-                onChange={event => {
-                  setNewRecurring({...newRecurring, amount: event.target.value})
-                }}
-              />
+            ) : (
               <button
                 onClick={() => {
-                  handleNewRecurring()
+                  setNewRecurring({display: true, name: '', category:'', amount: '', date: ''})
                 }}
-              >Save</button>
-              <button
-                onClick={() => {
-                  setNewRecurring({display: false, name: '', category:'', amount: '', date: ''})
-                  setViewDropdown({...viewDropdown , newRecurring: false})
-                }}
-              >Cancel</button>
+              >Add New Recurring</button>
+            )}    
+            <section className='recurring'>
+              {viewRecurring}
             </section>
-            {viewRecurring}
-          </section>
           </section>
           <section className='expense-right'>
             {newExpense.display ? (

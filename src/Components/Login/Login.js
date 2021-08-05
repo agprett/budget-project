@@ -9,8 +9,9 @@ function Login(props){
   return (
     <div className='log-back'>
     <section className='login'>
-      <p className='title'>Welcome to Budgetry!</p>
+      <p className='title'>Welcome to PB Budgetting!</p>
       <section className='log-inputs'>
+        <p>Login:</p>
         <input
           className='log-input'
           value={user.username}

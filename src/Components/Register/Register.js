@@ -9,8 +9,9 @@ function Register(props){
   return (
     <div className='reg-back'>
       <section className='register'>
-        <p className='title'>Welcome to Budgetry!</p>
+        <p className='title'>Welcome to  PB Budgetting!</p>
         <section className='reg-inputs'>
+          <p>Register:</p>
           <input
             className='reg-input'
             value={user.username}
