@@ -59,7 +59,11 @@ function ExpenseDisplay(props) {
   
       if(view === 'editting'){
         return (
-          <section key={expense_id} className='expenses' style={{backgroundColor: i % 2 === 1 ? '#F5F5F5' : '#987DC1'}}>
+          <section
+            key={expense_id}
+            className='expenses'
+            style={{backgroundColor: i % 2 === 1 ? '#F5F5F5' : '#987DC1', zIndex: 11 + expenses.length - i}}
+          >
             <input
               className='expense-name'
               placeholder={name}
@@ -74,14 +78,14 @@ function ExpenseDisplay(props) {
                 setUpdatedExpenses({...updatedExpenses, [expense_id]: {...updatedExpenses[expense_id], category: event.target.value}})
               }}
             /> */}
-            <section className='expense-category-dropdown'>
+            <section style={{margin: 'auto 0px'}} className='expense-category-dropdown'>
               <button
                 onClick={() => {
                   viewDropdown === expense_id ? setViewDropdown('') : setViewDropdown(expense_id)
                 }}
               >{updatedExpenses[expense_id].category ? updatedExpenses[expense_id].category : 'Select Category'}
                 <img
-                  className={viewDropdown ? 'down-arrow' : 'arrow'}
+                  className={viewDropdown === expense_id ? 'down-arrow' : 'arrow'}
                   src='https://image.flaticon.com/icons/png/512/16/16038.png'
                   alt='arrow'
                 />
@@ -97,7 +101,7 @@ function ExpenseDisplay(props) {
                 setUpdatedExpenses({...updatedExpenses, [expense_id]: {...updatedExpenses[expense_id], date: event.target.value}})
               }}
             /> */}
-            <section style={{zIndex: 4}}>
+            <section style={{zIndex: 4, margin: 'auto 0px'}}>
               {viewCalendar === expense_id ? (
                 <Calendar setSelectedDate={setUpdatedExpenses} selectedDate={updatedExpenses} view={viewCalendar} setView={setViewCalendar} data={{setValue: 'date', displayValue: expense_id}}/>
               ) : (
@@ -108,11 +112,11 @@ function ExpenseDisplay(props) {
                     }}
                   >{updatedExpenses[expense_id].date ? dayjs(updatedExpenses[expense_id].date).format('MM/DD/YY') : dayjs(date).format('MM/DD/YY')}</button>
                   <button
-                    className={date ? null : 'null'}
+                    className={updatedExpenses[expense_id].date !== date ? null : 'null'}
                     onClick={() => {
-                      setUpdatedExpenses({...updatedExpenses, [expense_id]: {...updatedExpenses[expense_id], date: ''}})
+                      setUpdatedExpenses({...updatedExpenses, [expense_id]: {...updatedExpenses[expense_id], date: date}})
                     }}
-                  >Clear</button>
+                  >Reset</button>
                 </div>
               )}
             </section>
@@ -124,6 +128,7 @@ function ExpenseDisplay(props) {
               }}
             />
             <input
+              style={{margin: 'auto 0px'}}
               type='checkbox'
               onClick={() => {
                 remove = !remove
@@ -144,6 +149,7 @@ function ExpenseDisplay(props) {
             />
             <img
               className='close'
+              style={{margin: 'auto 0px'}}
               src={x}
               alt='x'
               onClick={() => {

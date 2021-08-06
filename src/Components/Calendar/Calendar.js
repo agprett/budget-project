@@ -72,34 +72,40 @@ function Calendar(props){
 
   return (
     <section className='calendar'>
-      <button
-        onClick={() => {
-          handleUpdateDisplayMonth('back')
-        }}
-      >{'<'}</button>
-      <p>{dayjs(startDisplayMonth).format('MMMM YY')}</p>
-      <button
-        onClick={() => {
-          handleUpdateDisplayMonth('forward')
-        }}
-      >{'>'}</button>
-      <button
-        onClick={() => {
-          setStartDisplayMonth(dayjs().startOf('month').format('MM/DD/YY'))
-        }}
-      >Today</button>
-      <img
-        className='close'
-        src={x}
-        alt='x'
-        onClick={() => {
-          if(typeof(data.displayValue) === 'number'){
-            setView('')
-          } else {
-            setView({...view, [data.displayValue]: false})
-          }
-        }}
-      />
+      <div className='calendar-buttons'>
+        <button
+          onClick={() => {
+            handleUpdateDisplayMonth('back')
+          }}
+        >{'<'}</button>
+        <p className='calendar-date-display'>{dayjs(startDisplayMonth).format('MMMM YY')}</p>
+        <button
+          onClick={() => {
+            handleUpdateDisplayMonth('forward')
+          }}
+        >{'>'}</button>
+      </div>
+      <div className='calendar-buttons'>
+        <button
+          onClick={() => {
+            setStartDisplayMonth(dayjs().startOf('month').format('MM/DD/YY'))
+          }}
+        >Today</button>
+        <button
+          onClick={() => {
+            if(typeof(data.displayValue) === 'number'){
+              setView('')
+            } else {
+              setView({...view, [data.displayValue]: false})
+            }
+          }}
+        >Cancel</button>
+        {/* <img
+          className='close'
+          src={x}
+          alt='x'
+        /> */}
+      </div>
       <section className='calendar-month'>
         {designCalendar}
       </section>

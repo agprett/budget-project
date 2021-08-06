@@ -179,30 +179,34 @@
   height: 45px;
   width: 100%;
   border-radius: 0px 0px 10px 0px;
-  padding: 5px 15px 5px 15px;
   position: relative;
   margin: auto;
   padding: 0px 30px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-content: center;
+  overflow: visible;
 }
 
 .expense-name {
-  width: 35%;
+  width: 32%;
+  margin: auto 0px;
 }
 
 .expense-category {
   width: 30%;
+  margin: auto 0px;
 }
 
 .expense-date{
-  width: 20%;
+  width: 23%;
+  margin: auto 0px;
 }
 
 .expense-amount {
   width: 15%;
   text-align: right;
+  margin: auto 0px;
 }
 
 .load-more-button {

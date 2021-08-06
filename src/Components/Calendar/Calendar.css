@@ -1,17 +1,37 @@
 .calendar {
   width: 200px;
-  height: auto;
+  height: 20px;
+  margin-bottom: auto 0px none;
+  overflow: visible;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   color: black;
+}
+
+.calendar-buttons {
+  width: 90%;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.calendar-date-display {
+  color: white;
+  background-color: #5074E2;
+  padding: 5px;
+  border-radius: 10px;
+  cursor: default;
 }
 
 .calendar-month {
   width: 177px;
   min-height: 102px;
-  max-height: 152px;
-  background-color: white;
+  max-height: auto;
+  background-color: #663399;
+  color: white;
   /* border: 1px solid grey; */
   border-radius: 5px;
   display: flex;
@@ -30,10 +50,10 @@
 
 .selected {
   font-weight: 700;
-  color: blue;
+  color: #5074E2;
 }
 
 .today {
   font-weight: 700;
-  color: grey;
+  color: black;
 }
