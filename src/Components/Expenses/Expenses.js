@@ -357,72 +357,74 @@ function Expenses() {
 
           <section className='expense-right'>
             {newExpense.display ? (
-              <div className='new-expense'>
-                <input
-                  placeholder='Name'
-                  value={newExpense.name}
-                  onChange={event => {
-                    setNewExpense({...newExpense, name: event.target.value})
-                  }}
-                />
-                <section className='expense-category-dropdown'>
+              <div className='new-expense-background'>
+                <div className='new-expense'>
+                  <input
+                    placeholder='Name'
+                    value={newExpense.name}
+                    onChange={event => {
+                      setNewExpense({...newExpense, name: event.target.value})
+                    }}
+                  />
+                  <section className='expense-category-dropdown'>
+                    <button
+                      onClick={() => {
+                        viewDropdown.newExpense ? (
+                          setViewDropdown({...viewDropdown, newExpense: false})
+                        ) : (
+                          setViewDropdown({...viewDropdown, newExpense: true})
+                        )
+                      }}
+                    >{newExpense.category ? newExpense.category : 'Select Category'}
+                      <img
+                        className={viewDropdown.newExpense ? 'down-arrow' : 'arrow'}
+                        src='https://image.flaticon.com/icons/png/512/16/16038.png'
+                        alt='arrow'
+                      />
+                    </button>
+                    <section className={viewDropdown.newExpense ? null : 'null'}>
+                      <Dropdown rerender data={newExpense} setDropdownCategory={setNewExpense} view={viewDropdown} setView={setViewDropdown} dropdownSelection='newExpense'/>
+                    </section>
+                  </section>
+                  <input
+                    placeholder='Amount'
+                    value={newExpense.amount}
+                    onChange={event => {
+                      setNewExpense({...newExpense, amount: +event.target.value})
+                    }}
+                  />
+                  <section className={viewCalendar.newExpense ? 'calendar-view-date' : null}>
+                    <div className='calendar-date-buttons'>
+                      <button
+                        onClick={() => {
+                          setViewCalendar({...viewCalendar, newExpense: true})
+                        }}
+                      >{newExpense.date ? newExpense.date : 'Select Date'}</button>
+                      <button
+                        // className={newExpense.date === dayjs(newExpense.date).format('MM/DD/YY') ? null : 'null'}
+                        onClick={() => {
+                          setNewExpense({...newExpense, date: dayjs().format('MM/DD/YY')})
+                        }}
+                      >Today</button>
+                    </div>
+                    <div className={viewCalendar.newExpense ? null : 'null'}>
+                      <Calendar setSelectedDate={setNewExpense} selectedDate={newExpense} view={viewCalendar} setView={setViewCalendar} data={{setValue: 'date', displayValue: 'newExpense'}}/>
+                    </div>
+                  </section>
                   <button
                     onClick={() => {
-                      viewDropdown.newExpense ? (
-                        setViewDropdown({...viewDropdown, newExpense: false})
-                      ) : (
-                        setViewDropdown({...viewDropdown, newExpense: true})
-                      )
+                      addNewExpense(newExpense)
                     }}
-                  >{newExpense.category ? newExpense.category : 'Select Category'}
-                    <img
-                      className={viewDropdown.newExpense ? 'down-arrow' : 'arrow'}
-                      src='https://image.flaticon.com/icons/png/512/16/16038.png'
-                      alt='arrow'
-                    />
-                  </button>
-                  <section className={viewDropdown.newExpense ? null : 'null'}>
-                    <Dropdown rerender data={newExpense} setDropdownCategory={setNewExpense} view={viewDropdown} setView={setViewDropdown} dropdownSelection='newExpense'/>
-                  </section>
-                </section>
-                <input
-                  placeholder='Amount'
-                  value={newExpense.amount}
-                  onChange={event => {
-                    setNewExpense({...newExpense, amount: +event.target.value})
-                  }}
-                />
-                <section className={viewCalendar.newExpense ? 'calendar-view-date' : null}>
-                  <div className='calendar-date-buttons'>
+                    >Submit</button>
                     <button
-                      onClick={() => {
-                        setViewCalendar({...viewCalendar, newExpense: true})
-                      }}
-                    >{newExpense.date ? newExpense.date : 'Select Date'}</button>
-                    <button
-                      // className={newExpense.date === dayjs(newExpense.date).format('MM/DD/YY') ? null : 'null'}
-                      onClick={() => {
-                        setNewExpense({...newExpense, date: dayjs().format('MM/DD/YY')})
-                      }}
-                    >Today</button>
-                  </div>
-                  <div className={viewCalendar.newExpense ? null : 'null'}>
-                    <Calendar setSelectedDate={setNewExpense} selectedDate={newExpense} view={viewCalendar} setView={setViewCalendar} data={{setValue: 'date', displayValue: 'newExpense'}}/>
-                  </div>
-                </section>
-                <button
-                  onClick={() => {
-                    addNewExpense(newExpense)
-                  }}
-                  >Submit</button>
-                  <button
-                  onClick={() => {
-                    setNewExpense({display: false, name: '', category: '', amount: 0})
-                    setViewDropdown({...viewDropdown, newExpense: false})
-                    setViewCalendar({...viewCalendar, newExpense: false})
-                  }}
+                    onClick={() => {
+                      setNewExpense({display: false, name: '', category: '', amount: 0})
+                      setViewDropdown({...viewDropdown, newExpense: false})
+                      setViewCalendar({...viewCalendar, newExpense: false})
+                    }}
                   >Cancel</button>
                 </div>
+              </div>
               ) : null
             }
             <section className='modify-expenses'>
