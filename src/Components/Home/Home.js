@@ -104,10 +104,10 @@ function Home(props){
 
     return (
       <section className='recent' key={i} style={{backgroundColor: i % 2 === 1 ? '#F5F5F5' : '#987DC1'}}>
-        <div className='expense-name'>{name}</div>
-        <div className='expense-category'>{category}</div>
-        <div className='expense-date'>{dayjs(date).format('MM/DD/YY')}</div>
-        <div className='expense-amount'>$ {amount}</div>
+        <div className='recent-name'>{name}</div>
+        <div className='recent-category'>{category}</div>
+        <div className='recent-date'>{dayjs(date).format('MM/DD/YY')}</div>
+        <div className='recent-amount'>$ {amount}</div>
       </section>
     )
   })

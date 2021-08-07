@@ -20,6 +20,7 @@ function Dropdown(props){
     return (
       <button
         key={category}
+        className='dropdown-selection'
         onClick={() => {
           if(dropdownId){
             setDropdownCategory({...data, [dropdownId]: {...data[dropdownId], category: category}})
@@ -43,7 +44,7 @@ function Dropdown(props){
   return (
     <section className='dropdown-menu'>
       {newCategory ? (
-        <section>
+        <section className='custom-dropdown'>
           <input
             placeholder='Category'
             value={data.category}
@@ -68,7 +69,7 @@ function Dropdown(props){
         <menu className='dropdown-selections'>
           {viewCategories}
           <button
-            className={data.category ? null : 'null'}
+            className={data.category ? 'dropdown-selection' : 'null'}
             onClick={() => {
               if(dropdownId){
                 setDropdownCategory({...data, [dropdownId]: {...data[dropdownId], category: ''}})
@@ -85,6 +86,7 @@ function Dropdown(props){
             }}
           >Clear</button>
           <button
+            className='dropdown-selection'
             onClick={() => {
               setNewCategory(true)
             }}

@@ -86,10 +86,30 @@
   padding: 5px 15px;
   position: relative;
   margin: auto;
-  padding: 0px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.recent-name {
+  width: 30%;
+  /* margin: auto 0px; */
+}
+
+.recent-category {
+  width: 30%;
+  /* margin: auto 0px; */
+}
+
+.recent-date{
+  width: 25%;
+  /* margin: auto 0px; */
+}
+
+.recent-amount {
+  width: 15%;
+  text-align: right;
+  /* margin: auto 0px; */
 }
 
 .view-recurring {

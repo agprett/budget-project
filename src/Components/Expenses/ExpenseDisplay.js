@@ -101,24 +101,27 @@ function ExpenseDisplay(props) {
                 setUpdatedExpenses({...updatedExpenses, [expense_id]: {...updatedExpenses[expense_id], date: event.target.value}})
               }}
             /> */}
-            <section style={{zIndex: 4, margin: 'auto 0px'}}>
-              {viewCalendar === expense_id ? (
+            <section 
+              className={viewCalendar === expense_id ? 'calendar-view-date' : 'expense-date'}
+              style={{marginTop: '10px'}}
+            >
+              <div>
+                <button
+                  onClick={() => {
+                    setViewCalendar(expense_id)
+                  }}
+                >{updatedExpenses[expense_id].date ? dayjs(updatedExpenses[expense_id].date).format('MM/DD/YY') : dayjs(date).format('MM/DD/YY')}</button>
+                <button
+                  className={updatedExpenses[expense_id].date !== date ? null : 'null'}
+                  style={{margin: '0px 5px'}}
+                  onClick={() => {
+                    setUpdatedExpenses({...updatedExpenses, [expense_id]: {...updatedExpenses[expense_id], date: date}})
+                  }}
+                >Reset</button>
+              </div>
+              <div className={viewCalendar === expense_id ? null : 'null'}>
                 <Calendar setSelectedDate={setUpdatedExpenses} selectedDate={updatedExpenses} view={viewCalendar} setView={setViewCalendar} data={{setValue: 'date', displayValue: expense_id}}/>
-              ) : (
-                <div>
-                  <button
-                    onClick={() => {
-                      setViewCalendar(expense_id)
-                    }}
-                  >{updatedExpenses[expense_id].date ? dayjs(updatedExpenses[expense_id].date).format('MM/DD/YY') : dayjs(date).format('MM/DD/YY')}</button>
-                  <button
-                    className={updatedExpenses[expense_id].date !== date ? null : 'null'}
-                    onClick={() => {
-                      setUpdatedExpenses({...updatedExpenses, [expense_id]: {...updatedExpenses[expense_id], date: date}})
-                    }}
-                  >Reset</button>
-                </div>
-              )}
+              </div>
             </section>
             <input
               className='expense-amount'

@@ -1,15 +1,33 @@
-.dropdown-menu{
+.dropdown-menu {
   padding: 0px;
   height: 100px;
   width: auto;
   display: flex;
   flex-direction: column;
   position: absolute;
+  align-content: center;
 }
 
-.dropdown-selections{
+.custom-dropdown {
+  display: flex;
+  align-items: center;
+  margin: 5px 5px 0px;
+  padding: 3px;
+  background-color: #EBEBEB;
+  border: 2px solid black;
+  border-radius: 10px;
+}
+
+.dropdown-selections {
   padding: 0px;
   display: flex;
   flex-direction: column;
   overflow: scroll;
+  background-color: #EBEBEB;
+  border: 2px solid black;
+  border-radius: 10px;
+}
+
+.dropdown-selection {
+  margin: 5px 5px 0px;
 }

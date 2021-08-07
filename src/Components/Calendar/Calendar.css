@@ -1,13 +1,18 @@
 .calendar {
   width: 200px;
-  height: 20px;
-  margin-bottom: auto 0px none;
+  height: auto;
+  /* position: absolute; */
+  margin-top: 2px;
+  padding: 5px;
   overflow: visible;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: black;
+  background-color: #EBEBEB;
+  border: 2px solid black;
+  border-radius: 10px;
 }
 
 .calendar-buttons {
