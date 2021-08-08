@@ -600,7 +600,7 @@ function Expenses() {
                 data={{expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters, setRerenderDisplay, rerenderDisplay}}
               />
               <button
-                className='load-more-button'
+                className={expenses.length % 15 === 0 ? 'load-more-button' : 'null'}
                 onClick={() => {
                   handleLoadMoreExpenses()
                 }}
