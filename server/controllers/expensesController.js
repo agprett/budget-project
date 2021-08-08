@@ -1,5 +1,9 @@
 const dayjs = require('dayjs')
 
+const dataTypeCheck = (data) => {
+  return isNaN(data) ? false : true
+}
+
 module.exports = {
   getExpenses: async (req, res) => {
     const db = req.app.get('db')
@@ -18,9 +22,15 @@ module.exports = {
     // const {user_id} = req.session.user
     const user_id = 1
 
-    await db.expenses.new_expense([user_id, name, category, amount, date])
-  
-    res.sendStatus(200)
+    let test = amount * 10
+
+    if(dataTypeCheck(test)) {
+      await db.expenses.new_expense([user_id, name, category, amount, date])
+    
+      res.sendStatus(200)
+    } else {
+      res.sendStatus(400)
+    }
   },
 
   updateExpenses: async (req, res) => {
@@ -30,7 +40,13 @@ module.exports = {
     for(let i = 0; i < body.length; i++){
       const {name, date, amount, category, expense_id} = body[i]
 
-      await db.expenses.update_expense([name, date, amount, category, expense_id])
+      let test = amount * 10
+
+      if(dataTypeCheck(test)) {
+        await db.expenses.update_expense([name, date, amount, category, expense_id])
+      } else {
+        return res.sendStatus(400)
+      }
     }
 
     res.sendStatus(200)

@@ -1,3 +1,7 @@
+const dataTypeCheck = (data) => {
+  return isNaN(data) ? false : true
+}
+
 module.exports = {
   getBudget: async (req, res) => {
     const db = req.app.get('db')
@@ -15,9 +19,15 @@ module.exports = {
     // const {user_id} = req.session.user
     const user_id = 1
 
-    await db.budget.update_budget([budget_id, amount])
+    let test = amount * 10
 
-    res.sendStatus(200)
+    if(dataTypeCheck(test)) {
+      await db.budget.update_budget([budget_id, amount])
+  
+      res.sendStatus(200)
+    } else {
+      res.sendStatus(400)
+    }
   },
 
   // updateBudget: async (req, res) => {
@@ -39,18 +49,24 @@ module.exports = {
     //const {user_id} = req.session.user
     const user_id = 1
 
-    await db.budget.new_budget([user_id, category, amount])
+    let test = amount * 10
 
-    res.sendStatus(200)
+    if(dataTypeCheck(test)) {
+      await db.budget.new_budget([user_id, category, amount])
+  
+      res.sendStatus(200)
+    } else {
+      res.sendStatus(400)
+    }
   },
 
   deleteBudget: async (req, res) => {
     const db = req.app.get('db')
     const {id} = req.params
 
-    console.log(id)
+    // console.log(id)
 
-    // await db.budget.delete_budget([id])
+    await db.budget.delete_budget([id])
 
     res.sendStatus(200)
   }

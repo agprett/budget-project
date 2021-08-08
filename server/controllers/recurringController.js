@@ -1,5 +1,9 @@
 const dayjs = require('dayjs')
 
+const dataTypeCheck = (data) => {
+  return isNaN(data) ? false : true
+}
+
 module.exports = {
   getRecurring: async (req, res) => {
     const db = req.app.get('db')
@@ -22,18 +26,30 @@ module.exports = {
     const user_id = 1
     const {name, category, amount, date} = req.body
 
-    await db.recurring.new_recurring([user_id, name, category, amount, date])
+    let test = amount * 10
 
-    res.sendStatus(200)
+    if(dataTypeCheck(test)) {
+      await db.recurring.new_recurring([user_id, name, category, amount, date])
+  
+      res.sendStatus(200)
+    } else {
+      res.sendStatus(400)
+    }
   },
 
   updateRecurring: async (req, res) => {
     const db = req.app.get('db')
     const {name, category, amount, date, recurring_id} = req.body
 
-    await db.recurring.update_recurring([name, category, amount, date, recurring_id])
+    let test = amount * 10
 
-    res.sendStatus(200)
+    if(dataTypeCheck(test)) {
+      await db.recurring.update_recurring([name, category, amount, date, recurring_id])
+  
+      res.sendStatus(200)
+    } else {
+      res.sendStatus(400)
+    }
   },
 
   deleteRecurring: async (req, res) => {

@@ -55,7 +55,9 @@ function Expenses() {
       setNewExpense({display: false, name: '', category: '', amount: 0})
       setRerender(true)
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+      alert('Please enter numbers only')
+    })
   }
 
   const handleUpdateExpenses = () => {
@@ -70,6 +72,9 @@ function Expenses() {
       setUpdatedExpenses({})
       setEditting(false)
       setRerender(true)
+    })
+    .catch(err => {
+      alert('Please enter numbers only')
     })
   }
   
@@ -90,6 +95,9 @@ function Expenses() {
     .then(() => {
       setUpdatedRecurring({recurring_id: '', name: '', category: '', date: '', amount: ''})
       setRerender(true)
+    })
+    .catch(err => {
+      alert('Please enter numbers only')
     })
   }
 
@@ -113,10 +121,13 @@ function Expenses() {
       setNewRecurring({display: false, name: '', category:'', amount: '', date: ''})
       setRerender(true)
     })
+    .catch(err => {
+      alert('Please enter numbers only')
+    })
   }
 
-  const handleRecurringDelete = () => {
-    axios.post(`/api/recurring/${displayDelete.id}`)
+  const handleRecurringDelete = (recurring_id) => {
+    axios.post(`/api/recurring/${recurring_id}`)
     .then(() => {
       setRerender(true)
       setDisplayDelete({display: false, id: ''})
@@ -202,7 +213,7 @@ function Expenses() {
               className='recure-amount'
               placeholder={amount}
               onChange={event => {
-                setUpdatedRecurring({...updatedRecurring, amount: +event.target.value})
+                setUpdatedRecurring({...updatedRecurring, amount: event.target.value})
               }}
             />
             <div className='recurring-button-div'>
@@ -220,7 +231,7 @@ function Expenses() {
             </div>
             <button
               onClick={() => {
-                setDisplayDelete({display: true, id: recurring.recurring_id})
+                handleRecurringDelete(recurring_id)
               }}
             >Delete</button>
           </section>
@@ -390,7 +401,7 @@ function Expenses() {
                     placeholder='Amount'
                     value={newExpense.amount}
                     onChange={event => {
-                      setNewExpense({...newExpense, amount: +event.target.value})
+                      setNewExpense({...newExpense, amount: event.target.value})
                     }}
                   />
                   <section className={viewCalendar.newExpense ? 'calendar-view-date' : null}>

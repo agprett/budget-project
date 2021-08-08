@@ -66,6 +66,9 @@ function Budget(props){
       setUpdatedSub({user_id: '', budget_id: '', amount: '', category: ''})
       setRerender(true)
     })
+    .catch(err => {
+      alert('Please enter numbers only')
+    })
   }
 
   const handleDeleteSubBudget = id => {
@@ -84,6 +87,9 @@ function Budget(props){
         setEditting({...editting, sub: false})
         setRerender(true)
       })
+      .catch(err => {
+        alert('Please enter numbers only')
+      })
     } else {
       alert("Please add a category and an amount")
     }
@@ -96,6 +102,9 @@ function Budget(props){
       setUpdatedMain(0)
       props.updateOverall(updatedMain)
       setRerender(true)
+    })
+    .catch(err => {
+      alert('Please enter numbers only')
     })
   }
 

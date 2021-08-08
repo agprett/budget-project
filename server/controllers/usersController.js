@@ -1,6 +1,10 @@
 const bcrypt = require('bcryptjs')
 const dayjs = require('dayjs')
 
+const dataTypeCheck = (data) => {
+  return isNaN(data) ? false : true
+}
+
 module.exports = {
   getUser: async (req, res) => {
     // if(req.session.user){
@@ -181,9 +185,15 @@ module.exports = {
     const user_id = 1
     let {overall} = req.params
 
-    await db.users.update_overall([user_id, overall])
+    let test = overall * 10
 
-    res.sendStatus(200)
+    if(dataTypeCheck(test)) {
+      await db.users.update_overall([user_id, +overall])
+  
+      res.sendStatus(200)
+    } else {
+      res.sendStatus(400)
+    }
   },
 
   getCategories: async (req, res) => {
