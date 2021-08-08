@@ -138,7 +138,11 @@ function Budget(props){
             <p>${spent(category)} / ${amount}</p>
             <div className='amount-bar'>
               <div className='spent-bar'
-                style={{width: `${spent(category)/amount*100}%`}}
+                style={{
+                  width: `${spent(category)/amount*100}%`,
+                  maxWidth: '100%',
+                  backgroundColor: (spent(category)/amount < .8 ? 'green' : spent(category)/amount > 1 ? 'red' : 'yellow')
+                }}
               >
               </div>
             </div>

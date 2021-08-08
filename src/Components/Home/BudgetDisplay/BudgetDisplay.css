@@ -49,7 +49,7 @@
 
 .spent-bar {
   height: 100%;
-  background-color: green;
+  /* background-color: green; */
   border-radius: inherit;
   text-align: right
 }
