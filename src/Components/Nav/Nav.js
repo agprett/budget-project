@@ -9,12 +9,15 @@ import {getUser, logoutUser, getSavings, getDebt} from '../../ducks/reducer'
 function Nav(props){
   const {user} = props
 
-  useEffect(() => {    
+  useEffect(() => {
     axios.get('/api/user')
     .then(res => {
       props.getUser(res.data)
     })
-    .catch(err => console.log(err))
+    .catch(() => {
+      props.history.push('/')
+      alert('Please sign in to access site!')
+    })
 
     axios.get('/api/savings')
     .then(res => {
@@ -34,7 +37,7 @@ function Nav(props){
     <section className='nav-bar'>
       <nav className='upper-nav'>
         <div className='nav-left'>
-          <h2 className='main-title'>PB Budgetting</h2>
+          <h2 className='main-title'>PB Budgeting</h2>
           <h4>Easy Financial Planning</h4>
         </div>
         <section className='nav-right'>
@@ -46,17 +49,17 @@ function Nav(props){
           /> */}
           <button
             className='nav-button'
-            // onClick={() => {
-            //   axios.post('/api/user/logout')
-            //   .then(() => {
-            //     props.logoutUser()
-            //     props.history.push('/')
-            //   })
-            //   .catch(err => {
-            //     alert('Failed to sign out')
-            //     console.log(err)
-            //   })
-            // }}
+            onClick={() => {
+              axios.post('/api/user/logout')
+              .then(() => {
+                props.logoutUser()
+                props.history.push('/')
+              })
+              .catch(err => {
+                alert('Failed to sign out')
+                console.log(err)
+              })
+            }}
           >Sign Out</button>
         </section>
       </nav>

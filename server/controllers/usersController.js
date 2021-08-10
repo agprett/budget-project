@@ -7,18 +7,18 @@ const dataTypeCheck = (data) => {
 
 module.exports = {
   getUser: async (req, res) => {
-    // if(req.session.user){
-    //   res.status(200).send(req.session.user)
-    // } else {
-    //   res.sendStatus(404)
-    // }
+    if(req.session.user){
+      res.status(200).send(req.session.user)
+    } else {
+      res.sendStatus(404)
+    }
 
-    const db = req.app.get('db')
-    const id = 1
+    // const db = req.app.get('db')
+    // const id = 1
 
-    const [user] = await db.users.get_user([id])
+    // const [user] = await db.users.get_user([id])
 
-    res.status(200).send(user)
+    // res.status(200).send(user)
   },
 
   newUser: async (req, res) => {
@@ -34,13 +34,17 @@ module.exports = {
     const salt = bcrypt.genSaltSync(10)
     const hash = bcrypt.hashSync(password, salt)
 
-    const [id] = await db.users.register_user([username, hash])
+    const [id] = await db.users.register_user([username, hash, 0])
 
-    const profile_pic = `https://robohash.org/${id.user_id}`
+    let user_id = id.user_id
 
-    const [newUser] = await db.users.update_user([id.user_id, profile_pic])
+    // const profile_pic = `https://robohash.org/${id.user_id}`
 
-    req.session.user = newUser
+    // const [newUser] = await db.users.update_user([id.user_id])
+
+    req.session.user = [username, user_id]
+
+    console.log(req.session.user)
 
     res.status(200).send(req.session.user)
   },
@@ -75,13 +79,14 @@ module.exports = {
 
   getChartData: async (req, res) => {
     const db = req.app.get('db')
-    // const {user_id} = req.session.user
-    const user_id = 1
+    const {user_id} = req.session.user
+    // const user_id = 1
     let spent = 0
     let budget = 0
     let response
 
     [response] = await db.users.get_overall([user_id])
+    console.log(response)
     budget = +response.overall
 
     let startMonth = dayjs().startOf('month').format()
@@ -102,8 +107,8 @@ module.exports = {
 
   getBreakdownChartData: async (req, res) => {
     const db = req.app.get('db')
-    // const {user_id} = req.session.user
-    const user_id = 1
+    const {user_id} = req.session.user
+    // const user_id = 1
     let budgets = []
     let current = []
     let chartData = {budgets : [], spent: []}
@@ -181,8 +186,8 @@ module.exports = {
 
   updateOverall: async (req, res) => {
     const db = req.app.get('db')
-    // const {user_id} = req.session.user
-    const user_id = 1
+    const {user_id} = req.session.user
+    // const user_id = 1
     let {overall} = req.params
 
     let test = overall * 10
@@ -198,8 +203,8 @@ module.exports = {
 
   getCategories: async (req, res) => {
     const db = req.app.get('db')
-    // const {user_id} = req.session.user
-    const user_id = 1
+    const {user_id} = req.session.user
+    // const user_id = 1
     let categories = []
     
     const response = await db.users.get_categories([user_id])

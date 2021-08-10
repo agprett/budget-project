@@ -9,7 +9,7 @@ function Login(props){
   return (
     <div className='log-back'>
     <section className='login'>
-      <p className='title'>Welcome to PB Budgetting!</p>
+      <p className='title'>Welcome to PB Budgeting!</p>
       <section className='log-inputs'>
         <p>Login:</p>
         <input
@@ -31,7 +31,10 @@ function Login(props){
           className='log-button'
           onClick={() => {
             axios.post('/api/user/login', user)
-            .then(() => props.history.push('/home'))
+            .then(res => {
+              // console.log(res)
+              props.history.push('/home')
+            })
             .catch(() => alert('Username or password incorrect'))
           }}
           >Login</button>

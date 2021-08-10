@@ -9,7 +9,7 @@ function Register(props){
   return (
     <div className='reg-back'>
       <section className='register'>
-        <p className='title'>Welcome to  PB Budgetting!</p>
+        <p className='title'>Welcome to  PB Budgeting!</p>
         <section className='reg-inputs'>
           <p>Register:</p>
           <input
@@ -31,7 +31,10 @@ function Register(props){
             className='reg-button'
             onClick={() => {
               axios.post('/api/user/new', user)
-              .then(() => props.history.push('/home'))
+              .then(res => {
+                // console.log(res)  
+                props.history.push('/home')
+              })
               .catch(() => alert('Username taken'))
             }}
             >Register</button>

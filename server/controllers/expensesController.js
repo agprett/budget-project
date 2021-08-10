@@ -7,8 +7,8 @@ const dataTypeCheck = (data) => {
 module.exports = {
   getExpenses: async (req, res) => {
     const db = req.app.get('db')
-    // const {user_id} = req.session.user
-    const user_id = 1
+    const {user_id} = req.session.user
+    // const user_id = 1
     const limit = +req.params.limit
 
     const expenses = await db.expenses.get_expenses([user_id, limit])
@@ -19,8 +19,8 @@ module.exports = {
   newExpense: async (req, res) => {
     const db = req.app.get('db')
     const {name, category, amount, date} = req.body
-    // const {user_id} = req.session.user
-    const user_id = 1
+    const {user_id} = req.session.user
+    // const user_id = 1
 
     let test = amount * 10
 
@@ -65,8 +65,8 @@ module.exports = {
 
   getRecent: async (req, res) => {
     const db = req.app.get('db')
-    // const {user_id} = req.session.user
-    const user_id = 1
+    const {user_id} = req.session.user
+    // const user_id = 1
 
     let recents = await db.expenses.get_recent([+user_id])
 
@@ -75,8 +75,8 @@ module.exports = {
 
   getCurrent: async (req, res) => {
     const db = req.app.get('db')
-    // const {user_id} = req.session.user
-    const user_id = 1
+    const {user_id} = req.session.user
+    // const user_id = 1
     let current = []
   
     let startMonth = dayjs().startOf('month').format()
@@ -101,8 +101,8 @@ module.exports = {
 
   filterExpenses: async (req, res) => {
     const db = req.app.get('db')
-    // const {user_id} = req.session.user
-    const user_id = 1
+    const {user_id} = req.session.user
+    // const user_id = 1
     const {name, category, end, start, low, high} = req.body
     const filters = req.body
 
