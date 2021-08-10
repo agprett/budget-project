@@ -72,7 +72,6 @@ function Budget(props){
   }
 
   const handleDeleteSubBudget = id => {
-    console.log(id)
     axios.post(`/api/budget/${id}`)
     .then(() => {
       setRerender(true)

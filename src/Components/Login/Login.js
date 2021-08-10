@@ -32,7 +32,6 @@ function Login(props){
           onClick={() => {
             axios.post('/api/user/login', user)
             .then(res => {
-              // console.log(res)
               props.history.push('/home')
             })
             .catch(() => alert('Username or password incorrect'))

@@ -114,10 +114,8 @@ module.exports = {
       } else if(category){
         return expense.category == category
       } else if(start){
-        console.log(start)
         return dayjs(expense.date).format('MM/DD/YY') >= dayjs(start).format('MM/DD/YY')
       } else if(end){
-        console.log(end)
         return dayjs(expense.date).format('MM/DD/YY') <= dayjs(end).formant('MM/DD/YY')
       } else if(low){
         return expense.amount >= low

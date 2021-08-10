@@ -40,11 +40,9 @@ module.exports = {
 
     // const profile_pic = `https://robohash.org/${id.user_id}`
 
-    // const [newUser] = await db.users.update_user([id.user_id])
+    const [newUser] = await db.users.update_user([user_id])
 
-    req.session.user = [username, user_id]
-
-    console.log(req.session.user)
+    req.session.user = newUser
 
     res.status(200).send(req.session.user)
   },
@@ -86,7 +84,6 @@ module.exports = {
     let response
 
     [response] = await db.users.get_overall([user_id])
-    console.log(response)
     budget = +response.overall
 
     let startMonth = dayjs().startOf('month').format()
