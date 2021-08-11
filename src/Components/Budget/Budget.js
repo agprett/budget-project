@@ -214,11 +214,17 @@ function Budget(props){
               >Edit</button>
             </div>
           )}
-            <div className='breakdown-chart'>
-              {/* <BreakdownChart data={chartData} size={{width: 600, height: 450, margin: 25}}/> */}
-              {/* <BreakdownChart data={chartData} size={{width: 300, height: 225, margin: 25}}/> */}
-              <BarChart budget={chartData.budget} current={chartData.spent} />
-            </div>
+            {budget.length === 0 ? (
+              <div className='breakdown-chart no-viewing'>
+                <p>No data to show</p>
+              </div>
+            ) : (
+              <div className='breakdown-chart'>
+                {/* <BreakdownChart data={chartData} size={{width: 600, height: 450, margin: 25}}/> */}
+                {/* <BreakdownChart data={chartData} size={{width: 300, height: 225, margin: 25}}/> */}
+                <BarChart budget={chartData.budget} current={chartData.spent} />
+              </div>
+            )}
           </div>
           <section className='sub-budgets-section'>
             <div className='new-sub-budget-section'>
@@ -258,9 +264,16 @@ function Budget(props){
                 >New</button>
               )}
             </div>
-            <div className='sub-budget-display'>
-              {viewSubs}
-            </div>
+            {budget.length === 0 ? (
+              <div style={{margin: '15px auto'}} className='sub-budget no-viewing'>
+                <p>No budgets to show</p>
+                <p>Add some above</p>
+              </div>
+            ) : (
+              <div className='sub-budget-display'>
+                {viewSubs}
+              </div>
+            )}
           </section>
         </section>
       )}

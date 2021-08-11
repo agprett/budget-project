@@ -58,7 +58,11 @@ function Home(props){
 
     axios.get('/api/user/chart')
     .then(res => {
-      setChartData(res.data)
+      if(res.data.budget === 0){
+        setChartData({budget: 100, spent: 0})
+      } else {
+        setChartData(res.data)
+      }
     })
     .catch(err => console.log(err))
 
@@ -152,12 +156,26 @@ function Home(props){
         </section>
 
         <section className='home-right'>
-          <section className='recent-expenses'>
-            {viewRecent}
-          </section>
-          <section className='view-recurring'>
-            {viewRecuring}
-          </section>
+          {recent.length === 0 ? (
+            <div className='recent-expenses no-viewing'>
+              <p>No recent expenses to show</p>
+              <p>Add them on the expense page!</p>
+            </div>
+          ) : (
+            <section className='recent-expenses'>
+              {viewRecent}
+            </section>
+          )}
+          {recurring.length === 0 ? (
+            <div className='view-recurring no-viewing'>
+              <p>No recurring purchases to show</p>
+              <p>Add some on the expense page!</p>
+            </div>
+          ) : (
+            <section className='view-recurring'>
+              {viewRecuring}
+            </section>
+          )}
           <section className='planning-home'>
             Savings and Debt Tracker coming soon!
             {/* <section className='planning-divs'>

@@ -41,9 +41,16 @@ function BudgetDisplay(props){
 
   return (
     <section className='budget-section'>
-      <div className='sub-budgets'>
-        {displayed}
-      </div>
+      {budget.length === 0 ? (
+        <div className='no-viewing'>
+          <p>No budgets to show</p>
+          <p>Add some on the budgets page!</p>
+        </div>
+      ) : (
+        <div className='sub-budgets'>
+          {displayed}
+        </div>
+      )}
     </section>
   )
 }

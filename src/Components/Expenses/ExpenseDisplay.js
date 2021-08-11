@@ -196,7 +196,11 @@ function ExpenseDisplay(props) {
 
   return (
     <section>
-      {displayedExpenses[0] ? viewExpenses(displayedExpenses) : <div style={{textAlign: 'center'}}>No Expenses to Show</div>}
+      {displayedExpenses[0] ? (
+        viewExpenses(displayedExpenses)
+      ) : (
+        <div style={{textAlign: 'center', color: 'white', fontSize: 'larger'}}>No Expenses to Show</div>
+      )}
     </section>
   )
 }

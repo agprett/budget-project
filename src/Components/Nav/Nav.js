@@ -15,8 +15,8 @@ function Nav(props){
       props.getUser(res.data)
     })
     .catch(() => {
-      props.history.push('/')
-      alert('Please sign in to access site!')
+      // props.history.push('/')
+      // alert('Please sign in to access site!')
     })
 
     axios.get('/api/savings')

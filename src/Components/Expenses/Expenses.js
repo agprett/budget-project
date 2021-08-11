@@ -360,10 +360,17 @@ function Expenses() {
                   setNewRecurring({display: true, name: '', category:'', amount: '', date: ''})
                 }}
               >New Recurring Purchase</button>
-            )}    
-            <section className='recurring'>
-              {viewRecurring}
-            </section>
+            )}
+            {recurring.length === 0 ? (
+              <div style={{margin: '15px auto'}} className='sub-budget no-viewing'>
+                <p>No recurring purchase to show</p>
+                <p>Add some above</p>
+              </div>
+            ) : (
+              <section className='recurring'>
+                {viewRecurring}
+              </section>
+            )}   
           </section>
 
           <section className='expense-right'>
@@ -611,7 +618,7 @@ function Expenses() {
                 data={{expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters, setRerenderDisplay, rerenderDisplay}}
               />
               <button
-                className={expenses.length % 15 === 0 ? 'load-more-button' : 'null'}
+                className={expenses.length === 0 ? 'null' : expenses.length % 15 === 0? 'load-more-button' : 'null'}
                 onClick={() => {
                   handleLoadMoreExpenses()
                 }}
