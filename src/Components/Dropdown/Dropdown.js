@@ -57,11 +57,18 @@ function Dropdown(props){
             }}
           />
           <img
-            className='close'
+            className='done'
             src={x}
             alt='x'
             onClick={() => {
               setNewCategory(false)
+              if(setView){
+                if(dropdownId){
+                  view === dropdownId ? setView('') : setView(dropdownId)
+                } else {
+                  view[dropdownSelection] ? setView({...view, [dropdownSelection]: false}) : setView({...view, [dropdownSelection]: true})
+                }
+              }
             }}
           />
         </section>
@@ -87,6 +94,7 @@ function Dropdown(props){
           >Clear</button>
           <button
             className='dropdown-selection'
+            style={{marginBottom: '5px'}}
             onClick={() => {
               setNewCategory(true)
             }}

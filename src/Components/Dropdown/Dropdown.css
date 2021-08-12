@@ -31,3 +31,9 @@
 .dropdown-selection {
   margin: 5px 5px 0px;
 }
+
+.done {
+  margin: 0px 5px;
+  height: 12px;
+  width: 12px;
+}
