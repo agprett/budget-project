@@ -7,18 +7,18 @@ const dataTypeCheck = (data) => {
 
 module.exports = {
   getUser: async (req, res) => {
-    if(req.session.user){
-      res.status(200).send(req.session.user)
-    } else {
-      res.sendStatus(404)
-    }
+    // if(req.session.user){
+    //   res.status(200).send(req.session.user)
+    // } else {
+    //   res.sendStatus(404)
+    // }
 
-    // const db = req.app.get('db')
-    // const id = 1
+    const db = req.app.get('db')
+    const id = 1
 
-    // const [user] = await db.users.get_user([id])
+    const [user] = await db.users.get_user([id])
 
-    // res.status(200).send(user)
+    res.status(200).send(user)
   },
 
   newUser: async (req, res) => {
@@ -77,8 +77,8 @@ module.exports = {
 
   getChartData: async (req, res) => {
     const db = req.app.get('db')
-    const {user_id} = req.session.user
-    // const user_id = 1
+    // const {user_id} = req.session.user
+    const user_id = 1
     let spent = 0
     let budget = 0
     let response
@@ -104,8 +104,8 @@ module.exports = {
 
   getBreakdownChartData: async (req, res) => {
     const db = req.app.get('db')
-    const {user_id} = req.session.user
-    // const user_id = 1
+    // const {user_id} = req.session.user
+    const user_id = 1
     let budgets = []
     let current = []
     let chartData = {budgets : [], spent: []}
@@ -183,8 +183,8 @@ module.exports = {
 
   updateOverall: async (req, res) => {
     const db = req.app.get('db')
-    const {user_id} = req.session.user
-    // const user_id = 1
+    // const {user_id} = req.session.user
+    const user_id = 1
     let {overall} = req.params
 
     let test = overall * 10
@@ -200,8 +200,8 @@ module.exports = {
 
   getCategories: async (req, res) => {
     const db = req.app.get('db')
-    const {user_id} = req.session.user
-    // const user_id = 1
+    // const {user_id} = req.session.user
+    const user_id = 1
     let categories = []
     
     const response = await db.users.get_categories([user_id])

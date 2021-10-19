@@ -41,7 +41,7 @@ function Register(props){
           <button
             className='reg-button'
             onClick={() => setUser({username: '', password: ''})}
-          >Cancel</button>
+          >Clear</button>
         </section>
         <p>Already have an account? <Link to='/' style={{color: 'orange'}}>Click here!</Link></p>
       </section>

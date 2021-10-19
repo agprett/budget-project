@@ -7,8 +7,8 @@ const dataTypeCheck = (data) => {
 module.exports = {
   getBudget: async (req, res) => {
     const db = req.app.get('db')
-    const {user_id} = req.session.user
-    // const user_id = 1
+    // const {user_id} = req.session.user
+    const user_id = 1
 
     let budget = await db.budget.get_budget([user_id])
 
@@ -18,8 +18,8 @@ module.exports = {
   updateBudget: async (req, res) => {
     const db = req.app.get('db')
     const {budget_id, amount} = req.body
-    const {user_id} = req.session.user
-    // const user_id = 1
+    // const {user_id} = req.session.user
+    const user_id = 1
 
     let test = amount * 10
 
@@ -48,8 +48,8 @@ module.exports = {
   newBudget: async (req, res) => {
     const db = req.app.get('db')
     const {category, amount} = req.body
-    const {user_id} = req.session.user
-    // const user_id = 1
+    // const {user_id} = req.session.user
+    const user_id = 1
 
     let test = amount * 10
 

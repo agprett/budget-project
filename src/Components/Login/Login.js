@@ -10,8 +10,8 @@ function Login(props){
     <div className='log-back'>
     <section className='login'>
       <p className='title'>Welcome to PB Budgeting!</p>
+      <p className='login-label'>Login:</p>
       <section className='log-inputs'>
-        <p>Login:</p>
         <input
           className='log-input'
           value={user.username}
@@ -40,7 +40,7 @@ function Login(props){
           <button
             className='log-button'
             onClick={() => setUser({username: '', password: ''})}
-          >Cancel</button>
+          >Clear</button>
         </section>
         <p>New to the site? <Link to='/register' style={{color: 'orange'}}>Click here!</Link></p>
       </section>

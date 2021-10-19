@@ -14,10 +14,10 @@ function Nav(props){
     .then(res => {
       props.getUser(res.data)
     })
-    .catch(() => {
-      props.history.push('/')
-      alert('Please sign in to access site!')
-    })
+    // .catch(() => {
+    //   props.history.push('/')
+    //   alert('Please sign in to access site!')
+    // })
 
     axios.get('/api/savings')
     .then(res => {
