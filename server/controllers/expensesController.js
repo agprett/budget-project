@@ -9,11 +9,47 @@ module.exports = {
     const db = req.app.get('db')
     // const {user_id} = req.session.user
     const user_id = 1
-    const limit = +req.params.limit
+    const limit = +req.query.limit
+    const offset = +req.query.offset
+    const low = +req.query.low
+    const high = +req.query.high
+    const {name, category, end, start} = req.query
+    let filters = {}
 
-    const expenses = await db.expenses.get_expenses([user_id, limit])
+    const expenses = await db.expenses.get_expenses([user_id, limit, offset])
 
-    res.status(200).send({expenses, limit})
+    const filtered = expenses.filter(expense => {
+      let bool = true
+
+      if(name){
+        filters = {...filters, name}
+        bool = expense.name == name
+      }
+      if(category){
+        filters = {...filters, category}
+        bool = expense.category == category
+      }
+      if(start){
+        filters = {...filters, start}
+        bool = dayjs(expense.date).format('MM/DD/YY') >= dayjs(start).format('MM/DD/YY')
+      }
+      if(end){
+        filters = {...filters, end}
+        bool = dayjs(expense.date).format('MM/DD/YY') <= dayjs(end).formant('MM/DD/YY')
+      }
+      if(low){
+        filters = {...filters, low}
+        bool = expense.amount >= +low
+      }
+      if(high){
+        filters = {...filters, high}
+        bool = expense.amount <= +high
+      }
+
+      return bool
+    })
+
+    res.status(200).send({filtered, limit, offset, filters})
   },
   
   newExpense: async (req, res) => {
@@ -54,23 +90,11 @@ module.exports = {
 
   deleteExpense: async (req, res) => {
     const db = req.app.get('db')
-    const {body} = req
+    const {id} = req.params
 
-    for(let i = 0; i < body.length; i++){
-      await db.expenses.delete_expense([body[i]])
-    }
+    await db.expenses.delete_expense([id])
     
     res.sendStatus(200)
-  },
-
-  getRecent: async (req, res) => {
-    const db = req.app.get('db')
-    // const {user_id} = req.session.user
-    const user_id = 1
-
-    let recents = await db.expenses.get_recent([+user_id])
-
-    res.status(200).send(recents)
   },
 
   getCurrent: async (req, res) => {
@@ -97,33 +121,5 @@ module.exports = {
     }
 
     res.status(200).send(current)
-  },
-
-  filterExpenses: async (req, res) => {
-    const db = req.app.get('db')
-    // const {user_id} = req.session.user
-    const user_id = 1
-    const {name, category, end, start, low, high} = req.body
-    const filters = req.body
-
-    const expenses = await db.expenses.get_expenses([user_id])
-
-    const filtered = expenses.filter(expense => {
-      if(name){
-        return expense.name == name
-      } else if(category){
-        return expense.category == category
-      } else if(start){
-        return dayjs(expense.date).format('MM/DD/YY') >= dayjs(start).format('MM/DD/YY')
-      } else if(end){
-        return dayjs(expense.date).format('MM/DD/YY') <= dayjs(end).formant('MM/DD/YY')
-      } else if(low){
-        return expense.amount >= low
-      } else if(high){
-        return expense.amount <= high
-      }
-    })
-      
-    res.status(200).send({filtered, filters})
   }
 }
