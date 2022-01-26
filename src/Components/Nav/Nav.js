@@ -50,7 +50,7 @@ function Nav(props){
           <button
             className='nav-button'
             onClick={() => {
-              axios.post('/api/user/logout')
+              axios.delete('/api/user')
               .then(() => {
                 props.logoutUser()
                 props.history.push('/')
@@ -88,14 +88,14 @@ function Nav(props){
             }
           }}
         >Expenses</button>
-        {/* <button
+        <button
           className={props.location.pathname === '/planning' ? 'nav-lower-buttons stuff' : 'nav-lower-buttons'}
           onClick={() => {
             if(props.location.pathname !== '/planning'){
               props.history.push('/planning')
             }
           }}
-        >Planning</button> */}
+        >Planning</button>
       </nav>
     </section>
   )

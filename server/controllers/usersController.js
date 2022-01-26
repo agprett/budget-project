@@ -21,28 +21,22 @@ module.exports = {
     res.status(200).send(user)
   },
 
-  newUser: async (req, res) => {
+  registerUser: async (req, res) => {
     const db = req.app.get('db')
-    const {username, password} = req.body
-
-    const [existingUser] = await db.users.check_user([username])
-
-    if(existingUser){
-      return res.status(409).send('Username taken')
-    }
+    const {username, password, budget} = req.body
 
     const salt = bcrypt.genSaltSync(10)
     const hash = bcrypt.hashSync(password, salt)
 
-    const [id] = await db.users.register_user([username, hash, 0])
+    const [dbResponse] = await db.users.register_user([username, hash, budget])
 
-    let user_id = id.user_id
+    let {user_id} = dbResponse
+    
+    await db.budget.new_budget([user_id, 'Overall', budget, true])
 
-    // const profile_pic = `https://robohash.org/${id.user_id}`
+    // const profile_pic = `https://robohash.org/${user_id}`'
 
-    const [newUser] = await db.users.update_user([user_id])
-
-    req.session.user = newUser
+    req.session.user = {user_id, username}
 
     res.status(200).send(req.session.user)
   },
@@ -73,6 +67,23 @@ module.exports = {
   logoutUser: (req, res) => {
     req.session.destroy()
     res.sendStatus(200)
+  },
+
+  getCategories: async (req, res) => {
+    const db = req.app.get('db')
+    // const {user_id} = req.session.user
+    const user_id = 1
+    let categories = []
+    
+    const response = await db.users.get_categories([user_id])
+
+    for(let i = 0; i < response.length; i++){
+      if(response[i].category !== 'Overall'){
+        categories.push(response[i].category)
+      }
+    }
+
+    res.status(200).send(categories)
   },
 
   getChartData: async (req, res) => {
@@ -179,37 +190,5 @@ module.exports = {
     chartData = {budget: tempBudget, spent: tempSpent}
 
     res.status(200).send(chartData)
-  },
-
-  updateOverall: async (req, res) => {
-    const db = req.app.get('db')
-    // const {user_id} = req.session.user
-    const user_id = 1
-    let {overall} = req.params
-
-    let test = overall * 10
-
-    if(dataTypeCheck(test)) {
-      await db.users.update_overall([user_id, +overall])
-  
-      res.sendStatus(200)
-    } else {
-      res.sendStatus(400)
-    }
-  },
-
-  getCategories: async (req, res) => {
-    const db = req.app.get('db')
-    // const {user_id} = req.session.user
-    const user_id = 1
-    let categories = []
-    
-    const response = await db.users.get_categories([user_id])
-
-    for(let i = 0; i < response.length; i++){
-      categories.push(response[i].category)
-    }
-
-    res.status(200).send(categories)
   }
 }

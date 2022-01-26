@@ -12,8 +12,8 @@ module.exports = {
 
   getDebts: async (req, res) => {
     const db = req.app.get('db')
-    const {user_id} = req.session.user
-    // const user_id = 1
+    // const {user_id} = req.session.user
+    const user_id = 1
     
     const debts = await db.debts.get_debts(user_id)
 

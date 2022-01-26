@@ -56,15 +56,15 @@ function Home(props){
     // })
     // .catch(err => console.log(err))
 
-    axios.get('/api/user/chart')
-    .then(res => {
-      if(res.data.budget === 0){
-        setChartData({budget: 100, spent: 0})
-      } else {
-        setChartData(res.data)
-      }
-    })
-    .catch(err => console.log(err))
+    // axios.get('/api/user/chart')
+    // .then(res => {
+    //   if(res.data.budget === 0){
+    //     setChartData({budget: 100, spent: 0})
+    //   } else {
+    //     setChartData(res.data)
+    //   }
+    // })
+    // .catch(err => console.log(err))
 
     axios.get('/api/current')
     .then(res => {

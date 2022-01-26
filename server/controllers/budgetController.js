@@ -18,8 +18,6 @@ module.exports = {
   updateBudget: async (req, res) => {
     const db = req.app.get('db')
     const {budget_id, amount} = req.body
-    // const {user_id} = req.session.user
-    const user_id = 1
 
     let test = amount * 10
 
@@ -32,19 +30,6 @@ module.exports = {
     }
   },
 
-  // updateBudget: async (req, res) => {
-  //   const db = req.app.get('db')
-  //   const updated = req.body
-  //   // const {user_id} = req.session.user
-  //   const user_id = 1
-
-  //   for(let key in updated){
-  //     await db.budget.update_budget([updated[key], user_id, key])
-  //   }
-
-  //   res.sendStatus(200)
-  // },
-
   newBudget: async (req, res) => {
     const db = req.app.get('db')
     const {category, amount} = req.body
@@ -54,7 +39,7 @@ module.exports = {
     let test = amount * 10
 
     if(dataTypeCheck(test)) {
-      await db.budget.new_budget([user_id, category, amount])
+      await db.budget.new_budget([user_id, category, amount, false])
   
       res.sendStatus(200)
     } else {

@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS debts;
-DROP TABLE IF EXISTS goals;
+DROP TABLE IF EXISTS savings_goals;
 DROP TABLE IF EXISTS savings;
 DROP TABLE IF EXISTS recurring;
 DROP TABLE IF EXISTS expenses;
@@ -9,15 +9,15 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users (
   user_id SERIAL PRIMARY KEY,
   username VARCHAR(20),
-  password VARCHAR(100),
-  overall INTEGER
+  password VARCHAR(255)
 );
 
 CREATE TABLE budget (
-  user_id INTEGER REFERENCES users(user_id),
   budget_id SERIAL PRIMARY KEY,
-  category VARCHAR(15),
-  amount INTEGER
+  user_id INTEGER REFERENCES users(user_id),
+  category VARCHAR(25),
+  amount INTEGER,
+  main BOOLEAN
 );
 
 CREATE TABLE expenses (
@@ -35,22 +35,24 @@ CREATE TABLE recurring (
   name VARCHAR(20),
   category VARCHAR(20),
   amount INTEGER,
-  date DATE
+  date DATE,
+  recurrence varchar(15)
 );
 
 CREATE TABLE savings (
   savings_id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES users(user_id),
-  overall INTEGER
+  amount INTEGER,
+  name VARCHAR(20)
 );
 
-CREATE TABLE goals (
+CREATE TABLE savings_goals (
   goal_id SERIAL PRIMARY KEY,
-  savings_id INTEGER REFERENCES savings(savings_id),
+  user_id INTEGER REFERENCES users(user_id),
   goal_amount INTEGER,
   saved_amount INTEGER,
   name VARCHAR(20),
-  goal_date DATE,
+  date DATE,
   monthly_amount INTEGER
 );
 
@@ -60,7 +62,7 @@ CREATE TABLE debts (
   total INTEGER,
   monthly INTEGER,
   paid INTEGER,
-  due DATE
+  date DATE
 );
 
 SELECT * FROM users;

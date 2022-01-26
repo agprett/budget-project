@@ -1,3 +1,3 @@
-INSERT INTO users (username, password, overall)
-VALUES ($1, $2, $3)
+INSERT INTO users (username, password)
+VALUES ($1, $2)
 returning user_id;

@@ -30,11 +30,11 @@ function Budget(props){
       })
       .catch(err => console.log(err))
 
-    axios.get('api/user/breakdown')
-      .then(res => {
-        setChartData(res.data)
-      })
-      .catch(err => console.log(err))
+    // axios.get('api/user/breakdown')
+    //   .then(res => {
+    //     setChartData(res.data)
+    //   })
+    //   .catch(err => console.log(err))
       
     axios.get('api/budget')
       .then(res => {
