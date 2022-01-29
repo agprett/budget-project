@@ -4,19 +4,17 @@ import {updateOverall} from '../../ducks/reducer'
 import axios from 'axios'
 import Loading from '../Loading/Loading'
 import './Budget.css'
-import BreakdownChart from '../BreakdownChart/BreakdownChart'
-import BarChart from '../BarChart/BarChart'
+// import BreakdownChart from '../BreakdownChart/BreakdownChart'
+// import BarChart from '../BarChart/BarChart'
 
 function Budget(props){
-  const {overall} = props.user
   const [loading, setLoading] = useState(false)
+  const [overall, setOverall] = useState(0)
   const [budget, setBudget] = useState([])
   const [current, setCurrent] = useState([])
-  const [updatedSub, setUpdatedSub] = useState({user_id: '', budget_id: '', amount: '', category: ''})
-  const [updatedMain, setUpdatedMain] = useState(0)
-  const [editting, setEditting] = useState({main: false, sub: false})
-  const [newSub, setNewSub] = useState({amount: '', category: ''})
-  const [chartData, setChartData] = useState({budget: [], spent: []})
+  const [updatedBudget, setUpdatedBudget] = useState({budget_id: '', amount: ''})
+  const [newSub, setNewSub] = useState({adding: false, amount: '', category: ''})
+  // const [chartData, setChartData] = useState({budget: [], spent: []})
   const [rerender, setRerender] = useState(false)
 
   useEffect(() => {
@@ -24,7 +22,7 @@ function Budget(props){
   }, [])
 
   useEffect(() => {
-    axios.get('api/current')
+    axios.get('/api/current')
       .then(res => {
         setCurrent(res.data)
       })
@@ -36,8 +34,14 @@ function Budget(props){
     //   })
     //   .catch(err => console.log(err))
       
-    axios.get('api/budget')
+    axios.get('/api/budget')
       .then(res => {
+        res.data.forEach((element, index) => {
+          if(element.category === "Overall"){
+            setOverall(element.amount)
+            res.data.splice(index, 1)
+          }
+        });
         setBudget(res.data)
         setTimeout(() => {
           setLoading(false)
@@ -60,10 +64,10 @@ function Budget(props){
     return amount
   }
 
-  const handleUpdateSubBudget = () => {
-    axios.put('/api/budget', updatedSub)
+  const handleUpdateBudget = () => {
+    axios.put('/api/budget', updatedBudget)
     .then(() => {
-      setUpdatedSub({user_id: '', budget_id: '', amount: '', category: ''})
+      setUpdatedBudget({budget_id: '', amount: ''})
       setRerender(true)
     })
     .catch(err => {
@@ -72,7 +76,7 @@ function Budget(props){
   }
 
   const handleDeleteSubBudget = id => {
-    axios.post(`/api/budget/${id}`)
+    axios.delete(`/api/budget/${id}`)
     .then(() => {
       setRerender(true)
     })
@@ -80,10 +84,9 @@ function Budget(props){
 
   const handleNewSubBudget = () => {
     if(newSub.category && newSub.amount){
-      axios.post('/api/budget', newSub)
+      axios.post('/api/budget', {category: newSub.category, amount: newSub.amount})
       .then(() => {
         setNewSub({category: '', amount: ''})
-        setEditting({...editting, sub: false})
         setRerender(true)
       })
       .catch(err => {
@@ -95,11 +98,10 @@ function Budget(props){
   }
 
   const handleUpdateMain = () => {
-    axios.post(`/api/user/${updatedMain}`)
+    axios.put(`/api/budget`)
     .then(() => {
-      setEditting({...editting, main: false})
-      setUpdatedMain(0)
-      props.updateOverall(updatedMain)
+      props.updateOverall(updatedBudget.amount)
+      setUpdatedBudget({budget_id: '', amount: ''})
       setRerender(true)
     })
     .catch(err => {
@@ -112,30 +114,29 @@ function Budget(props){
 
     return (
       <section key={i}>
-        {updatedSub.budget_id === budget_id ? (
+        {updatedBudget.budget_id === budget_id ? (
           <section className='sub-budget'>
             <p>{category}:</p>
             <input
               placeholder={`$${amount}`}
               onChange={event => {
-                setUpdatedSub({...updatedSub, amount: event.target.value})
+                setUpdatedBudget({...updatedBudget, amount: event.target.value})
               }}
             ></input>
             <section className='sub-budget-buttons'>
               <button
                 onClick={() => {
-                  handleUpdateSubBudget()
+                  handleUpdateBudget()
                 }}
               >Save</button>
               <button
                 onClick={() => {
-                  console.log(budget_id)
                   handleDeleteSubBudget(budget_id)
                 }}
               >Delete</button>
               <button
                 onClick={() => {
-                  setUpdatedSub({user_id: '', budget_id: '', amount: '', category: ''})
+                  setUpdatedBudget({budget_id: '', amount: ''})
                 }}
               >Cancel</button>
             </section>
@@ -156,7 +157,7 @@ function Budget(props){
             </div>
             <button
               onClick={() => {
-                setUpdatedSub(budget)
+                setUpdatedBudget({budget_id: budget_id, amount: ''})
               }}
             >Edit</button>
           </section>
@@ -174,42 +175,61 @@ function Budget(props){
       ) : (
         <section className='budget-page'>
           <div className='budget-left'>
-          {editting.main ? (
+          {updatedBudget.budget_id == 1 ? (
             <div className='budget-overall'>
               <div className='monthly-budget'>
-                Monthly Budget: 
+                Monthly Budget: {spent("Overall")} / 
                 <input
                   className='monthly-budget-input'
                   placeholder={overall} 
                   onChange={event => {
-                    setUpdatedMain(event.target.value)
+                    setUpdatedBudget({...updatedBudget, amount: event.target.value})
                   }}
                 />
               </div>
-              <div className='monthly-budget'>Spent: {spent("Overall")}</div>
+              <div className='amount-bar'>
+                <div className='spent-bar'
+                  style={{
+                    width: `${spent('Overall')/overall*100}%`,
+                    maxWidth: '100%',
+                    backgroundColor: (spent('Overall')/overall < .8 ? 'green' : spent('Overall')/overall > 1 ? 'red' : 'yellow')
+                  }}
+                >
+                </div>
+              </div>
+              {/* <div className='monthly-budget'>Spent: </div> */}
               <div className='budget-overall-edit-buttons'>
                 <button
                   className='budget-overall-edit-button'
                   onClick={() => {
-                    handleUpdateMain()
+                    handleUpdateBudget()
                   }}
                 >Save</button>
                 <button
                   className='budget-overall-edit-button'
                   onClick={() => {
-                    setEditting({...editting, main: false})
-                    setUpdatedMain(0)
+                    setUpdatedBudget({budget_id: '', amount: ''})
                   }}
                 >Cancel</button>
               </div>
             </div>
           ) : (
             <div className='budget-overall'>
-              <div className='monthly-budget'>Monthly Budget: {overall}</div>
-              <div className='monthly-budget'>Spent: {spent("Overall")}</div>
+              <div className='monthly-budget'>Monthly Budget: {spent("Overall")} / {overall}</div>
+              {/* <div className='monthly-budget'>Spent: </div> */}
+              <div className='amount-bar'>
+                <div className='spent-bar'
+                  style={{
+                    width: `${spent('Overall')/overall*100}%`,
+                    maxWidth: '100%',
+                    backgroundColor: (spent('Overall')/overall < .8 ? 'green' : spent('Overall')/overall > 1 ? 'red' : 'yellow')
+                  }}
+                >
+                </div>
+              </div>
               <button
                 onClick={() => {
-                  setEditting({...editting, main: true})
+                  setUpdatedBudget({budget_id: 1, amount: ''})
                 }}
               >Edit</button>
             </div>
@@ -222,14 +242,14 @@ function Budget(props){
               <div className='breakdown-chart'>
                 {/* <BreakdownChart data={chartData} size={{width: 600, height: 450, margin: 25}}/> */}
                 {/* <BreakdownChart data={chartData} size={{width: 300, height: 225, margin: 25}}/> */}
-                <BarChart budget={chartData.budget} current={chartData.spent} />
+                {/* <BarChart budget={chartData.budget} current={chartData.spent} /> */}
               </div>
             )}
           </div>
           <section className='sub-budgets-section'>
             <div className='new-sub-budget-section'>
-              {editting.sub ? (
-                <section className={editting.sub ? 'sub-budget new-sub-budget' : 'null'}>
+              {newSub.adding ? (
+                <section className={newSub.adding ? 'sub-budget new-sub-budget' : 'null'}>
                   <input
                     placeholder={'Category'}
                     onChange={event => {
@@ -250,16 +270,16 @@ function Budget(props){
                     >Add</button>
                     <button
                       onClick={() => {
-                        setEditting({...editting, sub: false})
+                        setNewSub({...newSub, adding: false})
                       }}
                     >Cancel</button>
                   </div>
                 </section>
               ) : (
                 <button
-                  className={editting.sub ? 'null' : null}
+                  className={newSub.adding ? 'null' : null}
                   onClick={() => {
-                    setEditting({...editting, sub: true})
+                    setNewSub({...newSub, adding: true})
                   }}
                 >New</button>
               )}

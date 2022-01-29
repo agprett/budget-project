@@ -19,18 +19,18 @@ function Nav(props){
     //   alert('Please sign in to access site!')
     // })
 
-    axios.get('/api/savings')
-    .then(res => {
-      props.getSavings(res.data.overall)
-    })
-    .catch(err => console.log(err))
+    // axios.get('/api/savings')
+    // .then(res => {
+    //   props.getSavings(res.data.overall)
+    // })
+    // .catch(err => console.log(err))
 
     
-    axios.get(`/api/total`)
-    .then(res => {
-      props.getDebt(res.data.sum)
-    })
-    .catch(err => console.log(err))
+    // axios.get(`/api/total`)
+    // .then(res => {
+    //   props.getDebt(res.data.sum)
+    // })
+    // .catch(err => console.log(err))
   }, [])
   
   return (
