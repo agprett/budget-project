@@ -1,5 +1,3 @@
-const { response } = require("express")
-
 const dataTypeCheck = (data) => {
   return isNaN(data) ? false : true
 }

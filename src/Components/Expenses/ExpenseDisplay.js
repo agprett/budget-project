@@ -6,34 +6,12 @@ import Dropdown from '../Dropdown/Dropdown'
 import Calendar from '../Calendar/Calendar'
 
 function ExpenseDisplay(props) {
-  const {expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters, rerenderDisplay, setRerenderDisplay} = props.data
-  const [displayedExpenses, setDisplayedExpenses] = useState([])
+  const {expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters} = props.data
   const [viewDropdown, setViewDropdown] = useState(false)
   const [viewCalendar, setViewCalendar] = useState('')
+  const [rerenderDisplay, setRerenderDisplay] = useState(false)
 
   useEffect(() => {
-    if(filters.filtered && (filters.name || filters.category || filters.start || filters.end || filters.max || filters.min)){
-      const filteredArray = expenses.filter(expense => {
-        return (
-          expense.name.toLowerCase().includes(filters.name.toLowerCase())
-        ) && (
-          expense.category.toLowerCase().includes(filters.category.toLowerCase())
-        ) && (
-          filters.start ?  dayjs(expense.date).isAfter(filters.start): true
-        ) && (
-          filters.end ? dayjs(expense.date).isBefore(filters.end) : true
-        ) && (
-          filters.max ? (filters.max > expense.amount ? true : false) : true
-        ) && (
-          filters.min ? (filters.min < expense.amount ? true : false) : true
-        )
-      })
-      
-      setDisplayedExpenses(filteredArray)
-    } else {
-      setDisplayedExpenses(expenses)
-    }
-
     setViewDropdown('')
     setViewCalendar('')
     setRerenderDisplay(false)
@@ -196,8 +174,8 @@ function ExpenseDisplay(props) {
 
   return (
     <section>
-      {displayedExpenses[0] ? (
-        viewExpenses(displayedExpenses)
+      {expenses[0] ? (
+        viewExpenses(expenses)
       ) : (
         <div style={{textAlign: 'center', color: 'white', fontSize: 'larger'}}>No Expenses to Show</div>
       )}

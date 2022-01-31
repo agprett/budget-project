@@ -8,21 +8,19 @@ import ExpenseDisplay from './ExpenseDisplay'
 import Calendar from '../Calendar/Calendar'
 
 function Expenses() {
+  const [loading, setLoading] = useState(true)
   const [expenses, setExpenses] = useState([])
-  const [expenseLimit, setExpenseLimit] = useState(15)
   const [newExpense, setNewExpense] = useState({display: false, name: '', category: '', amount: 0})
+  const [filters, setFilters] = useState({limit: 15, offset: 0, name: '', category: '', start: '', end: '', max: '', min: ''})
   const [viewDropdown, setViewDropdown] = useState({newExpense: false, filter: false, updatedRecurring: false, newRecurring: false})
   const [viewCalendar, setViewCalendar] = useState({newExpense: false, start: false, end: false, updatedRecurring: false, newRecurring: false})
-  const [rerenderDisplay, setRerenderDisplay] = useState(false)
   const [editting, setEditting] = useState(false)
   const [updatedExpenses, setUpdatedExpenses] = useState({})
   const [deletedExpenses, setDeletedExpenses] = useState([])
   const [recurring, setRecurring] = useState([])
   const [newRecurring, setNewRecurring] = useState({display: false, name: '', category:'', amount: '', date: ''})
   const [updatedRecurring, setUpdatedRecurring] = useState({recurring_id: '', name: '', category: '', date: '', amount: ''})
-  const [filters, setFilters] = useState({filtered : false, name: '', category: '', start: '', end: '', max: '', min: ''})
   const [displayDelete, setDisplayDelete] = useState({display: false, id: ''})
-  const [loading, setLoading] = useState(true)
   const [rerender, setRerender] = useState(false)
 
   useEffect(() => {
@@ -30,16 +28,16 @@ function Expenses() {
   }, [])
 
   useEffect(() => {
-    axios.get('/api/recurring/0')
-    .then(res => {
-      setRecurring(res.data)
-    })
-    .catch(err => console.log(err))
+    // axios.get('/api/recurring/0')
+    // .then(res => {
+    //   setRecurring(res.data)
+    // })
+    // .catch(err => console.log(err))
 
-    axios.get(`/api/expenses/${expenseLimit}`)
+    axios.get(`/api/expenses?limit=${filters.limit}&offset=${filters.offset}`)
     .then(res => {
       setExpenses(res.data.expenses)
-      setExpenseLimit(res.data.limit)
+      setFilters(res.data.filters)
       setTimeout(() => {
         setLoading(false)
       }, 500)
@@ -79,111 +77,111 @@ function Expenses() {
   }
   
   const deleteExpenses = () => {
-    axios.post('/api/expenses/remove', deletedExpenses)
+    axios.delete('/api/expenses', {data: deletedExpenses})
     .then(() => {
       setDeletedExpenses([])
-      axios.get(`/api/expenses/${expenseLimit}`)
+      axios.get(`/api/expenses?limit=${filters.limit}&offset=${filters.offset}`)
         .then(res => {
           setExpenses(res.data.expenses)
-          setExpenseLimit(res.data.limit)
+          setFilters(res.data.filters)
         })
     })
   }
   
-  const updateRecurring = () => {
-    axios.put('/api/recurring', updatedRecurring)
-    .then(() => {
-      setUpdatedRecurring({recurring_id: '', name: '', category: '', date: '', amount: ''})
-      setRerender(true)
-    })
-    .catch(err => {
-      alert('Please enter numbers only')
-    })
-  }
+  // const updateRecurring = () => {
+  //   axios.put('/api/recurring', updatedRecurring)
+  //   .then(() => {
+  //     setUpdatedRecurring({recurring_id: '', name: '', category: '', date: '', amount: ''})
+  //     setRerender(true)
+  //   })
+  //   .catch(err => {
+  //     alert('Please enter numbers only')
+  //   })
+  // }
 
-  const handleRecurringPay = (name, category, date, amount, recurring_id) => {
-    let newExpense = {name, category, amount, date}
-    let updated = {recurring_id, date}
+  // const handleRecurringPay = (name, category, date, amount, recurring_id) => {
+  //   let newExpense = {name, category, amount, date}
+  //   let updated = {recurring_id, date}
     
-    axios.post('/api/expenses', newExpense)
-    .then(()=> {
-      axios.put('/api/recurring/date', updated)
-      .then(() => {
-        setRerender(true)
+  //   axios.post('/api/expenses', newExpense)
+  //   .then(()=> {
+  //     axios.put('/api/recurring/date', updated)
+  //     .then(() => {
+  //       setRerender(true)
+  //     })
+  //   })
+  //   .catch(err => console.log(err))
+  // }
+
+  // const handleNewRecurring = () => {
+  //   axios.post('/api/recurring', newRecurring)
+  //   .then(() => {
+  //     setNewRecurring({display: false, name: '', category:'', amount: '', date: ''})
+  //     setRerender(true)
+  //   })
+  //   .catch(err => {
+  //     alert('Please enter numbers only')
+  //   })
+  // }
+
+  // const handleRecurringDelete = (recurring_id) => {
+  //   axios.post(`/api/recurring/${recurring_id}`)
+  //   .then(() => {
+  //     setRerender(true)
+  //     setDisplayDelete({display: false, id: ''})
+  //   })
+  // }
+
+  const handleLimitExpenses = (type) => {
+    if(type === 'plus'){
+      axios.get(`/api/expenses/${filters.limit + 15}`)
+      .then(res =>  {
+        setExpenses(res.data.expenses)
+        setFilters({...filters, limit: res.data.filters.limit})
       })
-    })
-    .catch(err => console.log(err))
-  }
-
-  const handleNewRecurring = () => {
-    axios.post('/api/recurring', newRecurring)
-    .then(() => {
-      setNewRecurring({display: false, name: '', category:'', amount: '', date: ''})
-      setRerender(true)
-    })
-    .catch(err => {
-      alert('Please enter numbers only')
-    })
-  }
-
-  const handleRecurringDelete = (recurring_id) => {
-    axios.post(`/api/recurring/${recurring_id}`)
-    .then(() => {
-      setRerender(true)
-      setDisplayDelete({display: false, id: ''})
-    })
-  }
-
-  const handleLoadMoreExpenses = () => {
-    axios.get(`/api/expenses/${expenseLimit + 15}`)
-    .then(res =>  {
-      setExpenses(res.data.expenses)
-      setExpenseLimit(res.data.limit)
-    })
-  }
-
-  const handleLoadLessExpenses = () => {
-    axios.get(`/api/expenses/${expenseLimit - 15}`)
-    .then(res =>  {
-      setExpenses(res.data.expenses)
-      setExpenseLimit(res.data.limit)
-    })
+    } else if(type === 'minus'){
+      axios.get(`/api/expenses/${filters.limit - 15}`)
+      .then(res =>  {
+        setExpenses(res.data.expenses)
+        setFilters({...filters, limit: res.data.filters.limit})
+      })
+    }
   }
   
-  const viewRecurring = recurring.map((recurring, i) => {
-    const {name, category, date, amount, recurring_id} = recurring
+  // const viewRecurring = recurring.map((recurring, i) => {
+  //   const {name, category, date, amount, recurring_id} = recurring
 
-    return (
-      <div key={i} className='recurring-displays'>
-        {recurring.recurring_id === updatedRecurring.recurring_id ? (
-          <section className='recure'>
-            <input
-              className='recure-name'
-              placeholder={name}
-              onChange={event => {
-                setUpdatedRecurring({...updatedRecurring, name: event.target.value})
-              }}
-            />
-            <section className='expense-category-dropdown'>
-              <button
-                onClick={() => {
-                  viewDropdown.updatedRecurring ? (
-                    setViewDropdown({...viewDropdown, updatedRecurring: false}) 
-                  ) : (
-                    setViewDropdown({...viewDropdown, updatedRecurring: true})
-                  )
-                }}
-              >{updatedRecurring.category ? updatedRecurring.category : 'Select Category'}
-                <img
-                  className={viewDropdown.updatedRecurring ? 'down-arrow' : 'arrow'}
-                  src='https://image.flaticon.com/icons/png/512/16/16038.png'
-                  alt='arrow'
-                />
-              </button>
-              <section className={viewDropdown.updatedRecurring ? null : 'null'}>
-                <Dropdown rerender data={updatedRecurring} setDropdownCategory={setUpdatedRecurring} view={viewDropdown} setView={setViewDropdown} dropdownSelection='updatedRecurring'/>
-              </section>
-            </section>
+  //   return (
+  //     <div key={i} className='recurring-displays'>
+  //       {recurring.recurring_id === updatedRecurring.recurring_id ? (
+  //         <section className='recure'>
+  //           <input
+  //             className='recure-name'
+  //             placeholder={name}
+  //             onChange={event => {
+  //               setUpdatedRecurring({...updatedRecurring, name: event.target.value})
+  //             }}
+  //           />
+  //           <section className='expense-category-dropdown'>
+  //             <button
+  //               onClick={() => {
+  //                 viewDropdown.updatedRecurring ? (
+  //                   setViewDropdown({...viewDropdown, updatedRecurring: false}) 
+  //                 ) : (
+  //                   setViewDropdown({...viewDropdown, updatedRecurring: true})
+  //                 )
+  //               }}
+  //             >{updatedRecurring.category ? updatedRecurring.category : 'Select Category'}
+  //               <img
+  //                 className={viewDropdown.updatedRecurring ? 'down-arrow' : 'arrow'}
+  //                 src='https://image.flaticon.com/icons/png/512/16/16038.png'
+  //                 alt='arrow'
+  //               />
+  //             </button>
+  //             <section className={viewDropdown.updatedRecurring ? null : 'null'}>
+  //               <Dropdown rerender data={updatedRecurring} setDropdownCategory={setUpdatedRecurring} view={viewDropdown} setView={setViewDropdown} dropdownSelection='updatedRecurring'/>
+  //             </section>
+  //           </section>
             {/* <input
               className='recure-date'
               placeholder={dayjs(date).format('MM/DD/YY')}
@@ -191,73 +189,73 @@ function Expenses() {
                 setUpdatedRecurring({...updatedRecurring, date: event.target.value})
               }}
             /> */}
-            <section className={viewCalendar.updatedRecurring ? 'calendar-view-date' : null}>
-              <div className='calendar-date-buttons'>
-                <button
-                  onClick={() => {
-                    setViewCalendar({...viewCalendar, updatedRecurring: true})
-                  }}
-                >{updatedRecurring.date ? dayjs(updatedRecurring.date).format('MM/DD/YY') : dayjs(date).format('MM/DD/YY')}</button>
-                <button
-                  className={date ? null : 'null'}
-                  onClick={() => {
-                    setUpdatedRecurring({...updatedRecurring, date: ''})
-                  }}
-                >Clear</button>
-              </div>
-              <div className={viewCalendar.updatedRecurring ? null : 'null'}>
-                <Calendar setSelectedDate={setUpdatedRecurring} selectedDate={updatedRecurring} view={viewCalendar} setView={setViewCalendar} data={{setValue: 'date', displayValue: 'updatedRecurring'}}/>
-              </div>
-            </section>
-            <input
-              className='recure-amount'
-              placeholder={amount}
-              onChange={event => {
-                setUpdatedRecurring({...updatedRecurring, amount: event.target.value})
-              }}
-            />
-            <div className='recurring-button-div'>
-              <button
-                onClick={() => {
-                  updateRecurring()
-                }}
-              >Save</button>
-              <button
-                onClick={() => {
-                  setUpdatedRecurring({})
-                  setViewDropdown({newExpense: false, filter: false, updatedRecurring: false, newRecurring: false})
-                }}
-              >Cancel</button>
-            </div>
-            <button
-              onClick={() => {
-                handleRecurringDelete(recurring_id)
-              }}
-            >Delete</button>
-          </section>
-        ) : (
-          <section className='recure'>
-            <h2 className='recure-name'>{name}</h2>
-            <h2 className='recure-category'>{category}</h2>
-            <h2 className='recure-date'>{dayjs(date).format('MM/DD/YY')}</h2>
-            <h2 className='recure-amount'>$ {amount}</h2>
-            <div className='recurring-button-div'>              
-              <button
-                onClick={() => {
-                  handleRecurringPay(name, category, date, amount, recurring_id)
-                }}
-              >Pay</button>
-              <button
-                onClick={() => {
-                  setUpdatedRecurring(recurring)
-                }}
-              >Edit</button>
-            </div>
-          </section>
-        )}
-      </div>
-    )
-  })
+  //           <section className={viewCalendar.updatedRecurring ? 'calendar-view-date' : null}>
+  //             <div className='calendar-date-buttons'>
+  //               <button
+  //                 onClick={() => {
+  //                   setViewCalendar({...viewCalendar, updatedRecurring: true})
+  //                 }}
+  //               >{updatedRecurring.date ? dayjs(updatedRecurring.date).format('MM/DD/YY') : dayjs(date).format('MM/DD/YY')}</button>
+  //               <button
+  //                 className={date ? null : 'null'}
+  //                 onClick={() => {
+  //                   setUpdatedRecurring({...updatedRecurring, date: ''})
+  //                 }}
+  //               >Clear</button>
+  //             </div>
+  //             <div className={viewCalendar.updatedRecurring ? null : 'null'}>
+  //               <Calendar setSelectedDate={setUpdatedRecurring} selectedDate={updatedRecurring} view={viewCalendar} setView={setViewCalendar} data={{setValue: 'date', displayValue: 'updatedRecurring'}}/>
+  //             </div>
+  //           </section>
+  //           <input
+  //             className='recure-amount'
+  //             placeholder={amount}
+  //             onChange={event => {
+  //               setUpdatedRecurring({...updatedRecurring, amount: event.target.value})
+  //             }}
+  //           />
+  //           <div className='recurring-button-div'>
+  //             <button
+  //               onClick={() => {
+  //                 updateRecurring()
+  //               }}
+  //             >Save</button>
+  //             <button
+  //               onClick={() => {
+  //                 setUpdatedRecurring({})
+  //                 setViewDropdown({newExpense: false, filter: false, updatedRecurring: false, newRecurring: false})
+  //               }}
+  //             >Cancel</button>
+  //           </div>
+  //           <button
+  //             onClick={() => {
+  //               handleRecurringDelete(recurring_id)
+  //             }}
+  //           >Delete</button>
+  //         </section>
+  //       ) : (
+  //         <section className='recure'>
+  //           <h2 className='recure-name'>{name}</h2>
+  //           <h2 className='recure-category'>{category}</h2>
+  //           <h2 className='recure-date'>{dayjs(date).format('MM/DD/YY')}</h2>
+  //           <h2 className='recure-amount'>$ {amount}</h2>
+  //           <div className='recurring-button-div'>              
+  //             <button
+  //               onClick={() => {
+  //                 handleRecurringPay(name, category, date, amount, recurring_id)
+  //               }}
+  //             >Pay</button>
+  //             <button
+  //               onClick={() => {
+  //                 setUpdatedRecurring(recurring)
+  //               }}
+  //             >Edit</button>
+  //           </div>
+  //         </section>
+  //       )}
+  //     </div>
+  //   )
+  // })
 
   return (
     <section>
@@ -268,16 +266,16 @@ function Expenses() {
       ) : (
         <section className='expense-section'>
           <section className='expense-left'>
-            {newRecurring.display ? (
+            {/* {newRecurring.display ? (
               <section className='new-recure'>
                 <input
                   // className='recure-name'/
-                  placeholder='Name'
-                  value={newRecurring.name}
-                  onChange={event => {
-                    setNewRecurring({...newRecurring, name: event.target.value})
-                  }}
-                />
+                //   placeholder='Name'
+                //   value={newRecurring.name}
+                //   onChange={event => {
+                //     setNewRecurring({...newRecurring, name: event.target.value})
+                //   }}
+                // />
                 {/* <input
                   className='recure-category'
                   placeholder='Category'
@@ -286,7 +284,7 @@ function Expenses() {
                     setNewRecurring({...newRecurring, category: event.target.value})
                   }}
                 /> */}
-                <section className='expense-category-dropdown'>
+                {/* <section className='expense-category-dropdown'>
                   <button
                     onClick={() => {
                       viewDropdown.newRecurring ? (
@@ -305,7 +303,7 @@ function Expenses() {
                   <section className={viewDropdown.newRecurring ? null : 'null'}>
                     <Dropdown rerender data={newRecurring} setDropdownCategory={setNewRecurring} view={viewDropdown} setView={setViewDropdown} dropdownSelection='newRecurring'/>
                   </section>
-                </section>
+                </section> */}
                 {/* <input
                   className='recure-date'
                   placeholder='Date'
@@ -313,7 +311,7 @@ function Expenses() {
                   onChange={event => {
                     setNewRecurring({...newRecurring, date: event.target.value})
                   }}
-                /> */}
+                />
                 <section className={viewCalendar.newRecurring ? 'calendar-view-date' : null}>
                   <div className='calendar-date-buttons'>
                     <button
@@ -370,7 +368,7 @@ function Expenses() {
               <section className='recurring'>
                 {viewRecurring}
               </section>
-            )}   
+            )}*/}   
           </section>
 
           <section className='expense-right'>
@@ -615,18 +613,18 @@ function Expenses() {
             </section>
             <div className='expenses-view'>
               <ExpenseDisplay
-                data={{expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters, setRerenderDisplay, rerenderDisplay}}
+                data={{expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters}}
               />
               <button
                 className={expenses.length === 0 ? 'null' : expenses.length % 15 === 0? 'load-more-button' : 'null'}
                 onClick={() => {
-                  handleLoadMoreExpenses()
+                  handleLimitExpenses('plus')
                 }}
               >Load more</button>
               <button
-                className={expenseLimit > 15 ? 'load-more-button' : 'null'}
+                className={filters.limit > 15 && filters.offset === 0 ? 'load-more-button' : 'null'}
                 onClick={() => {
-                  handleLoadLessExpenses()
+                  handleLimitExpenses('minus')
                 }}
               >Load less</button>
             </div>

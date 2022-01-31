@@ -35,8 +35,14 @@ app.delete('/api/budget/:id', budgetCtrl.deleteBudget)
 app.get('/api/expenses', expensesCtrl.getExpenses)
 app.post('/api/expenses', expensesCtrl.newExpense)
 app.put('/api/expenses', expensesCtrl.updateExpenses)
-app.delete('/api/expenses/:id', expensesCtrl.deleteExpense)
+app.delete('/api/expenses', expensesCtrl.deleteExpense)
 app.get('/api/current', expensesCtrl.getCurrent)
+
+app.get('/api/recurring/:limit', recurringCtrl.getRecurring)
+app.post('/api/recurring', recurringCtrl.newRecurring)
+app.put('/api/recurring', recurringCtrl.updateRecurring)
+app.post('/api/recurring/:id', recurringCtrl.deleteRecurring)
+app.put('/api/recurring/date', recurringCtrl.updateRecurringDate)
 
 app.get('/api/savings', savingsCtrl.getSavings)
 app.put('/api/savings/:overall', savingsCtrl.updateSavings)
@@ -50,12 +56,6 @@ app.post('/api/debts', debtsCtrl.newDebt)
 app.put('/api/debts/:id', debtsCtrl.updateDebts)
 app.get('/api/total', debtsCtrl.getTotal)
 app.get('/api/upcoming', debtsCtrl.getUpcoming)
-
-app.get('/api/recurring/:limit', recurringCtrl.getRecurring)
-app.post('/api/recurring', recurringCtrl.newRecurring)
-app.put('/api/recurring', recurringCtrl.updateRecurring)
-app.post('/api/recurring/:id', recurringCtrl.deleteRecurring)
-app.put('/api/recurring/date', recurringCtrl.updateRecurringDate)
 
 app.use(express.static(__dirname + '/../build'))
 

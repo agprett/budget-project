@@ -16,7 +16,7 @@ module.exports = {
     const {name, category, end, start} = req.query
     let filters = {}
 
-    const expenses = await db.expenses.get_expenses([user_id, limit, offset])
+    let expenses = await db.expenses.get_expenses([user_id, limit, offset])
 
     const filtered = expenses.filter(expense => {
       let bool = true
@@ -49,7 +49,9 @@ module.exports = {
       return bool
     })
 
-    res.status(200).send({filtered, limit, offset, filters})
+    expenses = filtered
+
+    res.status(200).send({expenses, limit, offset, filters})
   },
   
   newExpense: async (req, res) => {
@@ -90,10 +92,13 @@ module.exports = {
 
   deleteExpense: async (req, res) => {
     const db = req.app.get('db')
-    const {id} = req.params
+    const deletedExpenses = req.body
+    console.log(req.body)
 
-    await db.expenses.delete_expense([id])
-    
+    for(let i = 0; i < deletedExpenses.length; i++){
+      await db.expenses.delete_expense([deletedExpenses[i]])
+    };
+
     res.sendStatus(200)
   },
 
