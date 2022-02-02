@@ -9,8 +9,8 @@ module.exports = {
     const db = req.app.get('db')
     // const {user_id} = req.session.user
     const user_id = 1
-    const limit = +req.query.limit
-    const offset = +req.query.offset
+    const limit = +req.query.limit || 15
+    const offset = +req.query.offset || 0
     const low = +req.query.low
     const high = +req.query.high
     const {name, category, end, start} = req.query
@@ -93,7 +93,6 @@ module.exports = {
   deleteExpense: async (req, res) => {
     const db = req.app.get('db')
     const deletedExpenses = req.body
-    console.log(req.body)
 
     for(let i = 0; i < deletedExpenses.length; i++){
       await db.expenses.delete_expense([deletedExpenses[i]])
@@ -112,6 +111,7 @@ module.exports = {
     let endMonth = dayjs().endOf('month').format()
 
     let [response] = await db.expenses.get_current([user_id, startMonth, endMonth])
+
     if(response.some === null){
       response.sum = 0
     }

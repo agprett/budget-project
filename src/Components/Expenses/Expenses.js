@@ -17,10 +17,10 @@ function Expenses() {
   const [editting, setEditting] = useState(false)
   const [updatedExpenses, setUpdatedExpenses] = useState({})
   const [deletedExpenses, setDeletedExpenses] = useState([])
-  const [recurring, setRecurring] = useState([])
-  const [newRecurring, setNewRecurring] = useState({display: false, name: '', category:'', amount: '', date: ''})
-  const [updatedRecurring, setUpdatedRecurring] = useState({recurring_id: '', name: '', category: '', date: '', amount: ''})
-  const [displayDelete, setDisplayDelete] = useState({display: false, id: ''})
+  // const [recurring, setRecurring] = useState([])
+  // const [newRecurring, setNewRecurring] = useState({display: false, name: '', category:'', amount: '', date: ''})
+  // const [updatedRecurring, setUpdatedRecurring] = useState({recurring_id: '', name: '', category: '', date: '', amount: ''})
+  // const [displayDelete, setDisplayDelete] = useState({display: false, id: ''})
   const [rerender, setRerender] = useState(false)
 
   useEffect(() => {
@@ -80,11 +80,10 @@ function Expenses() {
     axios.delete('/api/expenses', {data: deletedExpenses})
     .then(() => {
       setDeletedExpenses([])
-      axios.get(`/api/expenses?limit=${filters.limit}&offset=${filters.offset}`)
-        .then(res => {
-          setExpenses(res.data.expenses)
-          setFilters(res.data.filters)
-        })
+      setRerender(true)
+    })
+    .catch(err => {
+      console.log(err)
     })
   }
   
@@ -132,21 +131,21 @@ function Expenses() {
   //   })
   // }
 
-  const handleLimitExpenses = (type) => {
-    if(type === 'plus'){
-      axios.get(`/api/expenses/${filters.limit + 15}`)
-      .then(res =>  {
-        setExpenses(res.data.expenses)
-        setFilters({...filters, limit: res.data.filters.limit})
-      })
-    } else if(type === 'minus'){
-      axios.get(`/api/expenses/${filters.limit - 15}`)
-      .then(res =>  {
-        setExpenses(res.data.expenses)
-        setFilters({...filters, limit: res.data.filters.limit})
-      })
-    }
-  }
+  // const handleLimitExpenses = (type) => {
+  //   if(type === 'plus'){
+  //     axios.get(`/api/expenses?limit=${filters.limit + 15}&offset=${filters.offset}`)
+  //     .then(res =>  {
+  //       setExpenses(res.data.expenses)
+  //       setFilters({...filters, limit: res.data.filters.limit})
+  //     })
+  //   } else if(type === 'minus'){
+  //     axios.get(`/api/expenses/${filters.limit - 15}`)
+  //     .then(res =>  {
+  //       setExpenses(res.data.expenses)
+  //       setFilters({...filters, limit: res.data.filters.limit})
+  //     })
+  //   }
+  // }
   
   // const viewRecurring = recurring.map((recurring, i) => {
   //   const {name, category, date, amount, recurring_id} = recurring
@@ -613,18 +612,18 @@ function Expenses() {
             </section>
             <div className='expenses-view'>
               <ExpenseDisplay
-                data={{expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters}}
+                data={{expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters, rerender}}
               />
               <button
                 className={expenses.length === 0 ? 'null' : expenses.length % 15 === 0? 'load-more-button' : 'null'}
                 onClick={() => {
-                  handleLimitExpenses('plus')
+                  // handleLimitExpenses('plus')
                 }}
               >Load more</button>
               <button
                 className={filters.limit > 15 && filters.offset === 0 ? 'load-more-button' : 'null'}
                 onClick={() => {
-                  handleLimitExpenses('minus')
+                  // handleLimitExpenses('minus')
                 }}
               >Load less</button>
             </div>

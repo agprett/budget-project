@@ -6,7 +6,7 @@ import Dropdown from '../Dropdown/Dropdown'
 import Calendar from '../Calendar/Calendar'
 
 function ExpenseDisplay(props) {
-  const {expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters} = props.data
+  const {expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters, rerender} = props.data
   const [viewDropdown, setViewDropdown] = useState(false)
   const [viewCalendar, setViewCalendar] = useState('')
   const [rerenderDisplay, setRerenderDisplay] = useState(false)
@@ -15,7 +15,7 @@ function ExpenseDisplay(props) {
     setViewDropdown('')
     setViewCalendar('')
     setRerenderDisplay(false)
-  }, [filters, rerenderDisplay, expenses])
+  }, [filters, rerenderDisplay, expenses, rerender])
 
 
   const viewExpenses = (data) => data.map((expense, i) => {
