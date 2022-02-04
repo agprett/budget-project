@@ -6,7 +6,7 @@ import Dropdown from '../Dropdown/Dropdown'
 import Calendar from '../Calendar/Calendar'
 
 function ExpenseDisplay(props) {
-  const {expenses, deletedExpenses, updatedExpenses, setDeletedExpenses, setUpdatedExpenses, editting, filters, rerender} = props.data
+  const {expenses, deletedExpenses, setDeletedExpenses, updatedExpenses, setUpdatedExpenses, editting, filters, rerender} = props.data
   const [viewDropdown, setViewDropdown] = useState(false)
   const [viewCalendar, setViewCalendar] = useState('')
   const [rerenderDisplay, setRerenderDisplay] = useState(false)

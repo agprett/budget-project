@@ -34,7 +34,7 @@ function Expenses() {
     // })
     // .catch(err => console.log(err))
 
-    axios.get(`/api/expenses?limit=${filters.limit}&offset=${filters.offset}`)
+    axios.get(`/api/expenses?limit=15&offset=0`)
     .then(res => {
       setExpenses(res.data.expenses)
       setFilters(res.data.filters)
@@ -181,13 +181,13 @@ function Expenses() {
   //               <Dropdown rerender data={updatedRecurring} setDropdownCategory={setUpdatedRecurring} view={viewDropdown} setView={setViewDropdown} dropdownSelection='updatedRecurring'/>
   //             </section>
   //           </section>
-            {/* <input
-              className='recure-date'
-              placeholder={dayjs(date).format('MM/DD/YY')}
-              onChange={event => {
-                setUpdatedRecurring({...updatedRecurring, date: event.target.value})
-              }}
-            /> */}
+            // <input
+            //   className='recure-date'
+            //   placeholder={dayjs(date).format('MM/DD/YY')}
+            //   onChange={event => {
+            //     setUpdatedRecurring({...updatedRecurring, date: event.target.value})
+            //   }}
+            // />
   //           <section className={viewCalendar.updatedRecurring ? 'calendar-view-date' : null}>
   //             <div className='calendar-date-buttons'>
   //               <button

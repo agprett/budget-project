@@ -31,7 +31,7 @@ function Nav(props){
     //   props.getDebt(res.data.sum)
     // })
     // .catch(err => console.log(err))
-  }, [])
+  })
   
   return (
     <section className='nav-bar'>

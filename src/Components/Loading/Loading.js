@@ -73,14 +73,15 @@ function Loading() {
         r2 = Math.abs(d.radius),
         r0 = r2 - 8,
         r1 = r2 + 8,
+        r3 = null
         r3 = d.ring ? (r3 = r0, r0 = r1, r1 = r3, r2 + 20) : (
           d.center === 'small' ? 15 : (
             d.center === 'medium' ? 30 : (
               d.center === 'large' ? 45 : 20
             )
           ) 
-        ),
-        da = Math.PI / n,
+        )
+      var da = Math.PI / n,
         a0 = -Math.PI / 2 + (d.ring ? Math.PI / n : 0),
         i = -1,
         path = ["M", r0 * Math.cos(a0), ",", r0 * Math.sin(a0)];

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import dayjs from 'dayjs'
 import './Calendar.css'
-import {x} from '../img.json'
+// import {x} from '../img.json'
 
 function Calendar(props){
   const {setView, view, selectedDate, setSelectedDate, data} = props

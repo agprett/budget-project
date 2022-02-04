@@ -97,17 +97,17 @@ function Budget(props){
     }
   }
 
-  const handleUpdateMain = () => {
-    axios.put(`/api/budget`)
-    .then(() => {
-      props.updateOverall(updatedBudget.amount)
-      setUpdatedBudget({budget_id: '', amount: ''})
-      setRerender(true)
-    })
-    .catch(err => {
-      alert('Please enter numbers only')
-    })
-  }
+  // const handleUpdateMain = () => {
+  //   axios.put(`/api/budget`)
+  //   .then(() => {
+  //     props.updateOverall(updatedBudget.amount)
+  //     setUpdatedBudget({budget_id: '', amount: ''})
+  //     setRerender(true)
+  //   })
+  //   .catch(err => {
+  //     alert('Please enter numbers only')
+  //   })
+  // }
 
   const viewSubs = budget.map((budget, i) => {
     const {category, amount, budget_id} = budget
@@ -175,7 +175,7 @@ function Budget(props){
       ) : (
         <section className='budget-page'>
           <div className='budget-left'>
-          {updatedBudget.budget_id == 1 ? (
+          {updatedBudget.budget_id === 1 ? (
             <div className='budget-overall'>
               <div className='monthly-budget'>
                 Monthly Budget: {spent("Overall")} / 

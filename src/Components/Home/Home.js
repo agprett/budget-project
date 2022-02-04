@@ -5,7 +5,7 @@ import axios from 'axios'
 import './Home.css'
 import Loading from '../Loading/Loading'
 import BudgetDisplay from './BudgetDisplay/BudgetDisplay'
-import DonutChart from '../DonutChart/DonutChart'
+// import DonutChart from '../DonutChart/DonutChart'
 
 function Home(props){
   const {overall} = props.user
@@ -14,8 +14,8 @@ function Home(props){
   const [budget, setBudget] = useState([])
   const [current, setCurrent] = useState([])
   const [recent, setRecent] = useState([])
-  const [chartData, setChartData] = useState({})
-  const [chartColors, setChartColors] = useState([])
+  // const [chartData, setChartData] = useState({})
+  // const [chartColors, setChartColors] = useState([])
   const [recurring, setRecuring] = useState([])
   // const [priority, setPriority] = useState({})
   // const [upcoming, setUpcoming] = useState({})
@@ -149,7 +149,7 @@ function Home(props){
               <p>${spent('Overall')} / ${overall}</p>
             </div>
             <section className='donut-chart'>
-              <DonutChart data={chartData}/>
+              {/* <DonutChart data={chartData}/> */}
             </section>
           </section>
           <BudgetDisplay budget={budget} current={current}/>
