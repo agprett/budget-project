@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import dayjs from 'dayjs'
-import Loading from '../Loading/Loading'
+import Loading from '../Loading/Loading.js'
 import './Planning.css'
 
 function Planning() {

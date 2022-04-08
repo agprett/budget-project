@@ -3,7 +3,7 @@ import axios from 'axios'
 import './Nav.css'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {getUser, logoutUser, getSavings, getDebt} from '../../ducks/reducer'
+import {getUser, logoutUser, getSavings, getDebt} from '../../ducks/reducer.js'
 // import {profile_pic} from '../img.json'
 
 function Nav(props){

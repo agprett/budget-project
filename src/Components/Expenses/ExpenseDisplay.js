@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import dayjs from 'dayjs'
 import './Expenses.css'
-import {x} from '../img.json'
-import Dropdown from '../Dropdown/Dropdown'
-import Calendar from '../Calendar/Calendar'
+import Dropdown from '../Dropdown/Dropdown.js'
+import Calendar from '../Calendar/Calendar.js'
+const x = require('../img.json')
 
 function ExpenseDisplay(props) {
   const {expenses, deletedExpenses, setDeletedExpenses, updatedExpenses, setUpdatedExpenses, editting, filters, rerender} = props.data

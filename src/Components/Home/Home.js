@@ -3,8 +3,8 @@ import {connect} from 'react-redux'
 import dayjs from 'dayjs'
 import axios from 'axios'
 import './Home.css'
-import Loading from '../Loading/Loading'
-import BudgetDisplay from './BudgetDisplay/BudgetDisplay'
+import Loading from '../Loading/Loading.js'
+import BudgetDisplay from './BudgetDisplay/BudgetDisplay.js'
 // import DonutChart from '../DonutChart/DonutChart'
 
 function Home(props){

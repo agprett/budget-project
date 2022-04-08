@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
-import {x} from '../img.json'
 import './Dropdown.css'
+const x = require('../img.json')
 
 function Dropdown(props){
   const {data, setDropdownCategory, view, setView, rerender, dropdownId, dropdownSelection} = props

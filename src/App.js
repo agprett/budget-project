@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 import {withRouter} from 'react-router-dom'
-import Nav from './Components/Nav/Nav'
-import routes from './routes'
+import Nav from './Components/Nav/Nav.js'
+import routes from './routes.js'
 
 function App(props) {
   return (

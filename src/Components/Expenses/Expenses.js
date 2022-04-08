@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import dayjs from 'dayjs'
-import Loading from '../Loading/Loading'
-import Dropdown from '../Dropdown/Dropdown'
+import Loading from '../Loading/Loading.js'
+import Dropdown from '../Dropdown/Dropdown.js'
 import './Expenses.css'
-import ExpenseDisplay from './ExpenseDisplay'
-import Calendar from '../Calendar/Calendar'
+import ExpenseDisplay from './ExpenseDisplay.js'
+import Calendar from '../Calendar/Calendar.js'
 
 function Expenses() {
   const [loading, setLoading] = useState(true)

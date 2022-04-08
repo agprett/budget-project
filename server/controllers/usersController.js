@@ -28,11 +28,11 @@ module.exports = {
     const salt = bcrypt.genSaltSync(10)
     const hash = bcrypt.hashSync(password, salt)
 
-    const [dbResponse] = await db.users.register_user([username, hash, budget])
+    const [dbResponse] = await db.users.register_user([username, hash])
 
     let {user_id} = dbResponse
     
-    await db.budget.new_budget([user_id, 'Overall', budget, true])
+    // await db.budget.new_budget([user_id, 'Overall', budget, true])
 
     // const profile_pic = `https://robohash.org/${user_id}`'
 

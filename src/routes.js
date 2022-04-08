@@ -1,11 +1,11 @@
 import React from 'react'
 import {Switch, Route} from 'react-router-dom'
-import Login from './Components/Login/Login'
-import Register from './Components/Register/Register'
-import Home from './Components/Home/Home'
-import Budget from './Components/Budget/Budget'
-import Expenses from './Components/Expenses/Expenses'
-import Planning from './Components/Planning/Planning'
+import Login from './Components/Login/Login.js'
+import Register from './Components/Register/Register.js'
+import Home from './Components/Home/Home.js'
+import Budget from './Components/Budget/Budget.js'
+import Expenses from './Components/Expenses/Expenses.js'
+import Planning from './Components/Planning/Planning.js'
 
 export default (
   <Switch>
